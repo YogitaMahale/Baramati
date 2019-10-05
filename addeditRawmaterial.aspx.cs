@@ -21,7 +21,7 @@ public partial class addeditRawmaterial : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        /*
+        
         if (!Page.IsPostBack)
         {
             //BindCategory();
@@ -39,7 +39,7 @@ public partial class addeditRawmaterial : System.Web.UI.Page
                 Page.Title = "Raw Material Add";
             }
         }
-        */
+        
     }
 
     public void BindProducts(Int64 ProductId)

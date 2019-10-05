@@ -22,7 +22,7 @@ public class Cls_Rawmaterial_b
         DataTable dt = new DataTable();
         try
         {
-            Cls_Rawmaterial_b objCls_Rawmaterial_b = new Cls_Rawmaterial_b();
+            Cls_Rawmaterial_db objCls_Rawmaterial_b = new Cls_Rawmaterial_db();
             dt = objCls_Rawmaterial_b.SelectAll();
             return dt;
         }
@@ -38,7 +38,7 @@ public class Cls_Rawmaterial_b
         rawMaterialMaster objrawMaterialMaster = new rawMaterialMaster();
         try
         {
-            Cls_Rawmaterial_b objCls_Rawmaterial_b = new Cls_Rawmaterial_b();
+                Cls_Rawmaterial_db objCls_Rawmaterial_b = new Cls_Rawmaterial_db();
             objrawMaterialMaster = objCls_Rawmaterial_b.SelectById(pid);
             return objrawMaterialMaster;
         }
@@ -53,7 +53,7 @@ public class Cls_Rawmaterial_b
         Int64 result = 0;
         try
         {
-            Cls_Rawmaterial_b objCls_Rawmaterial_b = new Cls_Rawmaterial_b();
+                Cls_Rawmaterial_db objCls_Rawmaterial_b = new Cls_Rawmaterial_db();
             result = Convert.ToInt64(objCls_Rawmaterial_b.Insert(objproduct));
             return result;
         }
@@ -68,7 +68,7 @@ public class Cls_Rawmaterial_b
         Int64 result = 0;
         try
         {
-            Cls_Rawmaterial_b objCls_Rawmaterial_b = new Cls_Rawmaterial_b();
+                Cls_Rawmaterial_db objCls_Rawmaterial_b = new Cls_Rawmaterial_db();
             result = Convert.ToInt64(objCls_Rawmaterial_b.Update(objproduct));
             return result;
         }
@@ -82,7 +82,7 @@ public class Cls_Rawmaterial_b
     {
         try
         {
-            Cls_Rawmaterial_b objCls_Rawmaterial_b = new Cls_Rawmaterial_b();
+                Cls_Rawmaterial_db objCls_Rawmaterial_b = new Cls_Rawmaterial_db();
             if (objCls_Rawmaterial_b.Delete(pid))
             {
                 return true;

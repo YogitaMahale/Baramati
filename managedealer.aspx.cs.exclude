@@ -1,0 +1,375 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+
+public partial class managedealer : System.Web.UI.Page
+{
+
+    common ocommon = new common();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["usertype"].ToString() != "superadmin")
+        {
+            Response.Redirect(Page.ResolveUrl("~/Default.aspx"));
+        }
+
+        if (Session["usertype"].ToString() == "superadmin")
+        {
+            divUserAuthority.Visible = true;
+        }
+
+
+        HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
+        hPageTitle.InnerText = "Manage Dealer's";
+        if (!Page.IsPostBack)
+        {
+            SelectAllActiveUser();
+            SelectAllNotActiveUser();
+        }
+
+        if (Request.QueryString["mode"] == "u")
+        {
+            spnMessage.Visible = true;
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Dealer Updated Successfully";
+        }
+    }
+
+    public void SelectAllActiveUser()
+    {
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        DataSet ds = new DataSet();
+        SqlDataAdapter da;
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealer_SelectAllAdmin";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            ConnectionString.Open();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            if (ds.Tables[0] != null)
+            {
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    divActiveSaveAll.Visible = true;
+                    repDealerActive.Visible = true;
+                    repDealerActive.DataSource = ds.Tables[0];
+                    repDealerActive.DataBind();
+                }
+                else
+                {
+                    divActiveSaveAll.Visible = false;
+                    repDealerActive.DataSource = null;
+                    repDealerActive.DataBind();
+                }
+            }
+            else
+            {
+                repDealerActive.DataSource = null;
+                repDealerActive.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+    }
+
+    public void SelectAllNotActiveUser()
+    {
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        DataSet ds = new DataSet();
+        SqlDataAdapter da;
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealer_SelectAllAdminNotActive";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            ConnectionString.Open();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            if (ds.Tables[0] != null)
+            {
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    divNonActiveSaveAll.Visible = true;
+                    repDealerNotActive.Visible = true;
+                    repDealerNotActive.DataSource = ds.Tables[0];
+                    repDealerNotActive.DataBind();
+                }
+                else
+                {
+                    divNonActiveSaveAll.Visible = false;
+                    repDealerNotActive.DataSource = null;
+                    repDealerNotActive.DataBind();
+                }
+            }
+            else
+            {
+                repDealerNotActive.DataSource = null;
+                repDealerNotActive.DataBind();
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+    }
+
+    protected void cbIsActiveUser_CheckedChanged(object sender, EventArgs e)
+    {
+        CheckBox cbIsActiveUser = (CheckBox)sender;
+        RepeaterItem item = (RepeaterItem)cbIsActiveUser.NamingContainer;
+        if (item != null)
+        {
+            if (!string.IsNullOrEmpty((item.FindControl("hfActiveUserId") as HiddenField).Value))
+            {
+                Int64 UserID = int.Parse((item.FindControl("hfActiveUserId") as HiddenField).Value);
+                bool cbIsActive = Convert.ToBoolean((item.FindControl("cbIsActiveUser") as CheckBox).Checked);
+                bool yes = User_IsActive(UserID, cbIsActive);
+                spnMessage.Visible = true;
+                if (yes)
+                {
+                    SelectAllActiveUser();
+                    SelectAllNotActiveUser();
+                    spnMessage.Style.Add("color", "green");
+                    spnMessage.InnerText = "User Updated Successfully";
+                }
+                else
+                {
+                    spnMessage.Style.Add("color", "red");
+                    spnMessage.InnerText = "User Not Updated";
+                }
+            }
+        }
+    }
+
+    protected void cbNonIsActive_CheckedChanged(object sender, EventArgs e)
+    {
+        CheckBox cbNonIsActive = (CheckBox)sender;
+        RepeaterItem item = (RepeaterItem)cbNonIsActive.NamingContainer;
+        if (item != null)
+        {
+            if (!string.IsNullOrEmpty((item.FindControl("hfNonActiveUserId") as HiddenField).Value))
+            {
+                Int64 UserID = int.Parse((item.FindControl("hfNonActiveUserId") as HiddenField).Value);
+                bool cbIsActive = Convert.ToBoolean((item.FindControl("cbNonIsActive") as CheckBox).Checked);
+                bool yes = User_IsActive(UserID, cbIsActive);
+                spnMessage.Visible = true;
+                if (yes)
+                {
+                    SelectAllActiveUser();
+                    SelectAllNotActiveUser();
+                    spnMessage.Style.Add("color", "green");
+                    spnMessage.InnerText = "User Updated Successfully";
+                }
+                else
+                {
+                    spnMessage.Style.Add("color", "red");
+                    spnMessage.InnerText = "User Not Updated";
+                }
+            }
+        }
+    }
+
+    public bool User_IsActive(Int64 UserID, Boolean IsActive)
+    {
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealermaster_IsActive";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            cmd.Parameters.AddWithValue("@uid", UserID);
+            cmd.Parameters.AddWithValue("@isactive", IsActive);
+            ConnectionString.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+        return true;
+    }
+
+    protected void lnkNotActiveDelete_Click(object sender, EventArgs e)
+    {
+        LinkButton lnkNotActiveDelete = (LinkButton)sender;
+        RepeaterItem item = (RepeaterItem)lnkNotActiveDelete.NamingContainer;
+        Int64 UserId = Convert.ToInt64(lnkNotActiveDelete.CommandArgument);
+        bool yes = User_Delete(UserId);
+        spnMessage.Visible = true;
+        if (yes)
+        {
+            SelectAllActiveUser();
+            SelectAllNotActiveUser();
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "User Deleted Successfully";
+        }
+        else
+        {
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "User Not Deleted";
+        }
+    }
+
+    protected void lnkActiveUserDelete_Click(object sender, EventArgs e)
+    {
+        LinkButton lnkActiveUserDelete = (LinkButton)sender;
+        RepeaterItem item = (RepeaterItem)lnkActiveUserDelete.NamingContainer;
+        Int64 UserId = Convert.ToInt64(lnkActiveUserDelete.CommandArgument);
+        bool yes = User_Delete(UserId);
+        spnMessage.Visible = true;
+        if (yes)
+        {
+            SelectAllActiveUser();
+            SelectAllNotActiveUser();
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "User Deleted Successfully";
+        }
+        else
+        {
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "User Not Deleted";
+        }
+
+    }
+
+    public bool User_Delete(Int64 UserID)
+    {
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealermaster_Delete";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            cmd.Parameters.AddWithValue("@uid", UserID);
+            ConnectionString.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+        return true;
+    }
+
+    protected void repDealerNotActive_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+            HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
+            hlEdit.NavigateUrl = Page.ResolveUrl("~/editdealerprofile.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "did").ToString(), true));
+        }
+    }
+
+    protected void repDealerActive_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+            HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
+            hlEdit.NavigateUrl = Page.ResolveUrl("~/editdealerprofile.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "did").ToString(), true));
+        }
+    }
+
+    protected void btnNonActiveSave_Click(object sender, EventArgs e)
+    {
+        bool yes = false;
+        foreach (RepeaterItem item in repDealerNotActive.Items)
+        {
+            CheckBox chkContainer = (CheckBox)item.FindControl("chkContainer");
+            if (chkContainer.Checked)
+            {
+                string DealerId = chkContainer.Attributes["attr-ID"];
+                CheckBox cbNonSuperStockiest = (CheckBox)item.FindControl("cbNonSuperStockiest");
+                CheckBox cbNonDealer = (CheckBox)item.FindControl("cbNonDealer");
+                CheckBox cbNonWholesaler = (CheckBox)item.FindControl("cbNonWholesaler");
+                CheckBox cbNonCustomer = (CheckBox)item.FindControl("cbNonCustomer");
+                yes = Dealer_Update_UserType(Convert.ToInt64(DealerId), cbNonSuperStockiest.Checked, cbNonDealer.Checked, cbNonWholesaler.Checked, cbNonCustomer.Checked);
+            }
+        }
+        spnMessage.Visible = true;
+        spnMessage.Style.Add("color", "green");
+        spnMessage.InnerText = "Dealer Information Updated Successfully";
+        SelectAllNotActiveUser();
+    }
+
+    protected void btnActiveSave_Click(object sender, EventArgs e)
+    {
+        bool yes = false;
+        foreach (RepeaterItem item in repDealerActive.Items)
+        {
+            CheckBox chkContainer = (CheckBox)item.FindControl("chkContainerActive");
+            if (chkContainer.Checked)
+            {
+                string DealerId = chkContainer.Attributes["attr-ID"];
+                CheckBox cbNonSuperStockiest = (CheckBox)item.FindControl("cbActiveSuperStockiest");
+                CheckBox cbNonDealer = (CheckBox)item.FindControl("cbActiveDealer");
+                CheckBox cbNonWholesaler = (CheckBox)item.FindControl("cbActiveWholesaler");
+                CheckBox cbNonCustomer = (CheckBox)item.FindControl("cbActiveCustomer");
+                yes = Dealer_Update_UserType(Convert.ToInt64(DealerId), cbNonSuperStockiest.Checked, cbNonDealer.Checked, cbNonWholesaler.Checked, cbNonCustomer.Checked);
+            }
+        }
+        spnMessage.Visible = true;
+        spnMessage.Style.Add("color", "green");
+        spnMessage.InnerText = "Dealer Information Updated Successfully";
+        SelectAllNotActiveUser();
+    }
+
+    private bool Dealer_Update_UserType(Int64 DealerId, bool SuperStockiest, bool Dealer, bool Wholesaler, bool Customer)
+    {
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealermaster_UpdateuserType";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            cmd.Parameters.AddWithValue("@uid", DealerId);
+            cmd.Parameters.AddWithValue("@superstockiest", SuperStockiest);
+            cmd.Parameters.AddWithValue("@dealer", Dealer);
+            cmd.Parameters.AddWithValue("@wholesaler", Wholesaler);
+            cmd.Parameters.AddWithValue("@customer", Customer);
+            ConnectionString.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+        return true;
+    }
+
+}

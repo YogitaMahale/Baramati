@@ -1,0 +1,583 @@
+﻿using BusinessLayer;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Configuration;
+public partial class manageproduct : System.Web.UI.Page
+{
+
+    readonly PagedDataSource _pgsource = new PagedDataSource();
+    int _firstIndex, _lastIndex;
+    private int _pageSize = 20;
+
+    //string productFrontPath = "~/uploads/product/front/";
+    common ocommon = new common();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!Page.IsPostBack)
+        {
+            BindCategory();
+            HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
+            hPageTitle.InnerText = "Manage Products";
+            Page.Title = "Manage Product";
+        }
+        if (!Page.IsPostBack)
+        {
+            if (Request.QueryString["mode"] == "u")
+            {
+                if (Request.QueryString["catid"] != null)
+                {
+                    BindProduct(Convert.ToInt64(Request.QueryString["catid"].ToString()));
+                    ddlCategory.SelectedValue = Request.QueryString["catid"].ToString();
+                }
+                spnMessage.Visible = true;
+                spnMessage.Style.Add("color", "green");
+                spnMessage.InnerText = "Product Updated Successfully";
+
+            }
+            else if (Request.QueryString["mode"] == "i")
+            {
+                if (Request.QueryString["catid"] != null)
+                {
+                    BindProduct(Convert.ToInt64(Request.QueryString["catid"].ToString()));
+                    ddlCategory.SelectedValue = Request.QueryString["catid"].ToString();
+                }
+                spnMessage.Visible = true;
+                spnMessage.Style.Add("color", "green");
+                spnMessage.InnerText = "Product Inserted Successfully";
+            }
+        }
+
+    }
+
+    private void BindCategory()
+    {
+        DataTable dtCategory = (new Cls_category_b().SelectAll());
+        if (dtCategory != null)
+        {
+            if (dtCategory.Rows.Count > 0)
+            {
+                ddlCategory.DataSource = dtCategory;
+                ddlCategory.DataTextField = "categoryname";
+                ddlCategory.DataValueField = "cid";
+                ddlCategory.DataBind();
+                ListItem objListItem = new ListItem("--Select Category--", "0");
+                ddlCategory.Items.Insert(0, objListItem);
+            }
+        }
+    }
+
+    private void BindProduct(Int64 CategoryId)
+    {
+        if (CategoryId > 0)
+        {
+            divProduct.Visible = true;
+            DataTable dtProduct = (new Cls_product_b().SelectAllProductUsingCategoryIdAdmin(CategoryId));
+            if (dtProduct != null)
+            {
+                divSaveAll.Visible = true;
+                divExcel.Visible = true;
+                repProduct.DataSource = dtProduct;
+                repProduct.DataBind();
+            }
+            else
+            {
+                divExcel.Visible = false;
+                divSaveAll.Visible = false;
+                repProduct.DataSource = null;
+                repProduct.DataBind();
+            }
+        }
+        else
+        {
+            divSaveAll.Visible = false;
+            repProduct.DataSource = null;
+            repProduct.DataBind();
+        }
+    }
+
+    protected void lnkDelete_Click(object sender, EventArgs e)
+    {
+        RepeaterItem item = (sender as LinkButton).Parent as RepeaterItem;
+        Int64 ProductId = int.Parse((item.FindControl("lblProductId") as Label).Text);
+        Int64 CategoryId = int.Parse((item.FindControl("lblCategoryId") as Label).Text);
+
+        bool yes = (new Cls_product_b().Delete(ProductId, CategoryId));
+        spnMessage.Visible = true;
+        if (yes)
+        {
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Product Deleted Successfully";
+            BindProduct(Convert.ToInt64(ViewState["CategoryId"]));
+
+        }
+        else
+        {
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Product Not Deleted";
+        }
+    }
+
+    protected void btnAddNewProduct_Click(object sender, EventArgs e)
+    {
+        Response.Redirect(Page.ResolveUrl("~/addeditproduct.aspx"));
+    }
+
+    protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindProduct(Convert.ToInt64(ddlCategory.SelectedValue));
+        ViewState["CategoryId"] = ddlCategory.SelectedValue;
+    }
+
+    protected void repProduct_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+
+            DropDownList ddlSeqNo = (DropDownList)e.Item.FindControl("ddlSeqNo");
+            HyperLink hlAddImageVideo = (HyperLink)e.Item.FindControl("hlAddImageVideo");
+            HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
+            hlEdit.NavigateUrl = Page.ResolveUrl("~/addeditproduct.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "pid").ToString(), true));
+            hlAddImageVideo.NavigateUrl = Page.ResolveUrl("~/addeditproductmultipleimages.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "pid").ToString(), true));
+            //Image imgProduct = (Image)e.Item.FindControl("imgProduct");
+            //imgProduct.ImageUrl = productFrontPath + DataBinder.Eval(e.Item.DataItem, "mainimage").ToString();
+            Fill_SeqNo(Convert.ToInt64(DataBinder.Eval(e.Item.DataItem, "SeqNo")), Convert.ToInt64(DataBinder.Eval(e.Item.DataItem, "MaxSeqNo")), ref ddlSeqNo);
+        }
+    }
+
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        bool yes = false;
+        foreach (RepeaterItem item in repProduct.Items)
+        {
+            CheckBox chkContainer = (CheckBox)item.FindControl("chkContainer");
+            if (chkContainer.Checked)
+            {
+                string ProductId = chkContainer.Attributes["attr-ID"];
+                TextBox txtDiscountPrice = (TextBox)item.FindControl("txtDiscountPrice");
+                TextBox txtStockQuantites = (TextBox)item.FindControl("txtStockQuantites");
+                TextBox txtStockAlertQuantites = (TextBox)item.FindControl("txtStockAlertQuantites");
+                TextBox txtCustomerPrice = (TextBox)item.FindControl("txtCustomerPrice");
+                TextBox txtDealerPrice = (TextBox)item.FindControl("txtDealerPrice");
+                TextBox txtWholesaleprice = (TextBox)item.FindControl("txtWholesaleprice");
+                TextBox txtSuperWholesaleprice = (TextBox)item.FindControl("txtSuperWholesaleprice");
+                TextBox txtGST = (TextBox)item.FindControl("txtGST");
+                CheckBox chbIsStock = (CheckBox)item.FindControl("chbIsStock");
+                CheckBox chbIsActive = (CheckBox)item.FindControl("IsActive");
+                Decimal DiscountPrice = 0;
+                int StockQuantites = 0;
+                int StockAlertQuantites = 0;
+                Decimal CustomerPrice = 0;
+                Decimal DealerPrice = 0;
+                Decimal Wholesaleprice = 0;
+                Decimal SuperWholesaleprice = 0;
+                Decimal GST = 0;
+                if (!string.IsNullOrEmpty(txtDiscountPrice.Text))
+                {
+                    DiscountPrice = Convert.ToDecimal(txtDiscountPrice.Text);
+                }
+                else
+                {
+                    DiscountPrice = 0;
+                }
+
+                if (!string.IsNullOrEmpty(txtStockQuantites.Text))
+                {
+                    StockQuantites = Convert.ToInt32(txtStockQuantites.Text);
+                }
+                else
+                {
+                    StockQuantites = 0;
+                }
+                if (!string.IsNullOrEmpty(txtStockAlertQuantites.Text))
+                {
+                    StockAlertQuantites = Convert.ToInt32(txtStockAlertQuantites.Text);
+                }
+                else
+                {
+                    StockAlertQuantites = 0;
+                }
+                if (!string.IsNullOrEmpty(txtCustomerPrice.Text))
+                {
+                    CustomerPrice = Convert.ToDecimal(txtCustomerPrice.Text);
+                }
+                else
+                {
+                    CustomerPrice = 0;
+                }
+                if (!string.IsNullOrEmpty(txtDealerPrice.Text))
+                {
+                    DealerPrice = Convert.ToDecimal(txtDealerPrice.Text);
+                }
+                else
+                {
+                    DealerPrice = 0;
+                }
+                if (!string.IsNullOrEmpty(txtWholesaleprice.Text))
+                {
+                    Wholesaleprice = Convert.ToDecimal(txtWholesaleprice.Text);
+                }
+                else
+                {
+                    Wholesaleprice = 0;
+                }
+                if (!string.IsNullOrEmpty(txtSuperWholesaleprice.Text))
+                {
+                    SuperWholesaleprice = Convert.ToDecimal(txtSuperWholesaleprice.Text);
+                }
+                else
+                {
+                    SuperWholesaleprice = 0;
+                }
+                if (!string.IsNullOrEmpty(txtGST.Text))
+                {
+                    GST = Convert.ToDecimal(txtGST.Text);
+                }
+                else
+                {
+                    GST = 0;
+                }
+
+                yes = (new Cls_product_b().Product_UpdatePrice(Convert.ToInt64(ProductId), CustomerPrice, DealerPrice, DiscountPrice, GST, StockQuantites, chbIsStock.Checked, chbIsActive.Checked, Wholesaleprice, SuperWholesaleprice, StockAlertQuantites));
+            }
+        }
+        spnMessage.Visible = true;
+        spnMessage.Style.Add("color", "green");
+        spnMessage.InnerText = "Product Updated Successfully";
+        if (ViewState["CategoryId"] != null)
+        {
+            BindProduct(Convert.ToInt64(ViewState["CategoryId"]));
+        }
+        else
+        {
+            BindProduct(Convert.ToInt64(ddlCategory.SelectedValue));
+        }
+    }
+
+    protected void ddlSeqNo_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DropDownList DDLSeqNo = (DropDownList)sender;
+        RepeaterItem item = (sender as DropDownList).Parent as RepeaterItem;
+        Int64 ProductId = int.Parse((item.FindControl("lblProductId") as Label).Text);
+        Int64 CategoryId = int.Parse((item.FindControl("lblCategoryId") as Label).Text);
+        Int64 PreSeqNo = int.Parse((item.FindControl("lblSeqNo") as Label).Text);
+        Update_SeqNo_Product_DB(ProductId, CategoryId, PreSeqNo, Convert.ToInt64(DDLSeqNo.SelectedValue));
+    }
+
+    public void Update_SeqNo_Product_DB(Int64 ProductId, Int64 CategoryId, Int64 PrevSeqNo, Int64 SeqNo)
+    {
+        SqlConnection Con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.CommandText = "Update_SeqNo_Product";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = Con;
+
+            cmd.Parameters.AddWithValue("@ProductID", ProductId);
+            cmd.Parameters.AddWithValue("@CategoryId", CategoryId);
+            cmd.Parameters.AddWithValue("@PrevSeqNo", PrevSeqNo);
+            cmd.Parameters.AddWithValue("@SeqNo", SeqNo);
+            Con.Open();
+            cmd.ExecuteNonQuery();
+            Con.Close();
+            spnMessage.Visible = true;
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Product Updated Successfully";
+            BindProduct(CategoryId);
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            Con.Close();
+        }
+    }
+
+    public void Fill_SeqNo(Int64 SelectedSeqNo, Int64 MaxSeqNo, ref DropDownList DDLSeqNo)
+    {
+        ListItem lst0;
+        for (int i = 0; i < MaxSeqNo; i++)
+        {
+            lst0 = new ListItem((i + 1).ToString(), (i + 1).ToString());
+            DDLSeqNo.Items.Add(lst0);
+        }
+        DDLSeqNo.DataBind();
+        if (DDLSeqNo.Items.Count > 0)
+            DDLSeqNo.SelectedValue = SelectedSeqNo.ToString();
+    }
+
+    protected void btnExcelExport_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            SelectAllProductUsingCategoryIdAdmin();
+            if (Session["dtProduct"] != null)
+            {
+                Response.Redirect("ExcelExport.aspx?filename=Product_Master_" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".xls");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public void SelectAllProductUsingCategoryIdAdmin()
+    {
+        DataTable dtTable = new DataTable();
+        SqlConnection ConnectionString = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            SqlDataAdapter da;
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "sp_ProductExcelExportUsingCategoryId";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            cmd.Parameters.AddWithValue("@categoryid", ddlCategory.SelectedValue);
+            ConnectionString.Open();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(dtTable);
+            if (dtTable != null)
+            {
+                if (dtTable.Rows.Count > 0)
+                {
+                    Session["dtProduct"] = dtTable;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+    }
+    protected void btn_updateRealStock_Click(object sender, EventArgs e)
+    {
+        DataTable dtTable = new DataTable();
+        SqlConnection ConnectionString = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            SqlDataAdapter da;
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "product_SelectAllAdmin";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            // cmd.Parameters.AddWithValue("@categoryid", ddlCategory.SelectedValue);
+            ConnectionString.Open();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(dtTable);
+            if (dtTable != null)
+            {
+                for (int i = 0; i < dtTable.Rows.Count; i++)
+                {
+                    string pid1 = dtTable.Rows[i]["pid"].ToString();
+                    string quantites1 = dtTable.Rows[i]["quantites"].ToString();
+                    string RealStock1 = dtTable.Rows[i]["RealStock"].ToString();
+                    string s = "update product set quantites=" + RealStock1 + " where pid=" + pid1 + "";
+                    SqlCommand cmd1 = new SqlCommand(s, ConnectionString);
+                    int t = cmd1.ExecuteNonQuery();
+
+
+                }
+            }
+            ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Stock Updated Successfully')", true);
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+    }
+
+    //-paging----
+
+    private int CurrentPage
+    {
+        get
+        {
+            if (ViewState["CurrentPage"] == null)
+            {
+                return 0;
+            }
+            return ((int)ViewState["CurrentPage"]);
+        }
+        set
+        {
+            ViewState["CurrentPage"] = value;
+        }
+    }
+    // Bind PagedDataSource into Repeater
+    private void BindDataIntoRepeater(DataTable dtData)
+    {
+        //var dt = SelectAllActiveUser();
+        var dt = dtData;
+        _pgsource.DataSource = dt.DefaultView;
+        _pgsource.AllowPaging = true;
+        // Number of items to be displayed in the Repeater
+        _pgsource.PageSize = _pageSize;
+        _pgsource.CurrentPageIndex = CurrentPage;
+        // Keep the Total pages in View State
+        ViewState["TotalPages"] = _pgsource.PageCount;
+        // Example: "Page 1 of 10"
+        lblpage.Text = "Page " + (CurrentPage + 1) + " of " + _pgsource.PageCount;
+        // Enable First, Last, Previous, Next buttons
+        lbPrevious.Enabled = !_pgsource.IsFirstPage;
+        lbNext.Enabled = !_pgsource.IsLastPage;
+        lbFirst.Enabled = !_pgsource.IsFirstPage;
+        lbLast.Enabled = !_pgsource.IsLastPage;
+
+        repProduct.DataSource = null;
+        repProduct.DataBind();
+        // Bind data into repeater
+        repProduct.DataSource = _pgsource;
+        repProduct.DataBind();
+
+        // Call the function to do paging
+        HandlePaging();
+    }
+
+    private void HandlePaging()
+    {
+        var dt = new DataTable();
+        dt.Columns.Add("PageIndex"); //Start from 0
+        dt.Columns.Add("PageText"); //Start from 1
+
+        _firstIndex = CurrentPage - 5;
+        if (CurrentPage > 5)
+            _lastIndex = CurrentPage + 5;
+        else
+            _lastIndex = 10;
+
+        // Check last page is greater than total page then reduced it to total no. of page is last index
+        if (_lastIndex > Convert.ToInt32(ViewState["TotalPages"]))
+        {
+            _lastIndex = Convert.ToInt32(ViewState["TotalPages"]);
+            _firstIndex = _lastIndex - 10;
+        }
+
+        if (_firstIndex < 0)
+            _firstIndex = 0;
+
+        // Now creating page number based on above first and last page index
+        for (var i = _firstIndex; i < _lastIndex; i++)
+        {
+            var dr = dt.NewRow();
+            dr[0] = i;
+            dr[1] = i + 1;
+            dt.Rows.Add(dr);
+        }
+
+        rptPaging.DataSource = null;
+        rptPaging.DataBind();
+        rptPaging.DataSource = dt;
+        rptPaging.DataBind();
+    }
+
+    protected void lbFirst_Click(object sender, EventArgs e)
+    {
+        CurrentPage = 0;
+        //BindDataIntoRepeater(SelectAllActiveUser());
+        //txtSearch_TextChanged(null, null);
+        search();
+    }
+    protected void lbLast_Click(object sender, EventArgs e)
+    {
+        CurrentPage = (Convert.ToInt32(ViewState["TotalPages"]) - 1);
+        //BindDataIntoRepeater(SelectAllActiveUser());
+        //txtSearch_TextChanged(null, null);
+        search();
+    }
+    protected void lbPrevious_Click(object sender, EventArgs e)
+    {
+        CurrentPage -= 1;
+        //BindDataIntoRepeater(SelectAllActiveUser());
+        //  txtSearch_TextChanged(null, null);
+        search();
+    }
+    protected void lbNext_Click(object sender, EventArgs e)
+    {
+        CurrentPage += 1;
+        // txtSearch_TextChanged(null, null);
+        //BindDataIntoRepeater(SelectAllActiveUser());
+        search();
+    }
+
+    protected void rptPaging_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (!e.CommandName.Equals("newPage")) return;
+        CurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
+        //  txtSearch_TextChanged(null, null);
+        //BindDataIntoRepeater(SelectAllActiveUser());
+        search();
+    }
+
+    protected void rptPaging_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        var lnkPage = (LinkButton)e.Item.FindControl("lbPaging");
+        if (lnkPage.CommandArgument != CurrentPage.ToString()) return;
+        lnkPage.Enabled = false;
+        lnkPage.BackColor = Color.FromName("#00FF00");
+    }
+    public void search()
+    {
+        #region
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        DataTable ds = new DataTable();
+        SqlDataAdapter da;
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealer_SelectAllAdminPagingNew";
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            if (txtSearch.Text == "")
+            {
+                cmd.Parameters.Add("@seachtext", null);
+            }
+            else
+            {
+                cmd.Parameters.Add("@seachtext", txtSearch.Text);
+
+            }
+            cmd.Parameters.Add("@isactive", Convert.ToInt64(ddlUserstatus.SelectedValue.ToString()));
+            cmd.Connection = ConnectionString;
+            ConnectionString.Open();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+
+
+            lbPrevious.Enabled = true;
+            lbNext.Enabled = false;
+            lbFirst.Enabled = true;
+            lbLast.Enabled = false;
+            //CurrentPage = 0;
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+        BindDataIntoRepeater(ds);
+        #endregion
+    }
+
+}

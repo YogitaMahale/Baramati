@@ -33,7 +33,7 @@
                     
                   <div class="col-xs-6">
                         <label for="exampleInputEmail1">Product </label>
-                    <asp:DropDownList ID="ddlProduct" CssClass="form-control" Width="500px" runat="server"></asp:DropDownList></td>
+                    <asp:DropDownList ID="ddlProduct" Enabled ="false"  CssClass="form-control" Width="500px" runat="server"></asp:DropDownList></td>
     
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="ddlProduct" ValidationGroup="gg"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
                        
@@ -50,7 +50,7 @@
                         <label for="exampleInputEmail1">Price </label>
                      <asp:TextBox ID="txt_price" CssClass="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txt_price" ValidationGroup="c1"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
-                       
+                         
                     </div>
                          <div class="col-xs-3">
                              <br />
@@ -64,7 +64,7 @@
                         <asp:GridView ID="repProcess" runat="server" AutoGenerateColumns="False" CellPadding="3" DataKeyNames="id" Width="1151px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                                 <Columns>
                                      
-                                    <asp:BoundField DataField="id"     HeaderStyle-Width="10px" HeaderText="TableId" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Top">
+                                    <asp:BoundField DataField="id"     HeaderStyle-Width="10px" Visible="false" HeaderText="TableId" ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Top">
                                         <HeaderStyle Width="10px" HorizontalAlign="Center" VerticalAlign="Top" />
                                         <ItemStyle HorizontalAlign="Center" VerticalAlign="Top" Width="50px" />
                                     </asp:BoundField>

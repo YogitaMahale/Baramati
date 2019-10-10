@@ -284,6 +284,10 @@ namespace BusinessLayer
         private decimal _LandingPrice;
 
         private Boolean _isHotproduct;
+
+        private Int64 _fk_colorId;
+        private Int64 _fk_sizeId;
+      
         #endregion
 
 
@@ -459,7 +463,19 @@ namespace BusinessLayer
             get { return _isHotproduct; }
             set { _isHotproduct = value; }
         }
-          
+
+        public Int64 fk_colorId
+        {
+            get { return _fk_colorId; }
+            set { _fk_colorId = value; }
+        }
+        public Int64  fk_sizeId
+        {
+            get { return _fk_sizeId; }
+            set { _fk_sizeId = value; }
+        }
+
+         
         #endregion
     }
 

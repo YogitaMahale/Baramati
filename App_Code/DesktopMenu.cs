@@ -155,7 +155,7 @@ namespace BusinessLayer
              */
             // string querystring = "select * from Menu;";
             //select distinct(ParentId) from SubMenu where Id IN (select pageid from pageauthority where adminid=1)
-            string querystring = "select * from Menu where Id  in (select distinct(ParentId) from SubMenu where Id IN (select pageid from pageauthority where adminid=" + adminID1 + "))";
+            string querystring = "select * from Menu where Id  in (select distinct(ParentId) from SubMenu where Id IN (select pageid from pageauthority where adminid=" + adminID1 + ")) order by seqno asc";
             //string querystring = "select * from Menu where Id  in (select Id from Menu where MenuName Not in('LOGIN','ORDERS','CART','LOGOUT')) order by seqno asc";
             SqlConnection _objcon = new SqlConnection(connectionstring);
             SqlDataAdapter _objda = new SqlDataAdapter(querystring, _objcon);

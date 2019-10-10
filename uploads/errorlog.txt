@@ -3505,7 +3505,7 @@ Error Message :@vid is not a parameter for procedure employee_SelectById.
 __________________________
 
 Log Entry : 
-10/10/2019 16:49:03
+10/07/2019 17:20:39
 Error Message :Thread was being aborted.
 
  Statck Trace:    at System.Threading.Thread.AbortInternal()
@@ -3514,5 +3514,5 @@ Error Message :Thread was being aborted.
    at System.Web.HttpResponse.End()
    at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
    at System.Web.HttpResponse.Redirect(String url)
-   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
+   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in e:\yogita\baramati\addeditwebuser.aspx.cs:line 262
 __________________________

@@ -24,6 +24,8 @@ public partial class addeditproduct : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             BindCategory();
+            BindColor();
+            BindSize();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             if (Request.QueryString["id"] != null)
             {
@@ -46,6 +48,9 @@ public partial class addeditproduct : System.Web.UI.Page
         if (objproduct != null)
         {
             ddlCategory.SelectedValue = objproduct.cid.ToString();
+            ddlSize .SelectedValue = objproduct.fk_sizeId.ToString();
+            ddlColor.SelectedValue = objproduct.fk_colorId .ToString();
+
             txtProductName.Text = objproduct.productname;
             txtSKU.Text = objproduct.sku;
             txtCustomerProductPrice.Text = objproduct.customerprice.ToString();
@@ -90,10 +95,12 @@ public partial class addeditproduct : System.Web.UI.Page
     private void BindCategory()
     {
         DataTable dtCategory = (new Cls_category_b().SelectAll());
+        ddlCategory.Items.Clear();
         if (dtCategory != null)
         {
             if (dtCategory.Rows.Count > 0)
             {
+               
                 ddlCategory.DataSource = dtCategory;
                 ddlCategory.DataTextField = "categoryname";
                 ddlCategory.DataValueField = "cid";
@@ -103,7 +110,40 @@ public partial class addeditproduct : System.Web.UI.Page
             }
         }
     }
+    private void BindSize()
+    {
+        DataTable dtSize= (new Cls_size_b ().SelectAll ());
+        if (dtSize != null)
+        {
+            if (dtSize.Rows.Count > 0)
+            {
 
+                ddlSize .DataSource = dtSize;
+                ddlSize.DataTextField = "sizeName";
+                ddlSize.DataValueField = "cid";
+                ddlSize.DataBind();
+                ListItem objListItem = new ListItem("--Select Size--", "0");
+                ddlSize.Items.Insert(0, objListItem);
+            }
+        }
+    }
+    private void BindColor()
+    {
+        DataTable dtColor = (new Cls_color_b ().SelectAll());
+        if (dtColor != null)
+        {
+            if (dtColor.Rows.Count > 0)
+            {
+
+                ddlColor .DataSource = dtColor;
+                ddlColor.DataTextField = "colorname";
+                ddlColor.DataValueField = "cid";
+                ddlColor.DataBind();
+                ListItem objListItem = new ListItem("--Select Color--", "0");
+                ddlColor.Items.Insert(0, objListItem);
+            }
+        }
+    }
     private void Clear()
     {
         txt_Hsncode.Text = string.Empty;
@@ -169,6 +209,10 @@ public partial class addeditproduct : System.Web.UI.Page
         {
             objproduct.mainimage = ViewState["fileName"].ToString();
         }
+
+        objproduct.fk_colorId  = Convert.ToInt64 (ddlColor.SelectedValue.ToString());
+        objproduct.fk_sizeId  = Convert.ToInt64(ddlSize.SelectedValue.ToString());
+
         if (Request.QueryString["id"] != null)
         {
             objproduct.pid = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));

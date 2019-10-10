@@ -77,13 +77,15 @@ public partial class addeditArticle : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
-            
+
             BindProduct();
 
             //BindRepeter();
-                if (Request.QueryString["id"] != null)
+            if (Request.QueryString["id"] != null)
             {
-                BindArticle(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
+                Int64 pid = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
+                ddlProduct.SelectedValue = pid.ToString();
+                BindArticle(pid );
                 btnSave.Text = "UPDATE";
                 hPageTitle.InnerText = "Update Article";
                 Page.Title = "Update Article";
@@ -145,7 +147,7 @@ public partial class addeditArticle : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Page.ResolveUrl("~/manage_article.aspx"));
+        Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx"));
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
@@ -205,7 +207,7 @@ public partial class addeditArticle : System.Web.UI.Page
                 if (Result > 0)
                 {
                     Clear();
-                    Response.Redirect(Page.ResolveUrl("~/manage_article.aspx?mode=u"));
+                    Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx?mode=u"));
                 }
                 else
                 {
@@ -233,7 +235,7 @@ public partial class addeditArticle : System.Web.UI.Page
                 if (i > 0)
                 {
                     Clear();
-                    Response.Redirect(Page.ResolveUrl("~/manage_article.aspx?mode=i"));
+                    Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx?mode=i"));
                 }
                 else
                 {

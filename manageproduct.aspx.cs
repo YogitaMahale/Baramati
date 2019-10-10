@@ -162,6 +162,11 @@ public partial class manageproduct : System.Web.UI.Page
             //Image imgProduct = (Image)e.Item.FindControl("imgProduct");
             //imgProduct.ImageUrl = productFrontPath + DataBinder.Eval(e.Item.DataItem, "mainimage").ToString();
             Fill_SeqNo(Convert.ToInt64(DataBinder.Eval(e.Item.DataItem, "SeqNo")), Convert.ToInt64(DataBinder.Eval(e.Item.DataItem, "MaxSeqNo")), ref ddlSeqNo);
+
+
+            HyperLink hlAddProcess = (HyperLink)e.Item.FindControl("hlAddProcess");
+            hlAddProcess.NavigateUrl = Page.ResolveUrl("~/addeditArticle.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "pid").ToString(), true));
+
         }
     }
 

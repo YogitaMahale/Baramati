@@ -226,6 +226,9 @@ namespace DatabaseLayer
                                     objproduct.RealStock = Convert.ToInt16(ds.Tables[0].Rows[0]["RealStock"]);
                                     objproduct.LandingPrice = Convert.ToDecimal(ds.Tables[0].Rows[0]["LandingPrice"]);
                                     objproduct.isHotproduct = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isHotproduct"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isHotproduct"]);
+
+                                    objproduct.fk_colorId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_colorId"]);
+                                    objproduct.fk_sizeId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_sizeId"]);
                                 }
                             }
                         }
@@ -344,7 +347,9 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@LandingPrice", objproduct.LandingPrice);
                 cmd.Parameters.AddWithValue("@isHotproduct", objproduct.isHotproduct);
 
-                 
+                cmd.Parameters.AddWithValue("@fk_sizeId", objproduct.fk_sizeId );
+                cmd.Parameters.AddWithValue("@fk_colorId", objproduct.fk_colorId );
+
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
@@ -407,6 +412,9 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@RealStock", objproduct.RealStock);
                 cmd.Parameters.AddWithValue("@LandingPrice", objproduct.LandingPrice);
                 cmd.Parameters.AddWithValue("@isHotproduct", objproduct.isHotproduct);
+                cmd.Parameters.AddWithValue("@fk_sizeId", objproduct.fk_sizeId);
+                cmd.Parameters.AddWithValue("@fk_colorId", objproduct.fk_colorId);
+
 
 
                 ConnectionString.Open();

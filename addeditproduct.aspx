@@ -33,8 +33,18 @@
                         <asp:RequiredFieldValidator ID="RFVddlCategory" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlCategory" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
 
                     </div>
+                     <div class="form-group">
+                        <label for="exampleInputEmail1">Select Color </label>
+                        <asp:DropDownList ID="ddlColor" Class="form-control" Width="500px" runat="server"></asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlColor" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                    </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Select Size </label>
+                        <asp:DropDownList ID="ddlSize" Class="form-control" Width="500px" runat="server"></asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlSize" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                    </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Product Name </label>
+                        <label for="exampleInputEmail1">Article Name </label>
                         <asp:TextBox ID="txtProductName" Class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RFVtxtProductName" runat="server" Display="Dynamic" ControlToValidate="txtProductName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
@@ -111,20 +121,7 @@
                         <label for="exampleInputPassword1">Is HotProduct</label>
                         <asp:CheckBox ID="cbIsHotproduct" Class="form-control" runat="server"></asp:CheckBox>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">HSN Code</label>
-                        <asp:TextBox ID="txt_Hsncode" Class="form-control" runat="server"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txt_Hsncode" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Real Stock</label>
-                        <asp:TextBox ID="txt_RealStock" Class="form-control" runat="server"></asp:TextBox>
-                        <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" FilterMode="ValidChars" TargetControlID="txt_RealStock" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
-
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txt_RealStock" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-
-                    </div>
-
+                   
 
 
                 </div>
@@ -150,6 +147,20 @@
         <div class="col-md-6">
             <div class="box box-primary">
                 <div class="box-body">
+                     <div class="form-group">
+                        <label for="exampleInputPassword1">HSN Code</label>
+                        <asp:TextBox ID="txt_Hsncode" Class="form-control" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txt_Hsncode" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Real Stock</label>
+                        <asp:TextBox ID="txt_RealStock" Class="form-control" runat="server"></asp:TextBox>
+                        <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" FilterMode="ValidChars" TargetControlID="txt_RealStock" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
+
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txt_RealStock" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+
+                    </div>
+
                     <div class="form-group">
                         <label for="exampleInputPassword1">Puchase( Landing ) Price</label>
                         <asp:TextBox ID="txt_landingprice" Class="form-control" runat="server"></asp:TextBox>

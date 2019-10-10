@@ -288,6 +288,7 @@
                                     &nbsp;<asp:LinkButton ID="lnkUpdate" runat="server" Visible="false" Text="Update" CssClass="btn btn-sm btn-info"></asp:LinkButton>
                                                     &nbsp;<asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this product?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                     &nbsp;<asp:HyperLink ID="hlAddImageVideo" runat="server" Target="_blank" CssClass="btn btn-sm btn-warning" Text="More Images"></asp:HyperLink>
+                                                     <asp:HyperLink ID="hlAddProcess" runat="server" CssClass="btn btn-sm btn-success" Text="Add Process"></asp:HyperLink>&nbsp;
                                                 </td>
                                             </tr>
                                         </ItemTemplate>

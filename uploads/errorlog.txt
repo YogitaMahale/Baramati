@@ -3503,3 +3503,16 @@ Error Message :@vid is not a parameter for procedure employee_SelectById.
    at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
    at DatabaseLayer.Cls_Employee_db.SelectById(Int64 id) in e:\yogita 6.8.19\Baramati\moryaapp.moryatools.com 4.10.19\App_Code\Cls_Employee_db.cs:line 73
 __________________________
+
+Log Entry : 
+10/10/2019 16:49:03
+Error Message :Thread was being aborted.
+
+ Statck Trace:    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
+__________________________

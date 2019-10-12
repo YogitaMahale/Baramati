@@ -25,6 +25,7 @@ public partial class addeditRawmaterial : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             //BindCategory();
+            BindUnits();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             if (Request.QueryString["id"] != null)
             {
@@ -42,6 +43,43 @@ public partial class addeditRawmaterial : System.Web.UI.Page
         
     }
 
+    private void BindUnits()
+    {
+        DataTable dtUnits = new DataTable();
+        
+        try
+        {
+
+
+
+            //ProductMaster objProductMaster = new ProductMaster();
+            Cls_unit_b clsbunit = new Cls_unit_b();
+            dtUnits = clsbunit.SelectAll();
+
+            if (dtUnits != null)
+            {
+                if (dtUnits.Rows.Count > 0)
+                {
+                    ddlunit.DataSource = dtUnits;
+                    ddlunit.DataTextField = "unitname";
+                    ddlunit.DataValueField = "id";
+                    ddlunit.DataBind();
+                    System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Unit--", "0");
+                    ddlunit.Items.Insert(0, objListItem);
+                }
+            }
+
+        }
+        catch { }
+        finally {
+            //con.Close(); 
+        }
+
+        
+    }
+
+
+
     public void BindProducts(Int64 ProductId)
     {
        
@@ -51,9 +89,10 @@ public partial class addeditRawmaterial : System.Web.UI.Page
         {
             
             txtProductName.Text = objproduct.productname;
-          
+            txthsncode.Text = objproduct.hsncode;
+            txtgstno.Text = objproduct.gstno;
             txtPrice .Text = objproduct.price.ToString();
-           
+            ddlunit.SelectedIndex = objproduct.unitid;
             txtQuantites.Text = objproduct.quantity.ToString();
             txtAlertQuantites.Text = objproduct.alertquantites.ToString();
             cbIsStock.Checked = objproduct.isstock;
@@ -70,7 +109,7 @@ public partial class addeditRawmaterial : System.Web.UI.Page
             }
             else
             {
-                btnImageUpload.Visible = true;
+                //btnImageUpload.Visible = true;
             }
            
 
@@ -87,107 +126,80 @@ public partial class addeditRawmaterial : System.Web.UI.Page
         cbIsStock.Checked = false;        
         imgProduct.Visible = false;
         ViewState["fileName"] = null;
-        btnImageUpload.Visible = true;
-        btnRemove.Visible = false;
+
+        //btnImageUpload.Visible = true;
+        //btnRemove.Visible = false;
          
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-         /*
-        Int64 Result = 0;
-        product objproduct = new product();
-        objproduct.productname = txtProductName.Text.Trim();
-        objproduct.sku = txtSKU.Text.Trim();
-        objproduct.customerprice = Convert.ToDecimal(txtCustomerProductPrice.Text.Trim());
-        objproduct.dealerprice = Convert.ToDecimal(txtDealerPrice.Text.Trim());
-        objproduct.discountprice = Convert.ToDecimal(txtDiscountProductPrice.Text.Trim());
-        objproduct.gst = Convert.ToDecimal(txtGST.Text.Trim());
-        objproduct.quantites = Convert.ToInt32(txtQuantites.Text.Trim());
-        objproduct.alertquantites = Convert.ToInt32(txtAlertQuantites.Text.Trim());
-        objproduct.isstock = cbIsStock.Checked;
-        objproduct.shortdescp = txtProductShortDescription.Text;
-        objproduct.longdescp = txtProductDescription.Text;
-        objproduct.cid = Convert.ToInt64(ddlCategory.SelectedValue);
-        objproduct.video1 = txtYouTubeVideo1.Text.Trim();
-        objproduct.video2 = txtYouTubeVideo2.Text.Trim();
-        objproduct.video3 = txtYouTubeVideo3.Text.Trim();
-        objproduct.video4 = txtYouTubeVideo4.Text.Trim();
-
-        objproduct.wholesaleprice = Convert.ToDecimal(txtWholesalePrice.Text);
-        objproduct.superwholesaleprice = Convert.ToDecimal(txtSuperWholesalePrice.Text);
-
-        objproduct.video_name_1 = txtYoutubeName1.Text;
-        objproduct.video_name_2 = txtYoutubeName2.Text;
-        objproduct.video_name_3 = txtYoutubeName3.Text;
-        objproduct.video_name_4 = txtYoutubeName4.Text;
-
-
-        objproduct.HSNCode = txt_Hsncode.Text;
-        objproduct.RealStock = Convert.ToInt32(txt_RealStock.Text.Trim());
-        objproduct.LandingPrice = Convert.ToDecimal(txt_landingprice.Text);
-        objproduct.isHotproduct = cbIsHotproduct.Checked;
+        /*
+         private String _productname;
+    private String _mainimage;
+    private Decimal _price;
+    private Int32 _quantity;
+    private Int32 _alertquantites;
+    private Boolean _isstock;
+    private String _shortdescp;
+    private String _longdescp;
+    private Boolean _isactive;
+    private Boolean _isdelete;
+    private System.DateTime _createddate;
+    private System.DateTime _modifieddate;
+    private String _hsncode;
+    private String _gstno;
+    private Int32 _unitid; */
+    Int64 Result = 0;
+        //product objproduct = new product();
+        rawMaterialMaster objrawmaterial = new rawMaterialMaster();
+        objrawmaterial.productname = txtProductName.Text.Trim();
+        objrawmaterial.price = Convert.ToDecimal(txtPrice.Text.Trim());
+        objrawmaterial.quantity = Convert.ToInt32(txtQuantites.Text.Trim());
+        objrawmaterial.alertquantites = Convert.ToInt32(txtAlertQuantites.Text.Trim());
+        objrawmaterial.isstock = cbIsStock.Checked;
+        objrawmaterial.shortdescp = txtProductShortDescription.Text;
+        objrawmaterial.longdescp = txtProductDescription.Text;
+        objrawmaterial.hsncode = txthsncode.Text.Trim();
+        objrawmaterial.gstno = txtgstno.Text.Trim();
+        objrawmaterial.unitid = Convert.ToInt32(ddlunit.SelectedValue);
         if (ViewState["fileName"] != null)
         {
-            objproduct.mainimage = ViewState["fileName"].ToString();
+            objrawmaterial.mainimage = ViewState["fileName"].ToString();
         }
         if (Request.QueryString["id"] != null)
         {
-            objproduct.pid = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
-            Result = (new Cls_product_b().Update(objproduct));
+            objrawmaterial.id = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
+            Result = (new Cls_Rawmaterial_b().Update(objrawmaterial));
             if (Result > 0)
             {
                 Clear();
-                //if (Request.QueryString["page"].ToString() == "price")
-                //{
-                //    Response.Redirect(Page.ResolveUrl("~/manageproductprice.aspx?mode=u&catid=" + objproduct.cid.ToString()));
-                //}
-                //else if (Request.QueryString["page"].ToString() == "stock")
-                //{
-                //    Response.Redirect(Page.ResolveUrl("~/manageproductstock.aspx?mode=u&catid=" + objproduct.cid.ToString()));
-                //}
-                //else
-                //{
-                //    Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx?mode=u&catid=" + objproduct.cid.ToString()));
-                //}
-                Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx?mode=u&catid=" + objproduct.cid.ToString()));
+                Response.Redirect(Page.ResolveUrl("~/manageRawMaterial.aspx?mode=u"));
             }
             else
             {
                 Clear();
                 spnMessgae.Style.Add("color", "red");
-                spnMessgae.InnerText = "Product Not Updated";
+                spnMessgae.InnerText = "Update Failed...";
                 BindProducts(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
             }
         }
         else
         {
-            Result = (new Cls_product_b().Insert(objproduct));
+            Result = (new Cls_Rawmaterial_b().Insert(objrawmaterial));
             if (Result > 0)
             {
                 Clear();
-                //if (Request.QueryString["page"].ToString() == "price")
-                //{
-                //    Response.Redirect(Page.ResolveUrl("~/manageproductprice.aspx?mode=i&catid=" + objproduct.cid.ToString()));
-                //}
-                //else if (Request.QueryString["page"].ToString() == "stock")
-                //{
-                //    Response.Redirect(Page.ResolveUrl("~/manageproductstock.aspx?mode=i&catid=" + objproduct.cid.ToString()));
-                //}
-                //else
-                //{
-                //    Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx?mode=i&catid=" + objproduct.cid.ToString()));
-                //}
-                Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx?mode=i&catid=" + objproduct.cid.ToString()));
+                Response.Redirect(Page.ResolveUrl("~/manageRawMaterial.aspx?mode=i"));
             }
             else
             {
                 Clear();
                 spnMessgae.Style.Add("color", "red");
-                spnMessgae.InnerText = "Product Not Inserted";
+                spnMessgae.InnerText = "Raw Material Not Saved";
             }
         }
-         */ 
+         
     }
 
     protected void btnImageUpload_Click(object sender, EventArgs e)

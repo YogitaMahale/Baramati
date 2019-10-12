@@ -84,8 +84,11 @@ public class Cls_Rawmaterial_db
                                 objrawMaterialMaster.productname = Convert.ToString(ds.Tables[0].Rows[0]["productname"]);
                                 objrawMaterialMaster.mainimage = Convert.ToString(ds.Tables[0].Rows[0]["mainimage"]);                                
                                 objrawMaterialMaster.price = Convert.ToDecimal(ds.Tables[0].Rows[0]["price"]);
-                                 
+                                objrawMaterialMaster.hsncode = Convert.ToString(ds.Tables[0].Rows[0]["hsncode"]);
+                                objrawMaterialMaster.gstno= Convert.ToString(ds.Tables[0].Rows[0]["gstno"]);
+
                                 objrawMaterialMaster.quantity = Convert.ToInt32(ds.Tables[0].Rows[0]["quantity"]);
+                                objrawMaterialMaster.unitid = Convert.ToInt32(ds.Tables[0].Rows[0]["unitid"]);
                                 objrawMaterialMaster.alertquantites = Convert.ToInt32(ds.Tables[0].Rows[0]["alertquantites"]);
                                 objrawMaterialMaster.isstock = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isstock"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isstock"]);
                                 objrawMaterialMaster.shortdescp = Convert.ToString(ds.Tables[0].Rows[0]["shortdescp"]);
@@ -138,9 +141,12 @@ public class Cls_Rawmaterial_db
             cmd.Parameters.AddWithValue("@isstock", objrawMaterialMaster.isstock);
             cmd.Parameters.AddWithValue("@shortdescp", objrawMaterialMaster.shortdescp);
             cmd.Parameters.AddWithValue("@longdescp", objrawMaterialMaster.longdescp);
-           
+            cmd.Parameters.AddWithValue("@hsncode", objrawMaterialMaster.hsncode);
+            cmd.Parameters.AddWithValue("@gstno", objrawMaterialMaster.gstno);
+            cmd.Parameters.AddWithValue("@unitid", objrawMaterialMaster.unitid);
 
-            ConnectionString.Open();
+
+                ConnectionString.Open();
             cmd.ExecuteNonQuery();
             result = Convert.ToInt64(param.Value);
         }
@@ -181,10 +187,12 @@ public class Cls_Rawmaterial_db
             cmd.Parameters.AddWithValue("@isstock", objrawMaterialMaster.isstock);
             cmd.Parameters.AddWithValue("@shortdescp", objrawMaterialMaster.shortdescp);
             cmd.Parameters.AddWithValue("@longdescp", objrawMaterialMaster.longdescp);
-           
+            cmd.Parameters.AddWithValue("@hsncode", objrawMaterialMaster.hsncode);
+            cmd.Parameters.AddWithValue("@gstno", objrawMaterialMaster.gstno);
+            cmd.Parameters.AddWithValue("@unitid", objrawMaterialMaster.unitid);
 
 
-            ConnectionString.Open();
+                ConnectionString.Open();
             cmd.ExecuteNonQuery();
             result = Convert.ToInt64(param.Value);
         }

@@ -68,7 +68,7 @@ public partial class manageRawMaterial : System.Web.UI.Page
             Image imgCategory = (Image)e.Item.FindControl("imgCategory");
             HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
             hlEdit.NavigateUrl = Page.ResolveUrl("~/addeditRawmaterial.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
-            imgCategory.ImageUrl = categoryFrontPath + DataBinder.Eval(e.Item.DataItem, "mainimage").ToString();
+            //imgCategory.ImageUrl = categoryFrontPath + DataBinder.Eval(e.Item.DataItem, "mainimage").ToString();
           //  Fill_SeqNo(Convert.ToInt64(DataBinder.Eval(e.Item.DataItem, "SeqNo")), Convert.ToInt64(DataBinder.Eval(e.Item.DataItem, "MaxSeqNo")), ref ddlSeqNo);
         }
     }

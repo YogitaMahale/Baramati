@@ -26,7 +26,7 @@
                 <div class="box-body">
                     
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Product Name </label>
+                        <label for="exampleInputEmail1">Material Name </label>
                         <asp:TextBox ID="txtProductName" Class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RFVtxtProductName" runat="server" Display="Dynamic" ControlToValidate="txtProductName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
@@ -40,7 +40,24 @@
                         <asp:RequiredFieldValidator ID="RFVtxtCustomerProductPrice" runat="server" Display="Dynamic" ControlToValidate="txtPrice" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
 
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Unit</label>
+                        <asp:DropDownList ID="ddlunit" Class="form-control" Width="500px" runat="server"></asp:DropDownList>
 
+                        <%--<asp:TextBox ID="TextBox3" Class="form-control" runat="server"></asp:TextBox>--%>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic" ControlToValidate="ddlunit" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">HSN Code</label>
+                        <asp:TextBox ID="txthsncode" Class="form-control" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txthsncode" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">GST No</label>
+                        <asp:TextBox ID="txtgstno" Class="form-control" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txtgstno" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                    </div>
+                    
 
                    
 
@@ -90,19 +107,19 @@
 
 
 
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label for="exampleInputFile">Image</label>
                         <table>
                             <tr>
                                 <td>
-                                    <asp:FileUpload ID="fpProduct" runat="server" />
+                                    <asp:FileUpload ID="fpProduct" runat="server" Visible="false" />
                                 </td>
                                 <td>
                                     <asp:Image ID="imgProduct" Visible="false" Width="75px" Height="50px" runat="server" />
                                 </td>
                                 <td>&nbsp;&nbsp;&nbsp;<asp:Button ID="btnRemove" runat="server" Visible="false" Text="X" CssClass="btn btn-danger" CausesValidation="false" OnClick="btnRemove_Click" />
                                     &nbsp;&nbsp;&nbsp;
-                            <asp:Button ID="btnImageUpload" runat="server" Text="Upload" CssClass="btn btn-info" OnClick="btnImageUpload_Click" OnClientClick="return checkFileExtension()" />
+                            <asp:Button ID="btnImageUpload" runat="server" Visible="false" Text="Upload" CssClass="btn btn-info" OnClick="btnImageUpload_Click" OnClientClick="return checkFileExtension()" />
                                 </td>
                             </tr>
                         </table>

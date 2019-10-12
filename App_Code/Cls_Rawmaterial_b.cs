@@ -118,9 +118,12 @@ public class rawMaterialMaster
     private Boolean _isdelete;
     private System.DateTime _createddate;
     private System.DateTime _modifieddate;    
-    #endregion
-    #region Public Properties
-    public Int64 id
+    private String _hsncode;
+    private String _gstno;
+    private Int32 _unitid;
+        #endregion
+        #region Public Properties
+        public Int64 id
     {
         get { return _id; }
         set { _id = value; }
@@ -129,6 +132,16 @@ public class rawMaterialMaster
     {
         get { return _productname; }
         set { _productname = value; }
+    }
+    public String hsncode
+    {
+        get { return _hsncode; }
+        set { _hsncode = value; }
+    }
+    public String gstno
+    {
+        get { return _gstno; }
+        set { _gstno = value; }
     }
     public String mainimage
     {
@@ -145,7 +158,12 @@ public class rawMaterialMaster
         get { return _quantity; }
         set { _quantity = value; }
     }
-    public Int32 alertquantites
+    public Int32 unitid
+    {
+        get { return _unitid; }
+        set { _unitid = value; }
+    }
+        public Int32 alertquantites
     {
         get { return _alertquantites; }
         set { _alertquantites = value; }

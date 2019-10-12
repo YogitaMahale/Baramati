@@ -3516,3 +3516,47 @@ Error Message :Thread was being aborted.
    at System.Web.HttpResponse.Redirect(String url)
    at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in e:\yogita\baramati\addeditwebuser.aspx.cs:line 262
 __________________________
+
+Log Entry : 
+10/12/2019 15:10:56
+Error Message :Thread was being aborted.
+
+ Statck Trace:    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
+__________________________
+
+Log Entry : 
+10/12/2019 16:57:17
+Error Message :Thread was being aborted.
+
+ Statck Trace:    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
+__________________________
+
+Log Entry : 
+10/12/2019 16:57:53
+Error Message :Column 'cid' does not belong to table Table.
+
+ Statck Trace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at DatabaseLayer.Cls_unit_db.SelectById(Int64 id) in f:\GitRepos\Baramati\App_Code\Cls_unit_db.cs:line 92
+__________________________
+
+Log Entry : 
+10/12/2019 17:00:03
+Error Message :Column 'cid' does not belong to table Table.
+
+ Statck Trace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at DatabaseLayer.Cls_unit_db.SelectById(Int64 id) in f:\GitRepos\Baramati\App_Code\Cls_unit_db.cs:line 92
+__________________________

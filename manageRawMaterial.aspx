@@ -33,8 +33,12 @@
                                     <tr>
                                         <%--<th style="text-align: center">Seq No</th>--%>
                                         <th style="text-align: center">Name</th>
-                                        <th style="text-align: center">Image</th>
+                                        <%--<th style="text-align: center">Image</th>--%>
                                         <th style="text-align: center">Price</th>
+                                        <th style="text-align: center">Unit</th>
+                                        <th style="text-align: center">HSN Code</th>
+                                        <th style="text-align: center">GST No</th>
+
                                          <th style="text-align: center">Quantity</th>
                                         <th style="text-align: center">Action</th>
                                     </tr>
@@ -54,14 +58,24 @@
                                                     <%--<asp:Label ID="lblSeqNo" runat="server" Visible="false" Text='<%# Eval("seqno") %>'></asp:Label>--%>
                                                     <asp:Label ID="lblCategoryName" runat="server" Text='<%# Eval("productname") %>'></asp:Label>
                                                 </td>
-                                                <td style="text-align: center">
+                                                <%--<td style="text-align: center">
                                                     <asp:Image ID="imgCategory" Width="75px" Height="50px" runat="server"></asp:Image>
-                                                </td>
+                                                </td>--%>
                                                <td style="text-align: center">
                                                     <asp:Label ID="Label1" runat="server"   Text='<%# Eval("price") %>'></asp:Label>
                                                    
                                                 </td>
-                                                 <td style="text-align: center">
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="Label5" runat="server" Text='<%# Eval("unitname") %>'></asp:Label>
+                                                </td>
+
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("hsncode") %>'></asp:Label>
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("gstno") %>'></asp:Label>
+                                                </td>
+                                                <td style="text-align: center">
                                                     <asp:Label ID="Label2" runat="server"   Text='<%# Eval("quantity") %>'></asp:Label>
                                                    
                                                 </td>
@@ -77,10 +91,15 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="text-align: center">Seq No</th>
+                                        <%--<th style="text-align: center">Seq No</th>--%>
                                         <th style="text-align: center">Name</th>
-                                        <th style="text-align: center">Image</th>
-                                        <th style="text-align: center">Is Show</th>
+                                        <%--<th style="text-align: center">Image</th>--%>
+                                        <th style="text-align: center">Price</th>
+                                        <th style="text-align: center">Unit</th>
+                                        <th style="text-align: center">HSN Code</th>
+                                        <th style="text-align: center">GST No</th>
+
+                                         <th style="text-align: center">Quantity</th>
                                         <th style="text-align: center">Action</th>
                                     </tr>
                                 </tfoot>

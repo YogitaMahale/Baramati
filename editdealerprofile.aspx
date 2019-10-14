@@ -6,30 +6,7 @@
             color: red;
         }
     </style>
-    <script type="text/javascript">
-        function checkFileExtension() {
-            var result = false;
-            var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
-            if (($("#ctl00_ContentPlaceHolder1_fpCategory").val() == "") || ($("#ctl00_ContentPlaceHolder1_fpCategory").val() == null)) {
-                alert("Please Upload Image.")
-                result = false;
-            }
-            else {
-                var allowedFiles = [".jpg", ".jpeg", ".bmp", ".gif", ".png", ".JPEG"];
-                var fileUpload = document.getElementById("ctl00_ContentPlaceHolder1_fpCategory");
-                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-                if (!regex.test(fileUpload.value.toLowerCase())) {
-                    alert("Please upload files having extensions:" + allowedFiles.join(', ') + " only.");
-                    result = false;
-                }
-                else {
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-    </script>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
       <div class="row">
@@ -75,6 +52,14 @@
                      <div class="form-group">
                         <label for="exampleInputPassword1">GST No</label>
                          <asp:TextBox ID="txtGSTNO" class="form-control" runat="server"></asp:TextBox>
+                    </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Aadhar No</label>
+                         <asp:TextBox ID="txtaadharno" class="form-control" runat="server"></asp:TextBox>
+                    </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">PAN No</label>
+                         <asp:TextBox ID="txtpanno" class="form-control" runat="server"></asp:TextBox>
                     </div>
                       <div class="form-group">
                         <label for="exampleInputPassword1"> Address 1</label>
@@ -152,5 +137,32 @@
     
     <script src="Template/dist/js/canvasjs.min.js"></script>
     <!-- page script -->
+
+    <script type="text/javascript">
+        function checkFileExtension() {
+            var result = false;
+            var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+            if (($("#ctl00_ContentPlaceHolder1_fpCategory").val() == "") || ($("#ctl00_ContentPlaceHolder1_fpCategory").val() == null)) {
+                alert("Please Upload Image.")
+                result = false;
+            }
+            else {
+                var allowedFiles = [".jpg", ".jpeg", ".bmp", ".gif", ".png", ".JPEG"];
+                var fileUpload = document.getElementById("ctl00_ContentPlaceHolder1_fpCategory");
+                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+                if (!regex.test(fileUpload.value.toLowerCase())) {
+                    alert("Please upload files having extensions:" + allowedFiles.join(', ') + " only.");
+                    result = false;
+                }
+                else {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+    </script>
+
+
 </asp:Content>
 

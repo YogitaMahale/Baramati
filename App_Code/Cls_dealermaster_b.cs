@@ -52,6 +52,8 @@ namespace BusinessLayer
         private String _whatappno;
         private String _email;
         private String _gstno;
+        private String _aadharno;
+        private String _panno;
         private String _address1;
         private String _address2;
         private String _city;
@@ -104,6 +106,16 @@ namespace BusinessLayer
         {
             get { return _gstno; }
             set { _gstno = value; }
+        }
+        public String aadharno
+        {
+            get { return _aadharno; }
+            set { _aadharno = value; }
+        }
+        public String panno
+        {
+            get { return _panno; }
+            set { _panno = value; }
         }
         public String address1
         {

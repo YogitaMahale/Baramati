@@ -728,4 +728,10 @@ public partial class managedealer1 : System.Web.UI.Page
     }
 
 
+
+    protected void btnNewDealer_Click(object sender, EventArgs e)
+    {
+        Response.Redirect(Page.ResolveUrl("~/editdealerprofile.aspx"));
+
+    }
 }

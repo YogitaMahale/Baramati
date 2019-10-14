@@ -64,6 +64,8 @@ namespace DatabaseLayer
                                     objdealermaster.whatappno = Convert.ToString(ds.Tables[0].Rows[0]["whatappno"]);
                                     objdealermaster.email = Convert.ToString(ds.Tables[0].Rows[0]["email"]);
                                     objdealermaster.gstno = Convert.ToString(ds.Tables[0].Rows[0]["gstno"]);
+                                    objdealermaster.aadharno = Convert.ToString(ds.Tables[0].Rows[0]["aadharno"]);
+                                    objdealermaster.panno = Convert.ToString(ds.Tables[0].Rows[0]["panno"]);
                                     objdealermaster.address1 = Convert.ToString(ds.Tables[0].Rows[0]["address1"]);
                                     objdealermaster.address2 = Convert.ToString(ds.Tables[0].Rows[0]["address2"]);
                                     objdealermaster.city = Convert.ToString(ds.Tables[0].Rows[0]["city"]);
@@ -112,6 +114,8 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@whatappno", objdealermaster.whatappno);
                 cmd.Parameters.AddWithValue("@email", objdealermaster.email);
                 cmd.Parameters.AddWithValue("@gstno", objdealermaster.gstno);
+                cmd.Parameters.AddWithValue("@aadharno", objdealermaster.gstno);
+                cmd.Parameters.AddWithValue("@panno", objdealermaster.gstno);
                 cmd.Parameters.AddWithValue("@address1", objdealermaster.address1);
                 cmd.Parameters.AddWithValue("@address2", objdealermaster.address2);
                 cmd.Parameters.AddWithValue("@city", objdealermaster.city);
@@ -155,6 +159,8 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@whatappno", objdealermaster.whatappno);
                 cmd.Parameters.AddWithValue("@email", objdealermaster.email);
                 cmd.Parameters.AddWithValue("@gstno", objdealermaster.gstno);
+                cmd.Parameters.AddWithValue("@aadharno", objdealermaster.gstno);
+                cmd.Parameters.AddWithValue("@panno", objdealermaster.gstno);
                 cmd.Parameters.AddWithValue("@address1", objdealermaster.address1);
                 cmd.Parameters.AddWithValue("@address2", objdealermaster.address2);
                 cmd.Parameters.AddWithValue("@city", objdealermaster.city);

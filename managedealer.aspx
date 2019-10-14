@@ -16,16 +16,17 @@
                     <div class="text-center">
                         <b id="spnMessage" visible="false" runat="server"></b>
                     </div>
-                     <div class="box">
+                     <%--<div class="box">
                         
-                         </div>
-                    <div class="box">
+                         </div>--%>
+                    <div class="box box-success">
                          <br />
                             
                             <div style="text-align:right;">
-                                 <asp:HyperLink ID="hlUserAuthority" runat="server" class="btn btn-Normal btn-primary" Target="_blank" Text="User Authority" NavigateUrl="~/userauthority.aspx"></asp:HyperLink>
+                                 <asp:HyperLink ID="hlUserAuthority" runat="server" class="btn btn-Normal btn-dropbox" Target="_blank" Text="User Authority" NavigateUrl="~/userauthority.aspx"></asp:HyperLink>
                                  <asp:Button ID="btnExcelExport" runat="server" class="btn btn-flickr" Width="100" Text="Excel Export" OnClick="btnExcelExport_Click" /></td>
-                
+                                 <asp:Button ID="btnNewDealer" runat="server" class="btn btn-info" Width="100" Text="New Dealer" OnClick="btnNewDealer_Click" /></td>
+                <div class="btn-"></div>
                                 
                             </div>
                              
@@ -85,14 +86,20 @@
                                             <asp:CheckBox ID="cbDealerActive" runat="server" /></th>
                                         <th style="width: 200px; text-align: center">Dealer
                                         </th>
-                                        <th style="width: 80px; text-align: center">Login MNo.
+                                        <th style="width: 80px; text-align: center">Login No
                                         </th>
                                         <th style="width: 80px; text-align: center">Password
                                         </th>
-                                        <th style="width: 80px; text-align: center">WhatsApp MNo.
+                                        <th style="width: 80px; text-align: center">WhatsApp No
                                         </th>
-                                        <th style="width: 80px; text-align: center">Login Count
+                                        <th style="width: 80px; text-align: center">GST
                                         </th>
+                                        <th style="width: 80px; text-align: center">Aadhar
+                                        </th>
+                                        <th style="width: 80px; text-align: center">PAN
+                                        </th>
+                                        <%--<th style="width: 80px; text-align: center">Login Count
+                                        </th>--%>
                                         <%--<th style="width: 150px; text-align: center">Address
                                         </th>--%>
                                         <th style="width: 150px; text-align: center">State City
@@ -137,8 +144,17 @@
                                                     <asp:Label ID="lblWhatappno" runat="server" Text='<%# Eval("whatappno") %>'></asp:Label>
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("logincount") %>'></asp:Label>
+                                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("gstno") %>'></asp:Label>
                                                 </td>
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="Label8" runat="server" Text='<%# Eval("aadharno") %>'></asp:Label>
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="Label9" runat="server" Text='<%# Eval("panno") %>'></asp:Label>
+                                                </td>
+                                                <%--<td style="text-align: center">
+                                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("logincount") %>'></asp:Label>
+                                                </td>--%>
                                                 <%--<td style="text-align: center">
                                                     <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("address1") %>'>></asp:Label>
                                                 </td>--%>
@@ -181,14 +197,20 @@
                                             <%--<asp:CheckBox ID="CheckBox1" runat="server" />--%></th>
                                         <th style="width: 200px; text-align: center">Dealer
                                         </th>
-                                        <th style="width: 80px; text-align: center">Login MNo.
+                                        <th style="width: 80px; text-align: center">Login No.
                                         </th>
                                         <th style="width: 80px; text-align: center">Password
                                         </th>
-                                        <th style="width: 80px; text-align: center">WhatsApp MNo.
+                                        <th style="width: 80px; text-align: center">WhatsApp No.
                                         </th>
-                                        <th style="width: 80px; text-align: center">Login Count
+                                        <th style="width: 80px; text-align: center">GST
                                         </th>
+                                        <th style="width: 80px; text-align: center">Aadhar
+                                        </th>
+                                        <th style="width: 80px; text-align: center">PAN
+                                        </th>
+                                        <%--<th style="width: 80px; text-align: center">Login Count
+                                        </th>--%>
                                         <%--<th style="width: 150px; text-align: center">Address
                                         </th>--%>
                                         <th style="width: 150px; text-align: center">State City

@@ -24,7 +24,15 @@ public partial class editdealerprofile : System.Web.UI.Page
                 Page.Title = "Update Dealer";
                 btnUpdate.Text = "Update";
                 BindDealer(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
-                
+
+            }
+            else
+            {
+                hPageTitle.InnerText = "New Dealer";
+                Page.Title = "New Dealer";
+                btnUpdate.Text = "Add";
+                //BindDealer(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
+
             }
         }
     }
@@ -42,6 +50,8 @@ public partial class editdealerprofile : System.Web.UI.Page
             txtWhatappNo.Text = objdealermaster.whatappno;
             txtEmailId.Text = objdealermaster.email;
             txtGSTNO.Text = objdealermaster.gstno;
+            txtaadharno.Text = objdealermaster.aadharno;
+            txtpanno.Text = objdealermaster.panno;
             txtAddress1.Text = objdealermaster.address1;
             txtAddress2.Text = objdealermaster.address2;
             txtCity.Text = objdealermaster.city;
@@ -53,28 +63,67 @@ public partial class editdealerprofile : System.Web.UI.Page
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
         dealermaster objdealermaster = new dealermaster();
-        objdealermaster.did = Convert.ToInt64(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
         objdealermaster.name = txtDealerName.Text;
         objdealermaster.userloginmobileno = txtUserLoginNo.Text;
         objdealermaster.password = txtPassword.Text;
         objdealermaster.whatappno = txtWhatappNo.Text;
         objdealermaster.email = txtEmailId.Text;
         objdealermaster.gstno = txtGSTNO.Text;
+        objdealermaster.aadharno = txtaadharno.Text;
+        objdealermaster.panno = txtpanno.Text;
         objdealermaster.address1 = txtAddress1.Text;
         objdealermaster.address2 = txtAddress2.Text;
         objdealermaster.city = txtCity.Text;
         objdealermaster.state = txtSate.Text;
         objdealermaster.agentid = Convert.ToInt64(ddlUser.SelectedValue.ToString());
-        Int64 DID = Update(objdealermaster);
-        if (DID > 0)
+        if (Request.QueryString["id"] != null)
         {
-            Response.Redirect(Page.ResolveUrl("~/managedealer.aspx?mode=u"));
+            objdealermaster.did = Convert.ToInt64(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
+            Int64 DID = Update(objdealermaster);
+            if (DID > 0)
+            {
+                Response.Redirect(Page.ResolveUrl("~/managedealer.aspx?mode=u"));
+            }
+            else
+            {
+                spnMessgae.Style.Add("color", "red");
+                spnMessgae.InnerText = "Dealer Not Updated";
+            }
         }
-        else
-        {
-            spnMessgae.Style.Add("color", "red");
-            spnMessgae.InnerText = "Dealer Not Updated";
+        else {
+            Int64 Result = (new Cls_dealermaster_b().Insert(objdealermaster));
+            if (Result > 0)
+            {
+                Clear();
+                Response.Redirect(Page.ResolveUrl("~/managedealer.aspx?mode=i"));
+            }
+            else
+            {
+                Clear();
+                spnMessgae.Style.Add("color", "red");
+                spnMessgae.InnerText = "Dealer Information Not Saved...";
+            }
+
         }
+    }
+
+    private void Clear()
+    {
+        txtDealerName.Text = String.Empty;
+        txtUserLoginNo.Text = String.Empty;
+        //txtUserLoginNo.Enabled = false;
+        txtPassword.Text = String.Empty;
+        //txtPassword.Enabled = String.Empty;
+        txtWhatappNo.Text = String.Empty;
+        txtEmailId.Text = String.Empty;
+        txtGSTNO.Text = String.Empty;
+        txtaadharno.Text = String.Empty;
+        txtpanno.Text = String.Empty;
+        txtAddress1.Text = String.Empty;
+        txtAddress2.Text = String.Empty;
+        txtCity.Text = String.Empty;
+        txtSate.Text = String.Empty;
+        ddlUser.SelectedIndex = 0;
     }
 
     public Int64 Update(dealermaster objdealermaster)
@@ -100,6 +149,8 @@ public partial class editdealerprofile : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@whatappno", objdealermaster.whatappno);
             cmd.Parameters.AddWithValue("@email", objdealermaster.email);
             cmd.Parameters.AddWithValue("@gstno", objdealermaster.gstno);
+            cmd.Parameters.AddWithValue("@aadharno", objdealermaster.aadharno);
+            cmd.Parameters.AddWithValue("@panno", objdealermaster.panno);
             cmd.Parameters.AddWithValue("@address1", objdealermaster.address1);
             cmd.Parameters.AddWithValue("@address2", objdealermaster.address2);
             cmd.Parameters.AddWithValue("@city", objdealermaster.city);

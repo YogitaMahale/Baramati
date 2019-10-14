@@ -133,17 +133,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <asp:Repeater ID="Repeater1" runat="server"  >                  
+                                            <asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="Repeater1_ItemDataBound" >                  
                                              <ItemTemplate>
 											<tr class="odd gradeX">
 												
-                                                <td class="center"><asp:Button ID="Button2" runat="server" Text="REMOVE"  OnClick ="Remove_Product" CommandArgument='<%# Eval("SrNo") %>'/></td>
-												 <td class="center"><asp:Label ID="Operation" runat="server" Text=' <%#Eval("operation")%>'></asp:Label></td>
-                                                 <td class="center"><asp:Label ID="Date" runat="server" Text=' <%#Eval("date")%>' > </asp:Label></td>
-                                                 <td class="center"><asp:Label ID="Employee" runat="server" Text=' <%#Eval("employee")%>' ></asp:Label></td>
+                                                <td class="center">
+                                                    <asp:Button ID="Button2" runat="server" Text="REMOVE"  OnClick ="Remove_Product" CommandArgument='<%# Eval("SrNo") %>'/>
+                                                    <asp:Label ID="lblSrNo" Visible="false" runat="server" Text=' <%#Eval("SrNo")%>'></asp:Label>
+                                                </td>
+												 <%--<td class="center"><asp:Label ID="Label1" runat="server" Text=' <%#Eval("operation")%>'></asp:Label></td>--%>
+												 <td class="center">
+                                                     <asp:Label ID="lbloperationid" runat="server" Visible="false" Text=' <%#Eval("operationid")%>'></asp:Label>
+                                                     <asp:DropDownList ID="ddlOperationRep" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlOperationRep_SelectedIndexChanged" AutoPostBack="true"/>
+
+												 </td>
+                                                 <td class="center">
+                                                     <%--<asp:Label ID="Date" runat="server" Text=' <%#Eval("date")%>' > </asp:Label>--%>
+                                                     <asp:TextBox ID="txtWorkDateRep" runat="server" class="form-control" autocomplete="off" Text=' <%#Eval("date")%>' AutoPostBack="true" OnTextChanged="txtWorkDateRep_TextChanged"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter Date" ControlToValidate="txtWorkDateRep" ValidationGroup="gg"  ForeColor="Red"></asp:RequiredFieldValidator>
+                        <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtWorkDateRep" Format="dd/MM/yyyy"> </cc1:CalendarExtender>
+                                                 </td>
+                                                 <td class="center">
+                                                     <asp:Label ID="lblemployeeid" runat="server" Visible="false" Text=' <%#Eval("employeeid")%>'></asp:Label>
+                                                     <asp:DropDownList ID="ddlemployeeRep" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlemployeeRep_SelectedIndexChanged" AutoPostBack="true"/>
+
+                                                 </td>
                                                  
-                                                <td class="center"><asp:Label ID="Quantity" runat="server" Text=' <%#Eval("quantity")%>' ></asp:Label></td>
-                                                <td class="center"><asp:Label ID="Remark" runat="server" Text=' <%#Eval("remark")%>' ></asp:Label></td>
+                                                 
+                                                <td class="center"><asp:TextBox ID="Quantity" runat="server" Text=' <%#Eval("quantity")%>' AutoPostBack="true" OnTextChanged="Quantity_TextChanged" ></asp:TextBox></td>
+                                                <td class="center"><asp:TextBox ID="Remark" runat="server" Text=' <%#Eval("remark")%>' AutoPostBack="true" OnTextChanged="Remark_TextChanged"></asp:TextBox></td>
 
 											</tr>
                                                      </ItemTemplate>

@@ -39,7 +39,24 @@ public partial class addWorksheet : System.Web.UI.Page
 
         }
         //if (!String.IsNullOrEmpty(Session["usermail"].ToString()))
-          //  usermail = Session["usermail"].ToString();
+        //  usermail = Session["usermail"].ToString();
+
+        if (Page.IsPostBack)
+        {
+            // get a reference to ScriptManager and check if we have a partial postback
+            if (ScriptManager.GetCurrent(this.Page).IsInAsyncPostBack)
+            {
+                // partial (asynchronous) postback occured
+                // insert Ajax custom logic here
+                Console.Write("partial");
+            }
+            else
+            {
+                Console.Write("full");
+                // regular full page postback occured
+                // custom logic accordingly                
+            }
+        }
     }
 
     private void Bind()
@@ -123,6 +140,7 @@ public partial class addWorksheet : System.Web.UI.Page
         {
             if (dtEmployee.Rows.Count > 0)
             {
+                Session["employee"] = dtEmployee;
                 ddlEmployee.DataSource = dtEmployee;
                 ddlEmployee.DataTextField = "employeeName";
                 ddlEmployee.DataValueField = "id";
@@ -196,6 +214,7 @@ public partial class addWorksheet : System.Web.UI.Page
         DataTable dtProduct = new DataTable();
         dtProduct = GetProducts();
 
+        
         if (ViewState["Products"] != null)
         {
             dtProduct = (DataTable)ViewState["Products"];
@@ -259,9 +278,9 @@ public partial class addWorksheet : System.Web.UI.Page
         }
         DataRow dtRow = dtProduct.NewRow();
 
-        dtRow["SrNo"] = ViewState["SrNo"];
-        dtRow["operation"] = ddlArticle.SelectedItem;
-        dtRow["operationid"] = ddlArticle.SelectedValue;
+        dtRow["SrNo"] = ViewState["SrNo"]; 
+        dtRow["operation"] = ddlOperation.SelectedItem;
+        dtRow["operationid"] = ddlOperation.SelectedValue;
 
         dtRow["employee"] = ddlEmployee.SelectedItem;
         dtRow["employeeid"] = ddlEmployee.SelectedValue;
@@ -972,7 +991,7 @@ public partial class addWorksheet : System.Web.UI.Page
                 CommandText = "SELECT * FROM productparticulars WHERE productid = @productid",
                 CommandType = CommandType.Text,
                 Connection = con
-                
+
             };
             cmd.Parameters.AddWithValue("@productid", ddlArticle.SelectedValue);
             con.Open();
@@ -983,24 +1002,313 @@ public partial class addWorksheet : System.Web.UI.Page
             {
                 if (dtOperations.Rows.Count > 0)
                 {
+                    
+                    Session["operations"] = dtOperations;
                     ddlOperation.DataSource = dtOperations;
                     ddlOperation.DataTextField = "particulars";
                     ddlOperation.DataValueField = "id";
                     ddlOperation.DataBind();
                     System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
                     ddlOperation.Items.Insert(0, objListItem);
+                    
                 }
             }
         }
         catch (Exception ex)
         {
             ////ErrHandler.writeError(ex.Message, ex.StackTrace);
-            
+
         }
         finally
         {
             con.Close();
         }
+        //DataTable dtOperations = new DataTable();
+        //Session["ddlvalue"] = ddlArticle.SelectedValue;
+        //dtOperations = getProductProcesses();
+        //if (dtOperations != null)
+        //{
+        //    if (dtOperations.Rows.Count > 0)
+        //    {
+        //        ddlOperation.DataSource = dtOperations;
+        //        ddlOperation.DataTextField = "particulars";
+        //        ddlOperation.DataValueField = "id";
+        //        ddlOperation.DataBind();
+        //        System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
+        //        ddlOperation.Items.Insert(0, objListItem);
+
+
+        //        foreach (RepeaterItem item in Repeater1.Items)
+        //        {
+        //            if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+        //            {
+        //                var ddlOR = (DropDownList)item.FindControl("ddlOperationRep");
+
+
+        //                ddlOR.DataSource = dtOperations;
+        //                ddlOR.DataTextField = "particulars";
+        //                ddlOR.DataValueField = "id";
+        //                ddlOR.DataBind();
+        //                //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
+        //                ddlOR.Items.Insert(0, objListItem);
+
+        //            }
+        //            //Do something with your checkbox...
+
+
+        //        }
+
+
+
+        //    }
+        //}
+
+
+
+
+
+    }
+
+    #region Product Processes
+    /*
+    private DataTable getProductProcesses() {
+        DataTable dtOperations = new DataTable();
+        DataSet ds = new DataSet();
+        SqlDataAdapter da;
+        try
+        {
+            String value = Session["ddlvalue"].ToString();
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "SELECT * FROM productparticulars WHERE productid = @productid",
+                CommandType = CommandType.Text,
+                Connection = con
+
+            };
+            cmd.Parameters.AddWithValue("@productid", value);
+            con.Open();
+            da = new SqlDataAdapter(cmd);
+            da.Fill(dtOperations);
+
+            
+        }
+        catch (Exception ex)
+        {
+            ////ErrHandler.writeError(ex.Message, ex.StackTrace);
+
+        }
+        finally
+        {
+            con.Close();
+        }
+        return dtOperations;
+    }
+    */
+    #endregion
+
+    protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+            DataTable dtOperations = new DataTable();
+            DataTable dtEmployee = new DataTable();
+            if (!String.IsNullOrEmpty(Session["employee"].ToString()))
+            {
+                dtEmployee = (DataTable)Session["employee"];
+            }
+            //if (!String.IsNullOrEmpty(Session["operations"].ToString()))
+            {
+                dtOperations = (DataTable)Session["operations"];
+            }
+            if (dtOperations != null)
+            {
+                if (dtOperations.Rows.Count > 0)
+                {
+
+
+                    //foreach (RepeaterItem item in Repeater1.Items)
+                    //{
+                        //if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                        //{
+                            var ddlOR = (DropDownList)e.Item.FindControl("ddlOperationRep");
+
+
+                            ddlOR.DataSource = dtOperations;
+                            ddlOR.DataTextField = "particulars";
+                            ddlOR.DataValueField = "id";
+                            ddlOR.DataBind();
+                            System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
+                            ddlOR.Items.Insert(0, objListItem);
+
+                    Label index = (Label)e.Item.FindControl("lbloperationid");
+
+                    ddlOR.SelectedValue = index.Text;
+                    
+
+
+
+                }
+            }
+            if (dtEmployee != null)
+            {
+                if (dtEmployee.Rows.Count > 0)
+                {
+
+
+                    //foreach (RepeaterItem item in Repeater1.Items)
+                    //{
+                    //if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                    //{
+                    var ddlER = (DropDownList)e.Item.FindControl("ddlEmployeeRep");
+
+
+                    ddlER.DataSource = dtEmployee;
+                    ddlER.DataTextField = "employeeName";
+                    ddlER.DataValueField = "id";
+                    ddlER.DataBind();
+                    System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Employee--", "0");
+                    ddlER.Items.Insert(0, objListItem);
+                    Label index = (Label)e.Item.FindControl("lblemployeeid");
+
+                    ddlER.SelectedValue = index.Text;
+                    
+
+
+                }
+            }
+
+            
+        }
+    }
+
+    protected void ddlOperationRep_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DropDownList ddlOR = (DropDownList)sender;
+        //DropDownList ddlER = (DropDownList)sender;
+        RepeaterItem row = (RepeaterItem)ddlOR.NamingContainer;
+        //row = (RepeaterItem)ddlER.NamingContainer;
+        //TextBox txtName = (TextBox)row.FindControl("TxtName");
+        int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
+
+        dtProduct = (DataTable)ViewState["Products"];
+
+
+        // dtProduct = (DataTable)ViewState["Products"];
+
+        DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
+        foreach (var newrow in drr)
+        {
+            newrow["operationid"] = ddlOR.SelectedValue;
+            newrow["operation"] = ddlOR.SelectedItem;
+        }
+        // dtProduct.Rows.RemoveAt(prodid);
+
+        dtProduct.AcceptChanges();
+        //Repeater1.DataSource = dtProduct;
+        //Repeater1.DataBind();
+
+
+    }
+
+
+    protected void ddlemployeeRep_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DropDownList ddlER = (DropDownList)sender;
+        RepeaterItem row = (RepeaterItem)ddlER.NamingContainer;
+        //TextBox txtName = (TextBox)row.FindControl("TxtName");
+        int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
+
+        dtProduct = (DataTable)ViewState["Products"];
+
+
+        // dtProduct = (DataTable)ViewState["Products"];
+
+        DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
+        foreach (var newrow in drr)
+        {
+            newrow["employeeid"] = ddlER.SelectedValue;
+            newrow["employee"] = ddlER.SelectedItem;
+        }
+        // dtProduct.Rows.RemoveAt(prodid);
+
+        dtProduct.AcceptChanges();
+        //Repeater1.DataSource = dtProduct;
+        //Repeater1.DataBind();
+
+    }
+
+    protected void Quantity_TextChanged(object sender, EventArgs e)
+    {
+        TextBox qty = (TextBox)sender;
+        RepeaterItem row = (RepeaterItem)qty.NamingContainer;
+        //TextBox txtName = (TextBox)row.FindControl("TxtName");
+        int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
+
+        dtProduct = (DataTable)ViewState["Products"];
+
+
+        // dtProduct = (DataTable)ViewState["Products"];
+
+        DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
+        foreach (var newrow in drr)
+        {
+            newrow["quantity"] = qty.Text;
+        }
+        // dtProduct.Rows.RemoveAt(prodid);
+
+        dtProduct.AcceptChanges();
+        //Repeater1.DataSource = dtProduct;
+        //Repeater1.DataBind();
+
+    }
+
+    protected void Remark_TextChanged(object sender, EventArgs e)
+    {
+        TextBox remark = (TextBox)sender;
+        RepeaterItem row = (RepeaterItem)remark.NamingContainer;
+        //TextBox txtName = (TextBox)row.FindControl("TxtName");
+        int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
+
+        dtProduct = (DataTable)ViewState["Products"];
+
+
+        // dtProduct = (DataTable)ViewState["Products"];
+
+        DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
+        foreach (var newrow in drr)
+        {
+            newrow["remark"] = remark.Text;
+        }
+        // dtProduct.Rows.RemoveAt(prodid);
+
+        dtProduct.AcceptChanges();
+        //Repeater1.DataSource = dtProduct;
+        //Repeater1.DataBind();
+
+    }
+
+    protected void txtWorkDateRep_TextChanged(object sender, EventArgs e)
+    {
+        TextBox workdate = (TextBox)sender;
+        RepeaterItem row = (RepeaterItem)workdate.NamingContainer;
+        //TextBox txtName = (TextBox)row.FindControl("TxtName");
+        int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
+
+        dtProduct = (DataTable)ViewState["Products"];
+
+
+        // dtProduct = (DataTable)ViewState["Products"];
+
+        DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
+        foreach (var newrow in drr)
+        {
+            newrow["date"] = workdate.Text;
+        }
+        // dtProduct.Rows.RemoveAt(prodid);
+
+        dtProduct.AcceptChanges();
+        //Repeater1.DataSource = dtProduct;
+        //Repeater1.DataBind();
 
     }
 }

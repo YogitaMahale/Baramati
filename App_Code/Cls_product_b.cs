@@ -287,7 +287,8 @@ namespace BusinessLayer
 
         private Int64 _fk_colorId;
         private Int64 _fk_sizeId;
-      
+        private Int32 _packing;
+
         #endregion
 
 
@@ -474,8 +475,13 @@ namespace BusinessLayer
             get { return _fk_sizeId; }
             set { _fk_sizeId = value; }
         }
+        public Int32 packing
+        {
+            get { return _packing; }
+            set { _packing = value; }
+        }
 
-         
+
         #endregion
     }
 

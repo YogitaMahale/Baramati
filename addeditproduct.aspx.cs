@@ -88,6 +88,7 @@ public partial class addeditproduct : System.Web.UI.Page
             txt_landingprice.Text = objproduct.LandingPrice.ToString();
             txt_RealStock.Text = objproduct.RealStock.ToString();
             cbIsHotproduct.Checked = objproduct.isHotproduct;
+            txtpack.Text = objproduct.packing.ToString();
 
         }
     }
@@ -149,7 +150,7 @@ public partial class addeditproduct : System.Web.UI.Page
         txt_Hsncode.Text = string.Empty;
         txt_RealStock.Text = string.Empty;
         txt_landingprice.Text = string.Empty;
-
+        txtpack.Text = string.Empty;
         txtProductName.Text = string.Empty;
         txtSKU.Text = string.Empty;
         txtCustomerProductPrice.Text = string.Empty;
@@ -212,6 +213,7 @@ public partial class addeditproduct : System.Web.UI.Page
 
         objproduct.fk_colorId  = Convert.ToInt64 (ddlColor.SelectedValue.ToString());
         objproduct.fk_sizeId  = Convert.ToInt64(ddlSize.SelectedValue.ToString());
+        objproduct.packing = Convert.ToInt32(txtpack.Text.Trim());
 
         if (Request.QueryString["id"] != null)
         {
@@ -415,17 +417,18 @@ public partial class addeditproduct : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-        if (Request.QueryString["page"].ToString() == "price")
+        if (String.IsNullOrEmpty(Request.QueryString["page"]))
         {
-            Response.Redirect(Page.ResolveUrl("~/manageproductprice.aspx"));
+            Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx"));
         }
         else if (Request.QueryString["page"].ToString() == "stock")
         {
             Response.Redirect(Page.ResolveUrl("~/manageproductstock.aspx"));
         }
-        else
+        else if(Request.QueryString["page"].ToString() == "price")
         {
-            Response.Redirect(Page.ResolveUrl("~/manageproduct.aspx"));
+            Response.Redirect(Page.ResolveUrl("~/manageproductprice.aspx"));
+
         }
     }
 }

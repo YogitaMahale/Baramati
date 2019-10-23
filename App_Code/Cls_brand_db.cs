@@ -8,15 +8,15 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for Cls_worksheetmaster_db
+/// Summary description for Cls_brand_db
 /// </summary>
+
 namespace DatabaseLayer
 {
-    public class Cls_worksheetmaster_db
+    public class Cls_brand_db
     {
-
         SqlConnection ConnectionString = new SqlConnection();
-        public Cls_worksheetmaster_db()
+        public Cls_brand_db()
         {
             string name = string.Empty;
             string conname = string.Empty;
@@ -31,8 +31,11 @@ namespace DatabaseLayer
             }
             ConnectionString.ConnectionString = ConfigurationManager.ConnectionStrings[conname].ConnectionString;
         }
+
         #region Public Methods
-        public DataTable SelectAll(worksheetmaster objworksheetmaster)
+
+
+        public DataTable SelectAll()
         {
             DataSet ds = new DataSet();
             SqlDataAdapter da;
@@ -40,18 +43,17 @@ namespace DatabaseLayer
             {
                 SqlCommand cmd = new SqlCommand
                 {
-                    CommandText = "worksheetmaster_SelectAll",
+                    CommandText = "brand_SelectAll",
                     CommandType = CommandType.StoredProcedure,
                     Connection = ConnectionString
                 };
-
                 ConnectionString.Open();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
             }
             catch (Exception ex)
             {
-                ////ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return null;
             }
             finally
@@ -60,25 +62,27 @@ namespace DatabaseLayer
             }
             return ds.Tables[0];
         }
-        public worksheetmaster SelectById(Int64 id)
+
+
+
+
+        public brandMaster SelectById(Int64 cid)
         {
             SqlDataAdapter da;
             DataSet ds = new DataSet();
-            worksheetmaster objworksheetmaster = new worksheetmaster();
+            brandMaster objcategory = new brandMaster();
             try
             {
                 SqlCommand cmd = new SqlCommand
                 {
-                    CommandText = "worksheetmaster_SelectById",
+                    CommandText = "brand_SelectById",
                     CommandType = CommandType.StoredProcedure,
                     Connection = ConnectionString
                 };
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@bid", cid);
                 ConnectionString.Open();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
-
-                
 
                 if (ds != null)
                 {
@@ -88,22 +92,10 @@ namespace DatabaseLayer
                         {
                             if (ds.Tables[0].Rows.Count > 0)
                             {
-                                //[id],[productid],[sizeid],[colorid],[createdby],[createddate],[isdeleted]
-
-                                objworksheetmaster.Id = Convert.ToInt64(ds.Tables[0].Rows[0]["id"]);
-                                objworksheetmaster.Productid = Convert.ToInt64(ds.Tables[0].Rows[0]["productid"]);
-                                //objworksheetmaster.Sizeid = Convert.ToInt64(ds.Tables[0].Rows[0]["sizeid"]);
-                                objworksheetmaster.Sizeid = ds.Tables[0].Rows[0]["sizeid"].ToString();
-                                objworksheetmaster.Colorid = ds.Tables[0].Rows[0]["colorid"].ToString();
-                                objworksheetmaster.Createdby = Convert.ToInt64(ds.Tables[0].Rows[0]["createdby"]);
-                                //objworksheetmaster.isdeleted = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isdeleted"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isdeleted"]);
-                                objworksheetmaster.Createddate= string.IsNullOrEmpty(ds.Tables[0].Rows[0]["createddate"].ToString()) ? DateTime.MinValue : Convert.ToDateTime(ds.Tables[0].Rows[0]["createddate"]);
-                                //objworksheetmaster.orderstatus = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["orderstatus"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["orderstatus"]);
-
-
-
-
-
+                                {
+                                    objcategory.bid = Convert.ToInt64(ds.Tables[0].Rows[0]["bid"]);
+                                    objcategory.brandName = Convert.ToString(ds.Tables[0].Rows[0]["brandName"]);
+                                }
                             }
                         }
                     }
@@ -111,49 +103,38 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-                ////ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return null;
             }
             finally
             {
                 ConnectionString.Close();
             }
-            return objworksheetmaster;
+            return objcategory;
         }
-        public Int64 Insert(worksheetmaster objworksheetmaster)
+
+
+        public Int64 Insert(brandMaster objcategory)
         {
             Int64 result = 0;
             try
             {
                 SqlCommand cmd = new SqlCommand
                 {
-                    CommandText = "worksheetmaster_Insert",
+                    CommandText = "brand_Insert",
                     CommandType = CommandType.StoredProcedure,
                     Connection = ConnectionString
                 };
 
                 SqlParameter param = new SqlParameter
                 {
-                    ParameterName = "@id",
-                    Value = 0,
+                    ParameterName = "@bid",
+                    Value = objcategory.bid,
                     SqlDbType = SqlDbType.BigInt,
                     Direction = ParameterDirection.InputOutput
                 };
                 cmd.Parameters.Add(param);
-
-                //[id],[productid],[sizeid],[colorid],[createdby],[createddate],[isdeleted]
-
-                //cmd.Parameters.AddWithValue("@id", objworksheetmaster.Id);
-                cmd.Parameters.AddWithValue("@productid", objworksheetmaster.Productid);
-                cmd.Parameters.AddWithValue("@sizeid", objworksheetmaster.Sizeid);
-                cmd.Parameters.AddWithValue("@colorid", objworksheetmaster.Colorid);
-                cmd.Parameters.AddWithValue("@createdby", objworksheetmaster.Createdby);
-
-                //cmd.Parameters.AddWithValue("@isdeleted", objworksheetmaster.isdeleted);
-                cmd.Parameters.AddWithValue("@createddate", DateTime.Now);
-                //cmd.Parameters.AddWithValue("@orderstatus", objworksheetmaster.orderstatus);
-
-
+                cmd.Parameters.AddWithValue("@brandName", objcategory.brandName);
 
 
                 ConnectionString.Open();
@@ -162,7 +143,7 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-                //ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return result;
             }
             finally
@@ -171,38 +152,28 @@ namespace DatabaseLayer
             }
             return result;
         }
-        public Int64 Update(worksheetmaster objworksheetmaster)
+
+        public Int64 Update(brandMaster objcategory)
         {
             Int64 result = 0;
             try
             {
                 SqlCommand cmd = new SqlCommand
                 {
-                    CommandText = "worksheetmaster_Update",
+                    CommandText = "brand_Update",
                     CommandType = CommandType.StoredProcedure,
                     Connection = ConnectionString
                 };
 
                 SqlParameter param = new SqlParameter
                 {
-                    ParameterName = "@id",
-                    Value = objworksheetmaster.Id,
+                    ParameterName = "@bid",
+                    Value = objcategory.bid,
                     SqlDbType = SqlDbType.BigInt,
                     Direction = ParameterDirection.InputOutput
                 };
                 cmd.Parameters.Add(param);
-
-                //[id],[productid],[sizeid],[colorid],[createdby],[createddate],[isdeleted]
-
-                cmd.Parameters.AddWithValue("@id", objworksheetmaster.Id);
-                cmd.Parameters.AddWithValue("@productid", objworksheetmaster.Productid);
-                cmd.Parameters.AddWithValue("@sizeid", objworksheetmaster.Sizeid);
-                cmd.Parameters.AddWithValue("@colorid", objworksheetmaster.Colorid);
-                cmd.Parameters.AddWithValue("@createdby", objworksheetmaster.Createdby);
-
-                //cmd.Parameters.AddWithValue("@isdeleted", objworksheetmaster.isdeleted);
-                cmd.Parameters.AddWithValue("@createddate", DateTime.Now);
-                //cmd.Parameters.AddWithValue("@orderstatus", objworksheetmaster.orderstatus);
+                cmd.Parameters.AddWithValue("@brandName", objcategory.brandName);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
@@ -210,7 +181,7 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-                //ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return result;
             }
             finally
@@ -219,25 +190,25 @@ namespace DatabaseLayer
             }
             return result;
         }
-        public bool Delete(Int64 ID)
+        public bool Delete(Int64 cid)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand
                 {
-                    CommandText = "worksheetmaster_Delete",
+                    CommandText = "Brand_Delete",
                     CommandType = CommandType.StoredProcedure,
                     Connection = ConnectionString
                 };
 
-                cmd.Parameters.AddWithValue("@id", ID);
+                cmd.Parameters.AddWithValue("@bid", cid);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                //ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return false;
             }
             finally
@@ -246,8 +217,9 @@ namespace DatabaseLayer
             }
             return true;
         }
+
+
         #endregion
-
-
     }
+
 }

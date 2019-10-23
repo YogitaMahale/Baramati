@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="manageSize.aspx.cs" Inherits="manageSize" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="manageBrand.aspx.cs" Inherits="manageBrand" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -19,13 +19,13 @@
                             <br />
                             
                             <div style="text-align:right;">
-                                <asp:Button ID="btnNewCategoty" runat="server" Text="Add New Size" class="btn btn-Normal btn-primary" OnClick="btnNewCategoty_Click" Width="150" />
+                                <asp:Button ID="btnNewCategoty" runat="server" Text="New Brand" class="btn btn-Normal btn-primary" OnClick="btnNewCategoty_Click" Width="150" />
                             </div>
                             <br />
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center">Size Name</th>
+                                        <th style="text-align: center">Brand Name</th>
                                       
                                         <th style="text-align: center">Action</th>
                                     </tr>
@@ -38,15 +38,13 @@
                                             <tr>
                                                 
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="lblCategoryId" runat="server" Visible="false" Text='<%# Eval("cid") %>'></asp:Label>
-                                                  <%--  <asp:Label ID="lblProductCount" runat="server" Visible="false" Text='<%# Eval("productcount") %>'></asp:Label>--%>
-                                                    <%--<asp:Label ID="lblSeqNo" runat="server" Visible="false" Text='<%# Eval("seqno") %>'></asp:Label>--%>
-                                                    <asp:Label ID="lblCategoryName" runat="server" Text='<%# Eval("sizeName") %>'></asp:Label>
+                                                    <asp:Label ID="lblCategoryId" runat="server" Visible="false" Text='<%# Eval("bid") %>'></asp:Label>
+                                                    <asp:Label ID="lblCategoryName" runat="server" Text='<%# Eval("brandName") %>'></asp:Label>
                                                 </td>
                                              
                                                 <td style="text-align: center">
                                                     <asp:HyperLink ID="hlEdit" runat="server" Style="text-decoration: underline" class="btn btn-success" Text="Edit"></asp:HyperLink>&nbsp;
-                                        &nbsp;<asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" class="btn btn-danger" OnClientClick="return confirm('Do you want to delete this Size?');" OnClick="lnkDelete_Click"></asp:LinkButton>
+                                        &nbsp;<asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" class="btn btn-danger" OnClientClick="return confirm('Do you want to delete this Brand?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                 </td>
                                             </tr>
                                         </ItemTemplate>
@@ -55,7 +53,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="text-align: center">Size Name</th>
+                                        <th style="text-align: center">Brand Name</th>
                                          
                                         <th style="text-align: center">Action</th>
                                     </tr>
@@ -104,3 +102,4 @@
     </script>
 
 </asp:Content>
+

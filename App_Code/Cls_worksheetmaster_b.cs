@@ -131,8 +131,8 @@ public partial class worksheetmaster
     #region Private Variables
     private Int64 _id;
     private Int64 _productid;
-    private Int64 _sizeid;
-    private Int64 _colorid;
+    private String _sizeid;
+    private String _colorid;
     private Int64 _createdby;
     private DateTime _createddate;
 
@@ -156,12 +156,12 @@ public partial class worksheetmaster
         set { _productid = value; }
     }
 
-    public Int64 Sizeid
+    public String Sizeid
     {
         get { return _sizeid; }
         set { _sizeid = value; }
     }
-    public Int64 Colorid
+    public String Colorid
     {
         get { return _colorid; }
         set { _colorid = value; }

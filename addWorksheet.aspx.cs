@@ -17,6 +17,7 @@ using iTextSharp.text;
 using iTextSharp.text.html;
 using iTextSharp.text.pdf;
 
+
 public partial class addWorksheet : System.Web.UI.Page
 {
     common ocommon = new common();
@@ -30,19 +31,23 @@ public partial class addWorksheet : System.Web.UI.Page
         //Session["userid"]
         if (!String.IsNullOrEmpty(Session["userid"].ToString()))
             createdby = Session["userid"].ToString();
+        //Bind();
+        
         if (!IsPostBack)
         {
             Bind();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             hPageTitle.InnerText = "Work Sheet";
             txt_Date.Text = DateTime.Now.ToString("dd/MM/yyyy");
-
+            
         }
         //if (!String.IsNullOrEmpty(Session["usermail"].ToString()))
         //  usermail = Session["usermail"].ToString();
 
         if (Page.IsPostBack)
         {
+            //Bind();
+
             // get a reference to ScriptManager and check if we have a partial postback
             if (ScriptManager.GetCurrent(this.Page).IsInAsyncPostBack)
             {
@@ -54,13 +59,20 @@ public partial class addWorksheet : System.Web.UI.Page
             {
                 Console.Write("full");
                 // regular full page postback occured
-                // custom logic accordingly                
+                // custom logic accordingly    
+
             }
         }
+        
+
+
+
     }
+
 
     private void Bind()
     {
+        //List<SelectListItem> list = new List<SelectListItem>();
         DataTable dtArticle = new DataTable();
         DataTable dtColor = new DataTable();
         DataTable dtSize = new DataTable();
@@ -84,13 +96,7 @@ public partial class addWorksheet : System.Web.UI.Page
 
             Cls_Employee_b clsEmployee = new Cls_Employee_b();
             dtEmployee = clsEmployee.SelectAll();
-            //ProductMaster objProductMaster = new ProductMaster();
-            //Cls_VendorMaster_b clsbrand = new Cls_VendorMaster_b();
-            //dtVendorName = clsbrand.SelectAll();
-
-            //Cls_category_b clsCategory = new Cls_category_b();
-            //dtCategory = clsCategory.SelectAll();
-
+            
 
 
         }
@@ -114,28 +120,73 @@ public partial class addWorksheet : System.Web.UI.Page
         {
             if (dtColor.Rows.Count > 0)
             {
-                ddlColor.DataSource = dtColor;
-                ddlColor.DataTextField = "colorname";
-                ddlColor.DataValueField = "cid";
-                ddlColor.DataBind();
-                System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Color--", "0");
-                ddlColor.Items.Insert(0, objListItem);
+                //ddlColor.DataSource = dtColor;
+                //ddlColor.DataTextField = "colorname";
+                //ddlColor.DataValueField = "cid";
+                //ddlColor.DataBind();
+                //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Color--", "0");
+                //ddlColor.Items.Insert(0, objListItem);
+
+
+                lstColor.DataSource = dtColor;
+                lstColor.DataTextField = "colorname";
+                lstColor.DataValueField = "cid";
+                lstColor.DataBind();
+                //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Color--", "0");
+                //lstColor.Items.Insert(0, objListItem);
+
+
             }
+            else {
+                lstColor.DataSource = dtColor;
+                lstColor.DataTextField = "colorname";
+                lstColor.DataValueField = "cid";
+                lstColor.DataBind();
+
+
+            }
+        }
+        else
+        {
+            lstColor.DataSource = dtColor;
+            lstColor.DataTextField = "colorname";
+            lstColor.DataValueField = "cid";
+            lstColor.DataBind();
+
+
         }
 
         if (dtSize != null)
         {
             if (dtSize.Rows.Count > 0)
             {
-                ddlSize.DataSource = dtSize;
-                ddlSize.DataTextField = "sizeName";
-                ddlSize.DataValueField = "cid";
-                ddlSize.DataBind();
-                System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Size--", "0");
-                ddlSize.Items.Insert(0, objListItem);
+                //ddlSize.DataSource = dtSize;
+                //ddlSize.DataTextField = "sizeName";
+                //ddlSize.DataValueField = "cid";
+                //ddlSize.DataBind();
+                //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Size--", "0");
+                //ddlSize.Items.Insert(0, objListItem);
+
+                lstSize.DataSource = dtSize;
+                lstSize.DataTextField = "sizeName";
+                lstSize.DataValueField = "cid";
+                lstSize.DataBind();
+
+            }
+            else {
+                lstSize.DataSource = dtSize;
+                lstSize.DataTextField = "sizeName";
+                lstSize.DataValueField = "cid";
+                lstSize.DataBind();
             }
         }
-
+        else
+        {
+            lstSize.DataSource = dtSize;
+            lstSize.DataTextField = "sizeName";
+            lstSize.DataValueField = "cid";
+            lstSize.DataBind();
+        }
         if (dtEmployee != null)
         {
             if (dtEmployee.Rows.Count > 0)
@@ -150,67 +201,11 @@ public partial class addWorksheet : System.Web.UI.Page
             }
         }
     }
-    //protected void ddlVendor_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    Int64 id = Int64.Parse(ddlVendor.SelectedValue.ToString());
-    //    try
-    //    {
-    //        VendorMaster vm = new VendorMaster();
-    //        DataTable dt = new DataTable();
-    //        Cls_VendorMaster_b clsbrand = new Cls_VendorMaster_b();
-    //        vm = clsbrand.SelectById(id);
-    //        txtMobile.Text = vm.MobileNo1.ToString();
-    //        txtEmail.Text = vm.email.ToString();
-    //        //txtCity.Text = vm.fk_cityId.ToString();
-    //        //txtState.Text = vm.fk_stateId.ToString();
-    //        //txtCountry.Text = vm.fk_countryId.ToString();
-    //        txtCity.Text = vm.city.ToString();
-    //        txtState.Text = vm.state.ToString();
-    //        txtCountry.Text = vm.country.ToString();
-    //        txtAddress.Text = vm.Address1.ToString();
-
-
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        ErrHandler.writeError(ex.Message, ex.StackTrace);
-    //        //return null;
-    //    }
-    //    finally { con.Close(); }
-    //}
-    //protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    Int64 id = Int64.Parse(ddlCategory.SelectedValue.ToString());
-    //    try
-    //    {
-    //        product objProduct = new product();
-    //        Cls_product_b clsProduct = new Cls_product_b();
-    //        dtProduct = clsProduct.Product_WSSelectAllProductUsingCategoryId(id);
-    //        if (dtProduct != null)
-    //        {
-    //            if (dtProduct.Rows.Count > 0)
-    //            {
-    //                ddlProduct.DataSource = dtProduct;
-    //                ddlProduct.DataTextField = "productname";
-    //                ddlProduct.DataValueField = "pid";
-    //                ddlProduct.DataBind();
-    //                System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Product(s)--", "0");
-    //                ddlProduct.Items.Insert(0, objListItem);
-    //            }
-    //        }
-
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        ErrHandler.writeError(ex.Message, ex.StackTrace);
-    //        //return null;
-    //    }
-    //    finally { con.Close(); }
-
-    //}
+   
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
+   
         DataTable dtProduct = new DataTable();
         dtProduct = GetProducts();
 
@@ -231,10 +226,7 @@ public partial class addWorksheet : System.Web.UI.Page
             Repeater1.Visible = false;
         }
 
-        // ddlProductName.SelectedItem = string.Empty;
-        //ddlCategory.SelectedIndex = 0;
-        //ddlProduct.SelectedIndex = 0;
-
+        
         txtquantity.Text = "0";
     }
 
@@ -350,18 +342,7 @@ public partial class addWorksheet : System.Web.UI.Page
             ddlEmployee.SelectedIndex = 0;
             ddlOperation.SelectedIndex = 0;
             txtquantity.Text = "0";
-            //if (Request.QueryString["id"] != null)
-            //{
-            //    Int64 OrderID = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
-            //    string s = "delete from Ordersystem_orderproducts where oid=" + OrderID + " and pid=" + pid + "";
-            //    SqlCommand cmd = new SqlCommand(s, con);
-            //    int t = cmd.ExecuteNonQuery();
-
-
-            //}
-            //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Product Remove Successfully');", true);
-            //con.Close();
-
+            
             ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Product Removed Successfully');", true);
 
         }
@@ -380,24 +361,19 @@ public partial class addWorksheet : System.Web.UI.Page
         Int64 Result = 0, Result1 = 0;
         DataTable dtProduct = new DataTable();
 
+        //Response.Write(hf1.Value);
 
-        //String user = null, month = null, pono = null;
-        //bool flag = false, flag1 = false, flag2 = false, flag3 = false;
+        String valuesColor = hfcolorid.Value, valuesSize = hfsizeid.Value;
 
-        //int year = int.Parse(DateTime.Now.Year.ToString());
-        //month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-        //int day = int.Parse(DateTime.Now.Day.ToString());
-        //int min = int.Parse(DateTime.Now.Minute.ToString());
-        //int hour = int.Parse(DateTime.Now.Hour.ToString());
-
-        //pono = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
-
+        
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         //id,productid,sizeid,colorid,createdby,createddate,isdeleted
         worksheetmaster objworksheetmaster = new worksheetmaster();
         objworksheetmaster.Productid =Convert.ToInt64(ddlArticle.SelectedValue.ToString());
-        objworksheetmaster.Sizeid = Convert.ToInt64(ddlSize.SelectedValue.ToString());
-        objworksheetmaster.Colorid = Convert.ToInt64(ddlColor.SelectedValue.ToString());
+        //objworksheetmaster.Sizeid = Convert.ToInt64(ddlSize.SelectedValue.ToString());
+        //objworksheetmaster.Colorid = Convert.ToInt64(ddlColor.SelectedValue.ToString());
+        objworksheetmaster.Colorid = valuesColor;
+        objworksheetmaster.Sizeid = valuesSize;
         objworksheetmaster.Createdby = Convert.ToInt64(createdby);
         objworksheetmaster.Createddate =Convert.ToDateTime(txtWorkDate.Text.ToString());
 
@@ -451,16 +427,7 @@ public partial class addWorksheet : System.Web.UI.Page
 
                 con.Close();
 
-                //Clear();
-
-                //String vendorname = ddlVendor.SelectedItem.ToString();
-                //String mailTo = txtEmail.Text.Trim();
-                //String Name = txt_contactperson.Text.Trim();
-                //String MobileNo = txtMobile.Text.Trim();
-                //flag = PDFUpload(Result);
-                //flag1 = SendOrderMail(mailTo, pono);
-                //flag2 = SendSMS(vendorname, MobileNo);
-
+                
                 if (Result1>0)
                     Response.Redirect(Page.ResolveUrl("~/manageworksheets.aspx?mode=i"));
             }
@@ -981,6 +948,7 @@ public partial class addWorksheet : System.Web.UI.Page
 
     protected void ddlArticle_SelectedIndexChanged(object sender, EventArgs e)
     {
+        Session["colorname"] = hfcolorname.Value;
         DataTable dtOperations = new DataTable();
         DataSet ds = new DataSet();
         SqlDataAdapter da;
@@ -1002,7 +970,7 @@ public partial class addWorksheet : System.Web.UI.Page
             {
                 if (dtOperations.Rows.Count > 0)
                 {
-                    
+
                     Session["operations"] = dtOperations;
                     ddlOperation.DataSource = dtOperations;
                     ddlOperation.DataTextField = "particulars";
@@ -1010,9 +978,17 @@ public partial class addWorksheet : System.Web.UI.Page
                     ddlOperation.DataBind();
                     System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
                     ddlOperation.Items.Insert(0, objListItem);
-                    
+
                 }
             }
+            ViewState["Products"] = null;
+            Repeater1.DataSource = null;
+            Repeater1.DataBind();
+            Repeater1.Visible = false;
+            ddlEmployee.SelectedIndex = 0;
+            ddlOperation.SelectedIndex = 0;
+
+            txtquantity.Text = "0";
         }
         catch (Exception ex)
         {
@@ -1023,89 +999,10 @@ public partial class addWorksheet : System.Web.UI.Page
         {
             con.Close();
         }
-        //DataTable dtOperations = new DataTable();
-        //Session["ddlvalue"] = ddlArticle.SelectedValue;
-        //dtOperations = getProductProcesses();
-        //if (dtOperations != null)
-        //{
-        //    if (dtOperations.Rows.Count > 0)
-        //    {
-        //        ddlOperation.DataSource = dtOperations;
-        //        ddlOperation.DataTextField = "particulars";
-        //        ddlOperation.DataValueField = "id";
-        //        ddlOperation.DataBind();
-        //        System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
-        //        ddlOperation.Items.Insert(0, objListItem);
-
-
-        //        foreach (RepeaterItem item in Repeater1.Items)
-        //        {
-        //            if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
-        //            {
-        //                var ddlOR = (DropDownList)item.FindControl("ddlOperationRep");
-
-
-        //                ddlOR.DataSource = dtOperations;
-        //                ddlOR.DataTextField = "particulars";
-        //                ddlOR.DataValueField = "id";
-        //                ddlOR.DataBind();
-        //                //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Operation--", "0");
-        //                ddlOR.Items.Insert(0, objListItem);
-
-        //            }
-        //            //Do something with your checkbox...
-
-
-        //        }
-
-
-
-        //    }
-        //}
-
-
-
-
-
+        
     }
 
-    #region Product Processes
-    /*
-    private DataTable getProductProcesses() {
-        DataTable dtOperations = new DataTable();
-        DataSet ds = new DataSet();
-        SqlDataAdapter da;
-        try
-        {
-            String value = Session["ddlvalue"].ToString();
-            SqlCommand cmd = new SqlCommand
-            {
-                CommandText = "SELECT * FROM productparticulars WHERE productid = @productid",
-                CommandType = CommandType.Text,
-                Connection = con
-
-            };
-            cmd.Parameters.AddWithValue("@productid", value);
-            con.Open();
-            da = new SqlDataAdapter(cmd);
-            da.Fill(dtOperations);
-
-            
-        }
-        catch (Exception ex)
-        {
-            ////ErrHandler.writeError(ex.Message, ex.StackTrace);
-
-        }
-        finally
-        {
-            con.Close();
-        }
-        return dtOperations;
-    }
-    */
-    #endregion
-
+    
     protected void Repeater1_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
@@ -1155,10 +1052,6 @@ public partial class addWorksheet : System.Web.UI.Page
                 {
 
 
-                    //foreach (RepeaterItem item in Repeater1.Items)
-                    //{
-                    //if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
-                    //{
                     var ddlER = (DropDownList)e.Item.FindControl("ddlEmployeeRep");
 
 
@@ -1184,29 +1077,18 @@ public partial class addWorksheet : System.Web.UI.Page
     protected void ddlOperationRep_SelectedIndexChanged(object sender, EventArgs e)
     {
         DropDownList ddlOR = (DropDownList)sender;
-        //DropDownList ddlER = (DropDownList)sender;
         RepeaterItem row = (RepeaterItem)ddlOR.NamingContainer;
-        //row = (RepeaterItem)ddlER.NamingContainer;
-        //TextBox txtName = (TextBox)row.FindControl("TxtName");
         int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
 
         dtProduct = (DataTable)ViewState["Products"];
-
-
-        // dtProduct = (DataTable)ViewState["Products"];
-
         DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
         foreach (var newrow in drr)
         {
             newrow["operationid"] = ddlOR.SelectedValue;
             newrow["operation"] = ddlOR.SelectedItem;
         }
-        // dtProduct.Rows.RemoveAt(prodid);
 
         dtProduct.AcceptChanges();
-        //Repeater1.DataSource = dtProduct;
-        //Repeater1.DataBind();
-
 
     }
 
@@ -1215,13 +1097,11 @@ public partial class addWorksheet : System.Web.UI.Page
     {
         DropDownList ddlER = (DropDownList)sender;
         RepeaterItem row = (RepeaterItem)ddlER.NamingContainer;
-        //TextBox txtName = (TextBox)row.FindControl("TxtName");
         int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
 
         dtProduct = (DataTable)ViewState["Products"];
 
 
-        // dtProduct = (DataTable)ViewState["Products"];
 
         DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
         foreach (var newrow in drr)
@@ -1232,8 +1112,6 @@ public partial class addWorksheet : System.Web.UI.Page
         // dtProduct.Rows.RemoveAt(prodid);
 
         dtProduct.AcceptChanges();
-        //Repeater1.DataSource = dtProduct;
-        //Repeater1.DataBind();
 
     }
 

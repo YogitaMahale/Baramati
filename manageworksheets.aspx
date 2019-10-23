@@ -53,7 +53,7 @@
                                         <asp:Label ID="lblMobileno" runat="server" Text='<%# Eval("productid") %>'></asp:Label>
                                     </td>
                                     <td style="text-align: center">
-                                        <asp:Label ID="lblemail" runat="server" Text='<%# Eval("colorid") %>'></asp:Label>
+                                        <asp:Label ID="lblemail" runat="server" Text='<%# Eval("colornames") %>'></asp:Label>
                                     </td>
                                     <%--<td style="text-align: center">
                                         <asp:Image ID="imgProfile" Width="75px" Height="50px" runat="server"></asp:Image>

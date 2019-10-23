@@ -24,8 +24,8 @@ public partial class addeditproduct : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             BindCategory();
-            BindColor();
-            BindSize();
+            //BindColor();
+            //BindSize();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             if (Request.QueryString["id"] != null)
             {
@@ -48,8 +48,8 @@ public partial class addeditproduct : System.Web.UI.Page
         if (objproduct != null)
         {
             ddlCategory.SelectedValue = objproduct.cid.ToString();
-            ddlSize .SelectedValue = objproduct.fk_sizeId.ToString();
-            ddlColor.SelectedValue = objproduct.fk_colorId .ToString();
+            //ddlSize .SelectedValue = objproduct.fk_sizeId.ToString();
+            //ddlColor.SelectedValue = objproduct.fk_colorId .ToString();
 
             txtProductName.Text = objproduct.productname;
             txtSKU.Text = objproduct.sku;
@@ -111,7 +111,8 @@ public partial class addeditproduct : System.Web.UI.Page
             }
         }
     }
-    private void BindSize()
+    /*
+     * private void BindSize()
     {
         DataTable dtSize= (new Cls_size_b ().SelectAll ());
         if (dtSize != null)
@@ -145,6 +146,7 @@ public partial class addeditproduct : System.Web.UI.Page
             }
         }
     }
+    */
     private void Clear()
     {
         txt_Hsncode.Text = string.Empty;
@@ -210,9 +212,10 @@ public partial class addeditproduct : System.Web.UI.Page
         {
             objproduct.mainimage = ViewState["fileName"].ToString();
         }
-
-        objproduct.fk_colorId  = Convert.ToInt64 (ddlColor.SelectedValue.ToString());
-        objproduct.fk_sizeId  = Convert.ToInt64(ddlSize.SelectedValue.ToString());
+        objproduct.fk_colorId = 0;
+        objproduct.fk_sizeId = 0;
+        //objproduct.fk_colorId  = Convert.ToInt64 (ddlColor.SelectedValue.ToString());
+        //objproduct.fk_sizeId  = Convert.ToInt64(ddlSize.SelectedValue.ToString());
         objproduct.packing = Convert.ToInt32(txtpack.Text.Trim());
 
         if (Request.QueryString["id"] != null)
@@ -300,7 +303,7 @@ public partial class addeditproduct : System.Web.UI.Page
 
     private void WatermarkImageCreate(string fileName)
     {
-        string watermarkText = "© MORYATOOLS";
+        string watermarkText = "";
         using (Bitmap bmp = new Bitmap(HttpContext.Current.Server.MapPath(productFrontPath) + fileName, false))
         {
             using (Graphics grp = Graphics.FromImage(bmp))

@@ -40,20 +40,18 @@
                         <asp:TextBox ID="txtProductName" Class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RFVtxtProductName" runat="server" Display="Dynamic" ControlToValidate="txtProductName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
-                        <div class="col-xs-3">
+                        <%--<div class="col-xs-3">
                          <label for="exampleInputEmail1">Select Color </label>
                         <asp:DropDownList ID="ddlColor" Class="form-control"  runat="server"></asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlColor" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
-<%--                      <div class="form-group">--%>
+
                         <div class="col-xs-3">
                           <label for="exampleInputEmail1">Select Size </label>
                         <asp:DropDownList ID="ddlSize" Class="form-control"  runat="server"></asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlSize" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-                    </div>
-                        </div>
-                    <div class="form-group row">
-                        
+                    </div>--%>
+
                         <div class="col-xs-3">
                         <label for="exampleInputPassword1">Customer Price </label>
                         <asp:TextBox ID="txtCustomerProductPrice" Class="form-control" runat="server"></asp:TextBox>
@@ -62,7 +60,6 @@
                     </div>
                     
                         <div class="col-xs-3">
-                        <%--<label for="exampleInputEmail1">Product SKU</label>--%>
                         <asp:TextBox ID="txtSKU" Visible="false" Class="form-control" runat="server"></asp:TextBox>
                             <label for="exampleInputPassword1">Dealer Price</label>
                         <asp:TextBox ID="txtDealerPrice" Class="form-control" runat="server"></asp:TextBox>
@@ -73,6 +70,13 @@
 
 
                     </div>
+
+                        </div>
+
+                    
+                    <div class="form-group row">
+                        
+                        
                         <div class="col-xs-3">
                         <label for="exampleInputPassword1">Wholesale Price</label>
                         <asp:TextBox ID="txtWholesalePrice" Class="form-control" runat="server"></asp:TextBox>
@@ -86,17 +90,26 @@
                         <cc1:FilteredTextBoxExtender ID="FTBtxtSuperWholesalePrice" runat="server" FilterMode="ValidChars" TargetControlID="txtSuperWholesalePrice" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
 
                     </div>
-                        </div>
-                    <div class="form-group row">
                         <div class="col-xs-3">
                         <label for="exampleInputPassword1">Product Discount Price</label>
                         <asp:TextBox ID="txtDiscountProductPrice" Class="form-control" runat="server"></asp:TextBox>
                         <cc1:FilteredTextBoxExtender ID="FTBtxtDiscountProductPrice" runat="server" FilterMode="ValidChars" TargetControlID="txtDiscountProductPrice" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
 
                     </div>
+                        <div class="col-xs-3">
+                        <label for="exampleInputPassword1">Puchase( Landing ) Price</label>
+                        <asp:TextBox ID="txt_landingprice" Class="form-control" runat="server"></asp:TextBox>
+                        <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" FilterMode="ValidChars" TargetControlID="txt_landingprice" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
+
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic" ControlToValidate="txt_landingprice" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+
+                    </div>
+                        </div>
+                    <div class="form-group row">
+                        
                     <%--<div class="form-group">--%>
                         <div class="col-xs-3">
-                        <label for="exampleInputPassword1">Product GST in %</label>
+                        <label for="exampleInputPassword1">Product GST (%)</label>
                         <asp:TextBox ID="txtGST" Class="form-control" runat="server"></asp:TextBox>
                         <cc1:FilteredTextBoxExtender ID="FTBtxtGST" runat="server" FilterMode="ValidChars" TargetControlID="txtGST" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
 
@@ -149,14 +162,7 @@
                         
 
                     <div class="form-group row">
-                        <div class="col-xs-3">
-                        <label for="exampleInputPassword1">Puchase( Landing ) Price</label>
-                        <asp:TextBox ID="txt_landingprice" Class="form-control" runat="server"></asp:TextBox>
-                        <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" FilterMode="ValidChars" TargetControlID="txt_landingprice" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
-
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic" ControlToValidate="txt_landingprice" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-
-                    </div>
+                        
                             <div class="col-xs-3">
                         <label for="exampleInputPassword1">Is Stock</label>
                         <asp:CheckBox ID="cbIsStock" Class="form-control" runat="server"></asp:CheckBox>

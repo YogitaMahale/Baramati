@@ -60,7 +60,7 @@
 
                                         <%--<asp:DropDownList ID="ddlColor" class="form-control select2" multiple="multiple" runat="server" />--%>
                                         <%--<asp:TextBox ID="dummycolor" class="form-control" Enabled="false" Visible="false" runat="server"></asp:TextBox>--%>
-                                        <asp:ListBox ID="lstColor" runat="server" multiple="multiple" class="form-control select2"></asp:ListBox>
+                                        <asp:ListBox ID="lstColor" runat="server" class="form-control select2"></asp:ListBox>
                                         <asp:HiddenField ID="hfcolorid" runat="server" />
             <asp:HiddenField ID="hfcolorname" runat="server" />
             

@@ -148,6 +148,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@particularsid", objworksheetdetails.Particularsid);
                 cmd.Parameters.AddWithValue("@employeeid", objworksheetdetails.Employeeid);
                 cmd.Parameters.AddWithValue("@quantity", objworksheetdetails.Quantity);
+                cmd.Parameters.AddWithValue("@wages", objworksheetdetails.Wages);
                 cmd.Parameters.AddWithValue("@workdate", objworksheetdetails.Workdate);
                 cmd.Parameters.AddWithValue("@remark", objworksheetdetails.Remark);
 

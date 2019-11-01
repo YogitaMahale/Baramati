@@ -116,6 +116,12 @@
 
                                 </div>
                                 <div class="col-xs-2">
+                                    <label for="exampleInputEmail1">Wages</label>
+                                    <asp:TextBox ID="txtwages" class="form-control" runat="server" Text="0"></asp:TextBox>
+
+
+                                </div>
+                                <div class="col-xs-2">
                                     <label for="exampleInputEmail1">Remark</label>
                                     <asp:TextBox ID="txtRemark" class="form-control" runat="server"></asp:TextBox>
 
@@ -147,6 +153,7 @@
                                                 <th class="center">Date</th>
                                                 <th class="center">Employee</th>
                                                 <th class="center">Quantity</th>
+                                                <th class="center">Wages</th>
                                                 <th class="center">Remark</th>
                                                 <%--  <th class="center"> test Name </th>                               
                                             	<th class="center"> BRAND  </th>
@@ -184,6 +191,8 @@
 
                                                         <td class="center">
                                                             <asp:TextBox ID="Quantity" runat="server" Text=' <%#Eval("quantity")%>' AutoPostBack="true" OnTextChanged="Quantity_TextChanged"></asp:TextBox></td>
+                                                        <td class="center">
+                                                            <asp:TextBox ID="Wages" runat="server" Text=' <%#Eval("wages")%>' AutoPostBack="true" OnTextChanged="Quantity_TextChanged"></asp:TextBox></td>
                                                         <td class="center">
                                                             <asp:TextBox ID="Remark" runat="server" Text=' <%#Eval("remark")%>' AutoPostBack="true" OnTextChanged="Remark_TextChanged"></asp:TextBox></td>
 

@@ -260,6 +260,8 @@ public partial class addWorksheet : System.Web.UI.Page
             dtProduct.Columns.Add(new DataColumn("employee", typeof(string)));
             dtProduct.Columns.Add(new DataColumn("employeeid", typeof(int)));
             dtProduct.Columns.Add(new DataColumn("quantity", typeof(string)));
+            dtProduct.Columns.Add(new DataColumn("wages", typeof(string)));
+
             dtProduct.Columns.Add(new DataColumn("remark", typeof(string)));
 
             ViewState["Products"] = dtProduct;
@@ -279,6 +281,7 @@ public partial class addWorksheet : System.Web.UI.Page
         dtRow["date"] = txtWorkDate.Text.ToString();
         dtRow["remark"] = txtRemark.Text.Trim();
         dtRow["quantity"] = txtquantity.Text.Trim();
+        dtRow["wages"] = txtwages.Text.Trim();
         dtProduct.Rows.Add(dtRow);
         ViewState["Products"] = dtProduct;
         return dtProduct;
@@ -319,6 +322,7 @@ public partial class addWorksheet : System.Web.UI.Page
                 dtProduct.Columns.Add(new DataColumn("employee", typeof(string)));
                 dtProduct.Columns.Add(new DataColumn("employeeid", typeof(int)));
                 dtProduct.Columns.Add(new DataColumn("quantity", typeof(string)));
+                dtProduct.Columns.Add(new DataColumn("wages", typeof(string)));
                 dtProduct.Columns.Add(new DataColumn("remark", typeof(string)));
                 ViewState["Products"] = dtProduct;
             }
@@ -414,6 +418,7 @@ public partial class addWorksheet : System.Web.UI.Page
                     objPod.Particularsid= Convert.ToInt64(row["operationid"]);
                     objPod.Employeeid = Convert.ToInt64(row["employeeid"]);
                     objPod.Quantity = Convert.ToInt64(row["quantity"]);
+                    objPod.Wages = Convert.ToDouble(row["wages"]);
                     objPod.Workdate = Convert.ToDateTime(row["date"]);
                     objPod.Remark = Convert.ToString(row["remark"]);
 

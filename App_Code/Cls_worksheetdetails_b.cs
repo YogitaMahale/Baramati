@@ -123,6 +123,7 @@ namespace BusinessLayer
         private Int64 _particularsid;
         private Int64 _employeeid;
         private Int64 _quantity;
+        private Double _wages;
         private DateTime _workdate;
         private String _remark;
         //private Int64 _Quantity1;
@@ -165,6 +166,12 @@ namespace BusinessLayer
         {
             get { return _quantity; }
             set { _quantity = value; }
+        }
+
+        public Double Wages
+        {
+            get { return _wages; }
+            set { _wages = value; }
         }
 
         public String Remark

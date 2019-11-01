@@ -1,15 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="addeditcategory.aspx.cs" Inherits="addeditcategory" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="addeditmaincategory.aspx.cs" Inherits="addeditmaincategory" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-     <style type="text/css">
-        .error {
-            color: red;
-        }
-    </style>
-    
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:UpdatePanel ID="UpadatePanel1" runat="server">
+        <ContentTemplate>
     <div class="row">
         <!-- left column -->
         <div class="col-md-6">
@@ -23,35 +18,11 @@
 
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Category Name </label>
+                        <label for="exampleInputEmail1">Main Category Name </label>
                          <asp:TextBox ID="txtCategoryName" class="form-control" runat="server"></asp:TextBox>
                           <asp:RequiredFieldValidator ID="RFVtxtCategoryName" runat="server" Display="Dynamic" ControlToValidate="txtCategoryName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
                     </div>
-                    <div class="form-group" style="display:none;">
-                        <label for="exampleInputEmail1">Category Actual Price </label>
-                          <asp:TextBox ID="txtActualPrice" class="form-control" runat="server"></asp:TextBox>
-                        <cc1:filteredtextboxextender ID="FTBtxtActualPrice" runat="server" FilterMode="ValidChars" TargetControlID="txtActualPrice" ValidChars="01234567890."></cc1:filteredtextboxextender>
-                    </div>
-
-                      <div class="form-group" style="display:none;">
-                        <label for="exampleInputEmail1">Category Discount Price </label>
-                         <asp:TextBox ID="txtCategoryDiscount" Class="form-control" runat="server"></asp:TextBox>
-                        <cc1:filteredtextboxextender ID="FTBtxtCategoryDiscount" runat="server" FilterMode="ValidChars" TargetControlID="txtCategoryDiscount" ValidChars="01234567890."></cc1:filteredtextboxextender>
-                    </div>
-
-
-
-
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Category Short Description</label>
-                         <asp:TextBox ID="txtCategoryShortDescription" Class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>                  
-                        <asp:RequiredFieldValidator ID="RFVtxtCategoryShortDescription" runat="server" Display="Dynamic" ControlToValidate="txtCategoryShortDescription" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Category Long Description</label>
-                         <asp:TextBox ID="txtCategoryLongDescription" Class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
-                    </div>
-
+                    
 
                     <div class="form-group">
                         <label for="exampleInputFile">Category Image</label>
@@ -71,14 +42,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="form-group row">
-                                <div class="col-xs-6">
-                                    <label for="exampleInputEmail1">Main Category </label>
-                                    <asp:DropDownList ID="ddlMainCategory" Class="form-control" runat="server"></asp:DropDownList>
-
-                                    <asp:RequiredFieldValidator ID="RFVddlCategory" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlMainCategory" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-                                </div>
-                        </div>
+                    
                      <%--<div class="form-group">
                         <label for="exampleInputPassword1">Select Bank</label>
                          <asp:DropDownList ID="ddlBank" Class="form-control" Width="500px" runat="server"></asp:DropDownList>
@@ -115,6 +79,11 @@
 
         <!--/.col (right) -->
     </div>
+            </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="btnImageUpload" /> 
+        </Triggers>
+    </asp:UpdatePanel>
     <!-- jQuery 3 -->
     <script src="Template/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->

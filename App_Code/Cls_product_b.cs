@@ -288,6 +288,7 @@ namespace BusinessLayer
         private Int64 _fk_colorId;
         private Int64 _fk_sizeId;
         private Int32 _packing;
+        private Int64 _brandid;
 
         #endregion
 
@@ -302,6 +303,11 @@ namespace BusinessLayer
         {
             get { return _cid; }
             set { _cid = value; }
+        }
+        public Int64 brandid
+        {
+            get { return _brandid; }
+            set { _brandid = value; }
         }
         public String productname
         {

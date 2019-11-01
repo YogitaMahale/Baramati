@@ -1,18 +1,22 @@
+﻿using BusinessLayer;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using BusinessLayer;
+using System.Linq;
+using System.Web;
 
+/// <summary>
+/// Summary description for Cls_maincategory_db
+/// </summary>
 namespace DatabaseLayer
 {
-    public class Cls_category_db
+    public class Cls_maincategory_db
     {
         SqlConnection ConnectionString = new SqlConnection();
         #region Constructor
-        public Cls_category_db()
+        public Cls_maincategory_db()
         {
             string name = string.Empty;
             string conname = string.Empty;
@@ -28,7 +32,7 @@ namespace DatabaseLayer
             ConnectionString.ConnectionString = ConfigurationManager.ConnectionStrings[conname].ConnectionString;
         }
         #endregion
-      
+
         #region Public Methods
 
         public DataTable SelectAllAdmin()
@@ -38,7 +42,7 @@ namespace DatabaseLayer
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_SelectAllAdmin";
+                cmd.CommandText = "maincategory_SelectAllAdmin";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
                 ConnectionString.Open();
@@ -64,7 +68,7 @@ namespace DatabaseLayer
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_SelectAll";
+                cmd.CommandText = "maincategory_SelectAll";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
                 ConnectionString.Open();
@@ -83,46 +87,46 @@ namespace DatabaseLayer
             return ds.Tables[0];
         }
 
-        public DataTable category_WSSelectAll()
+        //public DataTable category_WSSelectAll()
+        //{
+        //    DataSet ds = new DataSet();
+        //    SqlDataAdapter da;
+        //    try
+        //    {
+        //        SqlCommand cmd = new SqlCommand();
+        //        cmd.CommandText = "category_WSSelectAll";
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Connection = ConnectionString;
+        //        ConnectionString.Open();
+        //        da = new SqlDataAdapter(cmd);
+        //        da.Fill(ds);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrHandler.writeError(ex.Message, ex.StackTrace);
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        ConnectionString.Close();
+        //    }
+        //    return ds.Tables[0];
+        //}
+
+
+
+        public maincategory SelectById(Int64 cid)
         {
-            DataSet ds = new DataSet();
             SqlDataAdapter da;
+            DataSet ds = new DataSet();
+            maincategory objcategory = new maincategory();
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_WSSelectAll";
+                cmd.CommandText = "maincategory_SelectById";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
-                ConnectionString.Open();
-                da = new SqlDataAdapter(cmd);
-                da.Fill(ds);
-            }
-            catch (Exception ex)
-            {
-                ErrHandler.writeError(ex.Message, ex.StackTrace);
-                return null;
-            }
-            finally
-            {
-                ConnectionString.Close();
-            }
-            return ds.Tables[0];
-        }
-
-
-
-        public category SelectById(Int64 cid)
-        {
-            SqlDataAdapter da;
-            DataSet ds = new DataSet();
-            category objcategory = new category();
-            try
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_SelectById";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Connection = ConnectionString;
-                cmd.Parameters.AddWithValue("@cid", cid);
+                cmd.Parameters.AddWithValue("@id", cid);
                 ConnectionString.Open();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
@@ -136,15 +140,10 @@ namespace DatabaseLayer
                             if (ds.Tables[0].Rows.Count > 0)
                             {
                                 {
-                                    objcategory.cid = Convert.ToInt64(ds.Tables[0].Rows[0]["cid"]);
-                                    objcategory.categoryname = Convert.ToString(ds.Tables[0].Rows[0]["categoryname"]);
+                                    objcategory.id = Convert.ToInt64(ds.Tables[0].Rows[0]["id"]);
+                                    objcategory.name = Convert.ToString(ds.Tables[0].Rows[0]["name"]);
                                     objcategory.imagename = Convert.ToString(ds.Tables[0].Rows[0]["imagename"]);
-                                    objcategory.actualprice = Convert.ToDecimal(ds.Tables[0].Rows[0]["actualprice"]);
-                                    objcategory.discountprice = Convert.ToDecimal(ds.Tables[0].Rows[0]["discountprice"]);
-                                    objcategory.shortdesc = Convert.ToString(ds.Tables[0].Rows[0]["shortdesc"]);
-                                    objcategory.longdescp = Convert.ToString(ds.Tables[0].Rows[0]["longdescp"]);
-                                    //objcategory.bankid = Convert.ToInt32(ds.Tables[0].Rows[0]["bankid"]);
-                                    objcategory.maincategoryid = Convert.ToInt32(ds.Tables[0].Rows[0]["maincategoryid"]);
+                                    
                                 }
                             }
                         }
@@ -163,58 +162,52 @@ namespace DatabaseLayer
             return objcategory;
         }
 
-        public DataTable category_WSSelectById(Int64 cid)
-        {
-            DataSet ds = new DataSet();
-            SqlDataAdapter da;
-            try
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_WSSelectById";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Connection = ConnectionString;
-                cmd.Parameters.AddWithValue("@cid", cid);
-                ConnectionString.Open();
-                da = new SqlDataAdapter(cmd);
-                da.Fill(ds);
-            }
-            catch (Exception ex)
-            {
-                ErrHandler.writeError(ex.Message, ex.StackTrace);
-                return null;
-            }
-            finally
-            {
-                ConnectionString.Close();
-            }
-            return ds.Tables[0];
-        }
+        //public DataTable category_WSSelectById(Int64 cid)
+        //{
+        //    DataSet ds = new DataSet();
+        //    SqlDataAdapter da;
+        //    try
+        //    {
+        //        SqlCommand cmd = new SqlCommand();
+        //        cmd.CommandText = "category_WSSelectById";
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Connection = ConnectionString;
+        //        cmd.Parameters.AddWithValue("@cid", cid);
+        //        ConnectionString.Open();
+        //        da = new SqlDataAdapter(cmd);
+        //        da.Fill(ds);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrHandler.writeError(ex.Message, ex.StackTrace);
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        ConnectionString.Close();
+        //    }
+        //    return ds.Tables[0];
+        //}
 
-        public Int64 Insert(category objcategory)
+        public Int64 Insert(maincategory objcategory)
         {
             Int64 result = 0;
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_Insert";
+                cmd.CommandText = "maincategory_Insert";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
 
                 SqlParameter param = new SqlParameter();
-                param.ParameterName = "@cid";
-                param.Value = objcategory.cid;
+                param.ParameterName = "@id";
+                param.Value = objcategory.id;
                 param.SqlDbType = SqlDbType.BigInt;
                 param.Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add(param);
-                cmd.Parameters.AddWithValue("@categoryname", objcategory.categoryname);
+                cmd.Parameters.AddWithValue("@name", objcategory.name);
                 cmd.Parameters.AddWithValue("@imagename", objcategory.imagename);
-                cmd.Parameters.AddWithValue("@actualprice", objcategory.actualprice);
-                cmd.Parameters.AddWithValue("@discountprice", objcategory.discountprice);
-                cmd.Parameters.AddWithValue("@shortdesc", objcategory.shortdesc);
-                cmd.Parameters.AddWithValue("@longdescp", objcategory.longdescp);
-                // cmd.Parameters.AddWithValue("@bankid", objcategory.bankid);
-                cmd.Parameters.AddWithValue("@maincategoryid", objcategory.maincategoryid);
-
+                
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
                 result = Convert.ToInt64(param.Value);
@@ -231,31 +224,25 @@ namespace DatabaseLayer
             return result;
         }
 
-        public Int64 Update(category objcategory)
+        public Int64 Update(maincategory objcategory)
         {
             Int64 result = 0;
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_Update";
+                cmd.CommandText = "maincategory_Update";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
 
                 SqlParameter param = new SqlParameter();
-                param.ParameterName = "@cid";
-                param.Value = objcategory.cid;
+                param.ParameterName = "@id";
+                param.Value = objcategory.id;
                 param.SqlDbType = SqlDbType.BigInt;
                 param.Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add(param);
-                cmd.Parameters.AddWithValue("@categoryname", objcategory.categoryname);
+                cmd.Parameters.AddWithValue("@name", objcategory.name);
                 cmd.Parameters.AddWithValue("@imagename", objcategory.imagename);
-                cmd.Parameters.AddWithValue("@actualprice", objcategory.actualprice);
-                cmd.Parameters.AddWithValue("@discountprice", objcategory.discountprice);
-                cmd.Parameters.AddWithValue("@shortdesc", objcategory.shortdesc);
-                cmd.Parameters.AddWithValue("@longdescp", objcategory.longdescp);
-                //cmd.Parameters.AddWithValue("@bankid", objcategory.bankid);                
-                cmd.Parameters.AddWithValue("@maincategoryid", objcategory.maincategoryid);
-
+                
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
                 result = Convert.ToInt64(param.Value);
@@ -276,11 +263,11 @@ namespace DatabaseLayer
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_Delete";
+                cmd.CommandText = "maincategory_Delete";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
 
-                cmd.Parameters.AddWithValue("@cid", cid);
+                cmd.Parameters.AddWithValue("@id", cid);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
@@ -302,10 +289,10 @@ namespace DatabaseLayer
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "category_IsActive";
+                cmd.CommandText = "maincategory_IsActive";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
-                cmd.Parameters.AddWithValue("@cid", CategoryId);
+                cmd.Parameters.AddWithValue("@id", CategoryId);
                 cmd.Parameters.AddWithValue("@isactive", IsActive);
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -18,12 +20,14 @@ public partial class addeditproduct : System.Web.UI.Page
     string productFrontPath = "~/uploads/product/water/";
     string productWaterFrontPath = "~/uploads/product/front/";
     common ocommon = new common();
+        SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (!Page.IsPostBack)
         {
-            BindCategory();
+            BindMainCategoryBrand();
             //BindColor();
             //BindSize();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
@@ -31,13 +35,13 @@ public partial class addeditproduct : System.Web.UI.Page
             {
                 BindProducts(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
                 btnSave.Text = "Update";
-                hPageTitle.InnerText = "Product Update";
-                Page.Title = "Product Update";
+                hPageTitle.InnerText = "Update Article";
+                Page.Title = "Update Article";
             }
             else
             {
-                hPageTitle.InnerText = "Product Add";
-                Page.Title = "Product Add";
+                hPageTitle.InnerText = "New Article";
+                Page.Title = "New Article";
             }
         }
     }
@@ -89,25 +93,61 @@ public partial class addeditproduct : System.Web.UI.Page
             txt_RealStock.Text = objproduct.RealStock.ToString();
             cbIsHotproduct.Checked = objproduct.isHotproduct;
             txtpack.Text = objproduct.packing.ToString();
+            ddlBrand.SelectedValue = objproduct.brandid.ToString();
 
         }
     }
 
-    private void BindCategory()
+    private void BindMainCategoryBrand()
     {
+        DataTable dtBrands = new Cls_brand_b().SelectAll();
+        
+        /*
         DataTable dtCategory = (new Cls_category_b().SelectAll());
         ddlCategory.Items.Clear();
         if (dtCategory != null)
         {
             if (dtCategory.Rows.Count > 0)
             {
-               
+
                 ddlCategory.DataSource = dtCategory;
                 ddlCategory.DataTextField = "categoryname";
                 ddlCategory.DataValueField = "cid";
                 ddlCategory.DataBind();
                 ListItem objListItem = new ListItem("--Select Category--", "0");
                 ddlCategory.Items.Insert(0, objListItem);
+            }
+        }
+        */
+        
+
+        DataTable dtMainCategory = (new Cls_maincategory_b().SelectAll());
+        ddlMain.Items.Clear();
+        if (dtMainCategory != null)
+        {
+            if (dtMainCategory.Rows.Count > 0)
+            {
+
+                ddlMain.DataSource = dtMainCategory;
+                ddlMain.DataTextField = "name";
+                ddlMain.DataValueField = "id";
+                ddlMain.DataBind();
+                ListItem objListItem = new ListItem("--Select Category--", "0");
+                ddlMain.Items.Insert(0, objListItem);
+            }
+        }
+
+        if (dtBrands != null)
+        {
+            if (dtBrands.Rows.Count > 0)
+            {
+
+                ddlBrand.DataSource = dtBrands;
+                ddlBrand.DataTextField = "brandName";
+                ddlBrand.DataValueField = "bid";
+                ddlBrand.DataBind();
+                ListItem objListItem = new ListItem("--Select Brand--", "0");
+                ddlBrand.Items.Insert(0, objListItem);
             }
         }
     }
@@ -171,7 +211,8 @@ public partial class addeditproduct : System.Web.UI.Page
         txtYoutubeName2.Text = string.Empty;
         txtYoutubeName3.Text = string.Empty;
         txtYoutubeName4.Text = string.Empty;
-        BindCategory();
+        ddlBrand.SelectedIndex = 0;
+        BindMainCategoryBrand();
     }
 
     protected void btnSave_Click(object sender, EventArgs e)
@@ -179,7 +220,8 @@ public partial class addeditproduct : System.Web.UI.Page
         Int64 Result = 0;
         product objproduct = new product();
         objproduct.productname = txtProductName.Text.Trim();
-        objproduct.sku = txtSKU.Text.Trim();
+        //objproduct.sku = txtSKU.Text.Trim();
+        objproduct.sku = "0";
         objproduct.customerprice = Convert.ToDecimal(txtCustomerProductPrice.Text.Trim());
         objproduct.dealerprice = Convert.ToDecimal(txtDealerPrice.Text.Trim());
         objproduct.discountprice = Convert.ToDecimal(txtDiscountProductPrice.Text.Trim());
@@ -217,6 +259,7 @@ public partial class addeditproduct : System.Web.UI.Page
         //objproduct.fk_colorId  = Convert.ToInt64 (ddlColor.SelectedValue.ToString());
         //objproduct.fk_sizeId  = Convert.ToInt64(ddlSize.SelectedValue.ToString());
         objproduct.packing = Convert.ToInt32(txtpack.Text.Trim());
+        objproduct.brandid = Convert.ToInt64(ddlBrand.SelectedValue);
 
         if (Request.QueryString["id"] != null)
         {
@@ -243,7 +286,7 @@ public partial class addeditproduct : System.Web.UI.Page
             {
                 Clear();
                 spnMessgae.Style.Add("color", "red");
-                spnMessgae.InnerText = "Product Not Updated";
+                spnMessgae.InnerText = "Article Not Updated";
                 BindProducts(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
             }
         }
@@ -271,7 +314,7 @@ public partial class addeditproduct : System.Web.UI.Page
             {
                 Clear();
                 spnMessgae.Style.Add("color", "red");
-                spnMessgae.InnerText = "Product Not Inserted";
+                spnMessgae.InnerText = "Article Saved";
             }
         }
     }
@@ -433,5 +476,48 @@ public partial class addeditproduct : System.Web.UI.Page
             Response.Redirect(Page.ResolveUrl("~/manageproductprice.aspx"));
 
         }
+    }
+
+    protected void ddlMain_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DataTable dtCategory = new DataTable();
+        ddlCategory.Items.Clear();
+
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT cid,categoryname FROM category WHERE isdelete = 0 and maincategoryid = @id";
+            //cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = ConnectionString;
+            cmd.Parameters.AddWithValue("@id", ddlMain.SelectedValue);
+            //cmd.Parameters.AddWithValue("@isactive", IsActive);
+            ConnectionString.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dtCategory);
+            if (dtCategory != null)
+            {
+                if (dtCategory.Rows.Count > 0)
+                {
+
+                    ddlCategory.DataSource = dtCategory;
+                    ddlCategory.DataTextField = "categoryname";
+                    ddlCategory.DataValueField = "cid";
+                    ddlCategory.DataBind();
+                    ListItem objListItem = new ListItem("--Select Category--", "0");
+                    ddlCategory.Items.Insert(0, objListItem);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            //return false;
+            
+        }
+        finally
+        {
+            ConnectionString.Close();
+        }
+
+
     }
 }

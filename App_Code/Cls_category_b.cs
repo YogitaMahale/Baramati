@@ -183,6 +183,7 @@ namespace BusinessLayer
         private String _field1;
         private String _field2;
         private Int32 _bankid;
+        private Int32 _maincategoryid;
         #endregion
 
 
@@ -196,6 +197,11 @@ namespace BusinessLayer
         {
             get { return _bankid; }
             set { _bankid = value; }
+        }
+        public Int32 maincategoryid
+        {
+            get { return _maincategoryid; }
+            set { _maincategoryid = value; }
         }
         public String categoryname
         {

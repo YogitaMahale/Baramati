@@ -230,6 +230,8 @@ namespace DatabaseLayer
                                     objproduct.fk_colorId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_colorId"]);
                                     objproduct.fk_sizeId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_sizeId"]);
                                     objproduct.packing = Convert.ToInt32(ds.Tables[0].Rows[0]["packing"]);
+                                    objproduct.brandid= Convert.ToInt64(ds.Tables[0].Rows[0]["brandid"]);
+
 
                                 }
                             }
@@ -352,6 +354,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@fk_sizeId", objproduct.fk_sizeId );
                 cmd.Parameters.AddWithValue("@fk_colorId", objproduct.fk_colorId );
                 cmd.Parameters.AddWithValue("@packing", objproduct.packing);
+                cmd.Parameters.AddWithValue("@brandid", objproduct.brandid);
 
 
                 ConnectionString.Open();
@@ -418,6 +421,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@fk_sizeId", objproduct.fk_sizeId);
                 cmd.Parameters.AddWithValue("@fk_colorId", objproduct.fk_colorId);
                 cmd.Parameters.AddWithValue("@packing", objproduct.packing);
+                cmd.Parameters.AddWithValue("@brandid", objproduct.brandid);
 
 
 

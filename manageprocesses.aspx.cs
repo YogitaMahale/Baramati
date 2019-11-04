@@ -2,43 +2,41 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-public partial class manageColor : System.Web.UI.Page
+public partial class manageprocesses : System.Web.UI.Page
 {
-    //string categoryFrontPath = "~/uploads/category/front/";
     common ocommon = new common();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
         {
-            BindCategory();
+            BindProcesses();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
-            hPageTitle.InnerText = "Manage Color";
+            hPageTitle.InnerText = "Manage Processes";
         }
 
         if (Request.QueryString["mode"] == "u")
         {
             spnMessage.Visible = true;
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "Color Updated Successfully";
+            spnMessage.InnerText = "Process Updated Successfully";
         }
         else if (Request.QueryString["mode"] == "i")
         {
             spnMessage.Visible = true;
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "Color Inserted Successfully";
+            spnMessage.InnerText = "Process Saved Successfully";
         }
     }
 
-    private void BindCategory()
+    private void BindProcesses()
     {
-        DataTable dtCategory = (new Cls_color_b ().SelectAll ());
+        DataTable dtCategory = (new Cls_process_b().SelectAll());
         if (dtCategory != null)
         {
             if (dtCategory.Rows.Count > 0)
@@ -63,14 +61,14 @@ public partial class manageColor : System.Web.UI.Page
     {
         if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
         {
-            
+
             HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
-            hlEdit.NavigateUrl = Page.ResolveUrl("~/addeditColor.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "cid").ToString(), true));
-            
+            hlEdit.NavigateUrl = Page.ResolveUrl("~/addeditprocess.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
+
         }
     }
 
-    
+
 
     protected void lnkDelete_Click(object sender, EventArgs e)
     {
@@ -79,20 +77,20 @@ public partial class manageColor : System.Web.UI.Page
         spnMessage.Visible = true;
         //if (ProductCount.ToString() == "0")
         //{
-            Int64 CategoryId = int.Parse((item.FindControl("lblCategoryId") as Label).Text);
-            bool yes = (new Cls_color_b().Delete(CategoryId));
+        Int64 CategoryId = int.Parse((item.FindControl("lblCategoryId") as Label).Text);
+        bool yes = (new Cls_process_b().Delete(CategoryId));
 
-            if (yes)
-            {
-                BindCategory();
-                spnMessage.Style.Add("color", "green");
-                spnMessage.InnerText = "Color Deleted Successfully";
-            }
-            else
-            {
-                spnMessage.Style.Add("color", "red");
-                spnMessage.InnerText = "Color Not Deleted";
-            }
+        if (yes)
+        {
+            BindProcesses();
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Process Deleted Successfully";
+        }
+        else
+        {
+            spnMessage.Style.Add("color", "red");
+            spnMessage.InnerText = "Process Not Deleted";
+        }
         //}
         //else
         //{
@@ -102,11 +100,11 @@ public partial class manageColor : System.Web.UI.Page
 
     }
 
-   
+
     protected void btnNewCategoty_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Page.ResolveUrl("~/addeditColor.aspx"));
+        Response.Redirect(Page.ResolveUrl("~/addeditprocess.aspx"));
     }
 
-    
+
 }

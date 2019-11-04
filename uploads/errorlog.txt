@@ -3692,3 +3692,16 @@ Error Message :Object cannot be cast from DBNull to other types.
    at System.Convert.ToInt32(Object value)
    at DatabaseLayer.Cls_category_db.SelectById(Int64 cid) in f:\GitRepos\Baramati\App_Code\Cls_category_db.cs:line 146
 __________________________
+
+Log Entry : 
+11/04/2019 13:47:14
+Error Message :Thread was being aborted.
+
+ Statck Trace:    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
+__________________________

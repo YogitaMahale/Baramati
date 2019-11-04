@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
@@ -449,6 +446,7 @@ public partial class addWorksheet : System.Web.UI.Page
 
 
     #region-- Send Mail
+    /*
     private bool SendOrderMail(String mailTo, String filename)
     {
         common ocommon = new common();
@@ -498,419 +496,423 @@ public partial class addWorksheet : System.Web.UI.Page
         }
         return send;
     }
+    */
     #endregion
 
 
 
     #region SMS
-    public bool SendSMS(string Name, string MobileNo)
+    /*
+public bool SendSMS(string Name, string MobileNo)
+{
+    bool flg = false;
+
+    #region
+    try
     {
-        bool flg = false;
+        string m = null;
+        string msg = "Dear " + Name + ",";
+        string msg1 = "\nA purchase order has been generated for you. Please check your inbox for details.";
+        string msg2 = "\n-Trimurti Diagnostics Alerts";
 
-        #region
-        try
-        {
-            string m = null;
-            string msg = "Dear " + Name + ",";
-            string msg1 = "\nA purchase order has been generated for you. Please check your inbox for details.";
-            string msg2 = "\n-Trimurti Diagnostics Alerts";
+        string OPTINS = "TDCNSK";
+        m = msg + msg1 + msg2;
 
-            string OPTINS = "TDCNSK";
-            m = msg + msg1 + msg2;
+        string type = "3";
+        string strUrl = "https://www.bulksmsgateway.in/sendmessage.php?user=Trimurti&password=" + "Trimurti@123" + "&message=" + m + "&sender=" + OPTINS + "&mobile=" + MobileNo + "&type=" + 3;
 
-            string type = "3";
-            string strUrl = "https://www.bulksmsgateway.in/sendmessage.php?user=Trimurti&password=" + "Trimurti@123" + "&message=" + m + "&sender=" + OPTINS + "&mobile=" + MobileNo + "&type=" + 3;
-
-            System.Net.WebRequest request = System.Net.WebRequest.Create(strUrl);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream s = (Stream)response.GetResponseStream();
-            StreamReader readStream = new StreamReader(s);
-            string dataString = readStream.ReadToEnd();
-            response.Close();
-            s.Close();
-            readStream.Close();
-            //  Response.Write("Sent");
-            flg = true;
+        System.Net.WebRequest request = System.Net.WebRequest.Create(strUrl);
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        Stream s = (Stream)response.GetResponseStream();
+        StreamReader readStream = new StreamReader(s);
+        string dataString = readStream.ReadToEnd();
+        response.Close();
+        s.Close();
+        readStream.Close();
+        //  Response.Write("Sent");
+        flg = true;
 
 
-        }
-        catch (Exception p)
-        {
+    }
+    catch (Exception p)
+    {
 
-        }
-        #endregion
-        return flg;
     }
     #endregion
-
+    return flg;
+}
+#endregion
+    */
+    #endregion
 
     #region Purchase Order
-    public Boolean PDFUpload(Int64 PurchaseOrderId)
-    {
-        string finalResult = string.Empty;
-        bool flag = true;
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-
-        Int64 inid = 0;
-        try
-        {
-
-
-            //string query = "Select POH.*,CONVERT(nvarchar, POH.OrderDate,103) + ' '+REPLACE(REPLACE(CONVERT(varchar(15), CAST(POH.OrderDate AS TIME), 100), 'P', ' P'), 'A', ' A') as OrderDate1, POD.*, PM.ProdName as ProdName , VM.*, BM.BrandName as Brand, SM.Size as Size from [DoctorDiagnosisNew].[PurchaseOrderHeader] POH ,[DoctorDiagnosisNew].[PurchaseOrderDetails] POD ,[dbo].[VendorMaster] VM ,[dbo].[BrandMaster] BM ,[dbo].[SizeMaster] SM ,[dbo].[ProductMaster] PM where POH.isdeleted=0 AND POH.[PurchaseOrderId] = " + CategoryId + " AND POH.[VendorId] = VM.[VendorId] AND POH.[PurchaseOrderId] = POD.[PurchaseOrderId] AND POD.[BrandId] = BM.[BrandId] AND POD.[SizeId] = SM.[SizeId] AND POD.[ProdId] = PM.[ProdId] ORDER BY ProdName DESC";
-            DataSet ds = new DataSet();
-
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "PurchaseOrderHeader_SelectById";
-            cmd.Parameters.AddWithValue("@id", PurchaseOrderId);
-            //cmd.Parameters.AddWithValue("@password", password);
-            cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sda = new SqlDataAdapter();
-            cmd.Connection = con;
-            sda.SelectCommand = cmd;
+        
+    //public Boolean PDFUpload(Int64 PurchaseOrderId)
+    //{
+    //    string finalResult = string.Empty;
+    //    bool flag = true;
+    //    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+
+    //    Int64 inid = 0;
+    //    try
+    //    {
+
+
+    //        //string query = "Select POH.*,CONVERT(nvarchar, POH.OrderDate,103) + ' '+REPLACE(REPLACE(CONVERT(varchar(15), CAST(POH.OrderDate AS TIME), 100), 'P', ' P'), 'A', ' A') as OrderDate1, POD.*, PM.ProdName as ProdName , VM.*, BM.BrandName as Brand, SM.Size as Size from [DoctorDiagnosisNew].[PurchaseOrderHeader] POH ,[DoctorDiagnosisNew].[PurchaseOrderDetails] POD ,[dbo].[VendorMaster] VM ,[dbo].[BrandMaster] BM ,[dbo].[SizeMaster] SM ,[dbo].[ProductMaster] PM where POH.isdeleted=0 AND POH.[PurchaseOrderId] = " + CategoryId + " AND POH.[VendorId] = VM.[VendorId] AND POH.[PurchaseOrderId] = POD.[PurchaseOrderId] AND POD.[BrandId] = BM.[BrandId] AND POD.[SizeId] = SM.[SizeId] AND POD.[ProdId] = PM.[ProdId] ORDER BY ProdName DESC";
+    //        DataSet ds = new DataSet();
+
+    //        SqlCommand cmd = new SqlCommand();
+
+    //        cmd.CommandText = "PurchaseOrderHeader_SelectById";
+    //        cmd.Parameters.AddWithValue("@id", PurchaseOrderId);
+    //        //cmd.Parameters.AddWithValue("@password", password);
+    //        cmd.CommandType = CommandType.StoredProcedure;
+    //        SqlDataAdapter sda = new SqlDataAdapter();
+    //        cmd.Connection = con;
+    //        sda.SelectCommand = cmd;
 
+
+
+    //        //SqlDataAdapter da = new SqlDataAdapter(query, con);
+    //        sda.Fill(ds);
+    //        String po = ds.Tables[0].Rows[0]["PONo"].ToString();
+    //        Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
+    //        MemoryStream PDFData = new MemoryStream();
+    //        //PdfWriter pw = PdfWriter.GetInstance(
+    //        PdfWriter writer = PdfWriter.GetInstance(pdfDoc, new FileStream(Context.Server.MapPath("~/uploads/PurchaseOrders/") + po + ".pdf", FileMode.Create));
+
+    //        var titleFont = FontFactory.GetFont("Arial", 6, Font.NORMAL);
+    //        var titleFontBlue = FontFactory.GetFont("Arial", 14, Font.NORMAL, Color.BLUE);
+    //        var boldTableFont = FontFactory.GetFont("Arial", 8, Font.BOLD);//8
+    //        var boldTableFont1 = FontFactory.GetFont("Arial", 8, Font.BOLD);//8
+    //        var bodyFont = FontFactory.GetFont("Arial", 7, Font.NORMAL);//8
+    //        var EmailFont = FontFactory.GetFont("Arial", 8, Font.BOLD, Color.BLACK);//8
+    //        var HeaderFont = FontFactory.GetFont("Arial", 10, Font.BOLD, Color.BLACK);
 
-
-            //SqlDataAdapter da = new SqlDataAdapter(query, con);
-            sda.Fill(ds);
-            String po = ds.Tables[0].Rows[0]["PONo"].ToString();
-            Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
-            MemoryStream PDFData = new MemoryStream();
-            //PdfWriter pw = PdfWriter.GetInstance(
-            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, new FileStream(Context.Server.MapPath("~/uploads/PurchaseOrders/") + po + ".pdf", FileMode.Create));
-
-            var titleFont = FontFactory.GetFont("Arial", 6, Font.NORMAL);
-            var titleFontBlue = FontFactory.GetFont("Arial", 14, Font.NORMAL, Color.BLUE);
-            var boldTableFont = FontFactory.GetFont("Arial", 8, Font.BOLD);//8
-            var boldTableFont1 = FontFactory.GetFont("Arial", 8, Font.BOLD);//8
-            var bodyFont = FontFactory.GetFont("Arial", 7, Font.NORMAL);//8
-            var EmailFont = FontFactory.GetFont("Arial", 8, Font.BOLD, Color.BLACK);//8
-            var HeaderFont = FontFactory.GetFont("Arial", 10, Font.BOLD, Color.BLACK);
+    //        var footerfont = FontFactory.GetFont("Arial", 6, Font.NORMAL, Color.BLACK);//8
+    //        Color TabelHeaderBackGroundColor = WebColors.GetRGBColor("#EEEEEE");
 
-            var footerfont = FontFactory.GetFont("Arial", 6, Font.NORMAL, Color.BLACK);//8
-            Color TabelHeaderBackGroundColor = WebColors.GetRGBColor("#EEEEEE");
+    //        Rectangle pageSize = writer.PageSize;
+    //        // Open the Document for writing
+    //        pdfDoc.Open();
+    //        //Add elements to the document here
 
-            Rectangle pageSize = writer.PageSize;
-            // Open the Document for writing
-            pdfDoc.Open();
-            //Add elements to the document here
+    //        #region Top table
+    //        // Create the header table 
+    //        PdfPTable headertable = new PdfPTable(3);
+    //        headertable.HorizontalAlignment = 0;
+    //        headertable.WidthPercentage = 100;
+    //        headertable.SetWidths(new float[] { 100f, 320f, 220f });  // then set the column's __relative__ widths
+    //        headertable.DefaultCell.Border = Rectangle.NO_BORDER;
+    //        headertable.DefaultCell.Border = Rectangle.BOX; //for testing           
 
-            #region Top table
-            // Create the header table 
-            PdfPTable headertable = new PdfPTable(3);
-            headertable.HorizontalAlignment = 0;
-            headertable.WidthPercentage = 100;
-            headertable.SetWidths(new float[] { 100f, 320f, 220f });  // then set the column's __relative__ widths
-            headertable.DefaultCell.Border = Rectangle.NO_BORDER;
-            headertable.DefaultCell.Border = Rectangle.BOX; //for testing           
 
 
+    //        // invoice rperte
 
-            // invoice rperte
+    //        PdfPTable Invoicetable2 = new PdfPTable(1);
+    //        Invoicetable2.HorizontalAlignment = 0;
+    //        Invoicetable2.WidthPercentage = 100;
+    //        Invoicetable2.SetWidths(new float[] { 500f });  // then set the column's __relative__ widths
+    //        Invoicetable2.DefaultCell.Border = Rectangle.NO_BORDER;
 
-            PdfPTable Invoicetable2 = new PdfPTable(1);
-            Invoicetable2.HorizontalAlignment = 0;
-            Invoicetable2.WidthPercentage = 100;
-            Invoicetable2.SetWidths(new float[] { 500f });  // then set the column's __relative__ widths
-            Invoicetable2.DefaultCell.Border = Rectangle.NO_BORDER;
+    //        {
 
-            {
+    //            PdfPTable mainN = new PdfPTable(1);
+    //            // tablenew.HorizontalAlignment = 1;
+    //            //PdfPCell cellnew = new PdfPCell(new Phrase("PURCHASE ORDER"),EmailFont);
+    //            //    PdfPCell cellN = new PdfPCell(new Phrase("Trimurti Diagnostics \n\n Home/Clinic Collection No : 7777 8866 04/05, 9766 6600 83 | 0253 2376062 "
+    //            //+ "\n\n28, Purab Paschim Plaza, Divya Adlabs Building, Trimurti Chowk, CIDCO, Nashik - 422008", HeaderFont));
+    //            PdfPCell cellN = new PdfPCell(new Phrase("Morya Tools \n\n 22, Pradhan Park, M.G Road, Nashik, Maharashtra, India 422001 "
+    //        + "\n\nPhone: (0253) 3014578 Email: kshatriya.enterprises@gmail.com", HeaderFont));
+    //            cellN.PaddingTop = 15f;
+    //            cellN.PaddingBottom = 15f;
+    //            cellN.VerticalAlignment = 1;
+    //            //cellnew.Colspan = 2;
+    //            cellN.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+    //            mainN.AddCell(cellN);
+    //            PdfPCell nesthousingnn = new PdfPCell(mainN);
 
-                PdfPTable mainN = new PdfPTable(1);
-                // tablenew.HorizontalAlignment = 1;
-                //PdfPCell cellnew = new PdfPCell(new Phrase("PURCHASE ORDER"),EmailFont);
-                //    PdfPCell cellN = new PdfPCell(new Phrase("Trimurti Diagnostics \n\n Home/Clinic Collection No : 7777 8866 04/05, 9766 6600 83 | 0253 2376062 "
-                //+ "\n\n28, Purab Paschim Plaza, Divya Adlabs Building, Trimurti Chowk, CIDCO, Nashik - 422008", HeaderFont));
-                PdfPCell cellN = new PdfPCell(new Phrase("Morya Tools \n\n 22, Pradhan Park, M.G Road, Nashik, Maharashtra, India 422001 "
-            + "\n\nPhone: (0253) 3014578 Email: kshatriya.enterprises@gmail.com", HeaderFont));
-                cellN.PaddingTop = 15f;
-                cellN.PaddingBottom = 15f;
-                cellN.VerticalAlignment = 1;
-                //cellnew.Colspan = 2;
-                cellN.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
-                mainN.AddCell(cellN);
-                PdfPCell nesthousingnn = new PdfPCell(mainN);
+    //            PdfPTable tablenew = new PdfPTable(1);
+    //            // tablenew.HorizontalAlignment = 1;
+    //            //PdfPCell cellnew = new PdfPCell(new Phrase("PURCHASE ORDER"),EmailFont);
+    //            PdfPCell cellnew = new PdfPCell(new Phrase("PURCHASE ORDER", EmailFont));
+    //            cellnew.PaddingTop = 15f;
+    //            cellnew.PaddingBottom = 15f;
+    //            cellnew.VerticalAlignment = 1;
+    //            //cellnew.Colspan = 2;
+    //            cellnew.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+    //            tablenew.AddCell(cellnew);
+    //            PdfPCell nesthousingn = new PdfPCell(tablenew);
 
-                PdfPTable tablenew = new PdfPTable(1);
-                // tablenew.HorizontalAlignment = 1;
-                //PdfPCell cellnew = new PdfPCell(new Phrase("PURCHASE ORDER"),EmailFont);
-                PdfPCell cellnew = new PdfPCell(new Phrase("PURCHASE ORDER", EmailFont));
-                cellnew.PaddingTop = 15f;
-                cellnew.PaddingBottom = 15f;
-                cellnew.VerticalAlignment = 1;
-                //cellnew.Colspan = 2;
-                cellnew.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
-                tablenew.AddCell(cellnew);
-                PdfPCell nesthousingn = new PdfPCell(tablenew);
 
 
 
 
+    //            PdfPTable tablenew1 = new PdfPTable(2);
 
-                PdfPTable tablenew1 = new PdfPTable(2);
+    //            // tablenew1.DefaultCell.FixedHeight = 100f;
+    //            PdfPCell cellnew4 = new PdfPCell(new Phrase("PO No :    " + ds.Tables[0].Rows[0]["PONo"].ToString(), EmailFont));
+    //            cellnew4.FixedHeight = 30f;
+    //            cellnew4.HorizontalAlignment = 1;
+    //            cellnew4.PaddingTop = 15f;
+    //            cellnew4.PaddingBottom = 15f;
+    //            PdfPCell cellnew5 = new PdfPCell(new Phrase("PO Date :  " + ds.Tables[0].Rows[0]["OrderDate1"].ToString(), EmailFont));
+    //            cellnew5.HorizontalAlignment = 1;
+    //            cellnew5.PaddingTop = 15f;
+    //            cellnew5.PaddingBottom = 15f;
 
-                // tablenew1.DefaultCell.FixedHeight = 100f;
-                PdfPCell cellnew4 = new PdfPCell(new Phrase("PO No :    " + ds.Tables[0].Rows[0]["PONo"].ToString(), EmailFont));
-                cellnew4.FixedHeight = 30f;
-                cellnew4.HorizontalAlignment = 1;
-                cellnew4.PaddingTop = 15f;
-                cellnew4.PaddingBottom = 15f;
-                PdfPCell cellnew5 = new PdfPCell(new Phrase("PO Date :  " + ds.Tables[0].Rows[0]["OrderDate1"].ToString(), EmailFont));
-                cellnew5.HorizontalAlignment = 1;
-                cellnew5.PaddingTop = 15f;
-                cellnew5.PaddingBottom = 15f;
+    //            tablenew1.AddCell(cellnew4);
 
-                tablenew1.AddCell(cellnew4);
+    //            tablenew1.AddCell(cellnew5);
 
-                tablenew1.AddCell(cellnew5);
 
 
+    //            PdfPTable tablevendor = new PdfPTable(2);
 
-                PdfPTable tablevendor = new PdfPTable(2);
+    //            PdfPCell suppliername = new PdfPCell(new Phrase("VENDOR NAME :    " + ds.Tables[0].Rows[0]["vendorName"].ToString(), EmailFont));
+    //            suppliername.MinimumHeight = 80f;
+    //            suppliername.PaddingTop = 10f;
+    //            PdfPCell supplierdetails = new PdfPCell(new Phrase("VENDOR DETAILS:  \n\n\t Contact Person : " + ds.Tables[0].Rows[0]["vendorName"].ToString() + "\n\n\t Mobile No : " + ds.Tables[0].Rows[0]["MobileNo1"].ToString() + "\n\n\t Email : " + ds.Tables[0].Rows[0]["email"].ToString(), EmailFont));
+    //            supplierdetails.PaddingTop = 10f;
+    //            // PdfPCell termsnconditions = new PdfPCell(new Phrase("Terms & Conditions:    ", EmailFont));
 
-                PdfPCell suppliername = new PdfPCell(new Phrase("VENDOR NAME :    " + ds.Tables[0].Rows[0]["vendorName"].ToString(), EmailFont));
-                suppliername.MinimumHeight = 80f;
-                suppliername.PaddingTop = 10f;
-                PdfPCell supplierdetails = new PdfPCell(new Phrase("VENDOR DETAILS:  \n\n\t Contact Person : " + ds.Tables[0].Rows[0]["vendorName"].ToString() + "\n\n\t Mobile No : " + ds.Tables[0].Rows[0]["MobileNo1"].ToString() + "\n\n\t Email : " + ds.Tables[0].Rows[0]["email"].ToString(), EmailFont));
-                supplierdetails.PaddingTop = 10f;
-                // PdfPCell termsnconditions = new PdfPCell(new Phrase("Terms & Conditions:    ", EmailFont));
+    //            tablevendor.AddCell(suppliername);
+    //            tablevendor.AddCell(supplierdetails);
+    //            //tablevendor.AddCell(termsnconditions);
 
-                tablevendor.AddCell(suppliername);
-                tablevendor.AddCell(supplierdetails);
-                //tablevendor.AddCell(termsnconditions);
 
 
+    //            PdfPCell nesthousingn1 = new PdfPCell(tablenew1);
+    //            PdfPCell nesthousingn2 = new PdfPCell(tablevendor);
+    //            // nesthousingn2.Height = 10f;
+    //            //PdfPCell nesthousingn3 = new PdfPCell(tablenew3);
 
-                PdfPCell nesthousingn1 = new PdfPCell(tablenew1);
-                PdfPCell nesthousingn2 = new PdfPCell(tablevendor);
-                // nesthousingn2.Height = 10f;
-                //PdfPCell nesthousingn3 = new PdfPCell(tablenew3);
 
+    //            nesthousingn.Border = Rectangle.NO_BORDER;
 
-                nesthousingn.Border = Rectangle.NO_BORDER;
+    //            //nesthousingn.PaddingBottom = 10f;
+    //            Invoicetable2.AddCell(nesthousingnn);
+    //            Invoicetable2.AddCell(nesthousingn);
+    //            Invoicetable2.AddCell(nesthousingn1);
+    //            Invoicetable2.AddCell(nesthousingn2);
+    //            //Invoicetable2.AddCell(nesthousingn3);
 
-                //nesthousingn.PaddingBottom = 10f;
-                Invoicetable2.AddCell(nesthousingnn);
-                Invoicetable2.AddCell(nesthousingn);
-                Invoicetable2.AddCell(nesthousingn1);
-                Invoicetable2.AddCell(nesthousingn2);
-                //Invoicetable2.AddCell(nesthousingn3);
 
 
+    //        }
+    //        //invoice repeat        
 
-            }
-            //invoice repeat        
+    //        // Invoicetable2.AddCell(headertable);
+    //        Invoicetable2.SpacingBefore = 3f;
+    //        //  Invoicetable. = 10f;
 
-            // Invoicetable2.AddCell(headertable);
-            Invoicetable2.SpacingBefore = 3f;
-            //  Invoicetable. = 10f;
+    //        // pdfDoc.Add(Invoicetable);
 
-            // pdfDoc.Add(Invoicetable);
 
 
 
+    //        #endregion
 
-            #endregion
+    //        #region Items Table
+    //        //Create body table
+    //        PdfPTable itemTable = new PdfPTable(3);
 
-            #region Items Table
-            //Create body table
-            PdfPTable itemTable = new PdfPTable(3);
+    //        itemTable.HorizontalAlignment = 0;
+    //        itemTable.WidthPercentage = 100;
+    //        // itemTable.SetWidths(new float[] { });  // then set the column's __relative__ widths
+    //        //itemTable.SetWidths(new float[] { 4, 30, 6, 6, 6 });
+    //        itemTable.SpacingAfter = 10;
 
-            itemTable.HorizontalAlignment = 0;
-            itemTable.WidthPercentage = 100;
-            // itemTable.SetWidths(new float[] { });  // then set the column's __relative__ widths
-            //itemTable.SetWidths(new float[] { 4, 30, 6, 6, 6 });
-            itemTable.SpacingAfter = 10;
+    //        //itemTable.DefaultCell.Border = Rectangle.BOX;
 
-            //itemTable.DefaultCell.Border = Rectangle.BOX;
 
 
 
+    //        PdfPCell cell1 = new PdfPCell(new Phrase("PRODUCT", boldTableFont));
+    //        //cell1.BackgroundColor = TabelHeaderBackGroundColor;
+    //        cell1.HorizontalAlignment = Element.ALIGN_CENTER;
+    //        itemTable.AddCell(cell1);
 
-            PdfPCell cell1 = new PdfPCell(new Phrase("PRODUCT", boldTableFont));
-            //cell1.BackgroundColor = TabelHeaderBackGroundColor;
-            cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-            itemTable.AddCell(cell1);
 
+    //        PdfPCell cell2 = new PdfPCell(new Phrase("IMAGE", boldTableFont));
+    //        //cell2.BackgroundColor = TabelHeaderBackGroundColor;
+    //        cell2.HorizontalAlignment = 1;
+    //        itemTable.AddCell(cell2);
 
-            PdfPCell cell2 = new PdfPCell(new Phrase("IMAGE", boldTableFont));
-            //cell2.BackgroundColor = TabelHeaderBackGroundColor;
-            cell2.HorizontalAlignment = 1;
-            itemTable.AddCell(cell2);
 
+    //        /*
+    //        PdfPCell cell3 = new PdfPCell(new Phrase("SIZE", boldTableFont));
+    //        //cell4.BackgroundColor = TabelHeaderBackGroundColor;
+    //        cell3.HorizontalAlignment = 1;
+    //        itemTable.AddCell(cell3);
+    //        */
 
-            /*
-            PdfPCell cell3 = new PdfPCell(new Phrase("SIZE", boldTableFont));
-            //cell4.BackgroundColor = TabelHeaderBackGroundColor;
-            cell3.HorizontalAlignment = 1;
-            itemTable.AddCell(cell3);
-            */
+    //        PdfPCell cell4 = new PdfPCell(new Phrase("QUANTITY", boldTableFont));
+    //        //cell5.BackgroundColor = TabelHeaderBackGroundColor;
+    //        cell4.HorizontalAlignment = 1;
+    //        itemTable.AddCell(cell4);
 
-            PdfPCell cell4 = new PdfPCell(new Phrase("QUANTITY", boldTableFont));
-            //cell5.BackgroundColor = TabelHeaderBackGroundColor;
-            cell4.HorizontalAlignment = 1;
-            itemTable.AddCell(cell4);
 
+    //        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+    //        {
 
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
+    //            PdfPCell cell1i = new PdfPCell(new Phrase(ds.Tables[0].Rows[i]["ProdName"].ToString(), bodyFont));
+    //            //cell1.BackgroundColor = TabelHeaderBackGroundColor;
+    //            cell1i.HorizontalAlignment = Element.ALIGN_CENTER;
+    //            itemTable.AddCell(cell1i);
 
-                PdfPCell cell1i = new PdfPCell(new Phrase(ds.Tables[0].Rows[i]["ProdName"].ToString(), bodyFont));
-                //cell1.BackgroundColor = TabelHeaderBackGroundColor;
-                cell1i.HorizontalAlignment = Element.ALIGN_CENTER;
-                itemTable.AddCell(cell1i);
+    //            //iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance("Image location");
+    //            //PdfPCell cell = new PdfPCell(myImage);
+    //            //content.AddCell(cell);
+    //            //string xy = null;
+    //            String Filepath = Server.MapPath("~/uploads/product/water/" + ds.Tables[0].Rows[i]["imagename"].ToString());
+    //            if (!String.IsNullOrEmpty(ds.Tables[0].Rows[i]["imagename"].ToString()))
+    //            {
 
-                //iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance("Image location");
-                //PdfPCell cell = new PdfPCell(myImage);
-                //content.AddCell(cell);
-                //string xy = null;
-                String Filepath = Server.MapPath("~/uploads/product/water/" + ds.Tables[0].Rows[i]["imagename"].ToString());
-                if (!String.IsNullOrEmpty(ds.Tables[0].Rows[i]["imagename"].ToString()))
-                {
+    //                if (File.Exists(Filepath))
+    //                {
 
-                    if (File.Exists(Filepath))
-                    {
 
 
+    //                    //iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Server.MapPath(ds.Tables[0].Rows[i]["imagename"].ToString()));
+    //                    iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Filepath);
+    //                    //iTextSharp.text.Image.GetInstance(xy);
+    //                    myImage.ScaleAbsolute(20f, 20f);
+    //                    PdfPCell cell2i = new PdfPCell(myImage);
+    //                    //cell2.BackgroundColor = TabelHeaderBackGroundColor;
+    //                    cell2i.HorizontalAlignment = 1;
+    //                    itemTable.AddCell(cell2i);
+    //                }
+    //                else
+    //                {
+    //                    iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Server.MapPath("uploads/ImageNotFound.png"));
+    //                    myImage.ScaleAbsolute(20f, 20f);
+    //                    PdfPCell cell2i = new PdfPCell(myImage);
+    //                    //cell2.BackgroundColor = TabelHeaderBackGroundColor;
+    //                    cell2i.HorizontalAlignment = 1;
+    //                    itemTable.AddCell(cell2i);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Server.MapPath("uploads/ImageNotFound.png"));
+    //                myImage.ScaleAbsolute(20f, 20f);
+    //                PdfPCell cell2i = new PdfPCell(myImage);
+    //                //cell2.BackgroundColor = TabelHeaderBackGroundColor;
+    //                cell2i.HorizontalAlignment = 1;
+    //                itemTable.AddCell(cell2i);
+    //            }
 
-                        //iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Server.MapPath(ds.Tables[0].Rows[i]["imagename"].ToString()));
-                        iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Filepath);
-                        //iTextSharp.text.Image.GetInstance(xy);
-                        myImage.ScaleAbsolute(20f, 20f);
-                        PdfPCell cell2i = new PdfPCell(myImage);
-                        //cell2.BackgroundColor = TabelHeaderBackGroundColor;
-                        cell2i.HorizontalAlignment = 1;
-                        itemTable.AddCell(cell2i);
-                    }
-                    else
-                    {
-                        iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Server.MapPath("uploads/ImageNotFound.png"));
-                        myImage.ScaleAbsolute(20f, 20f);
-                        PdfPCell cell2i = new PdfPCell(myImage);
-                        //cell2.BackgroundColor = TabelHeaderBackGroundColor;
-                        cell2i.HorizontalAlignment = 1;
-                        itemTable.AddCell(cell2i);
-                    }
-                }
-                else
-                {
-                    iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(Server.MapPath("uploads/ImageNotFound.png"));
-                    myImage.ScaleAbsolute(20f, 20f);
-                    PdfPCell cell2i = new PdfPCell(myImage);
-                    //cell2.BackgroundColor = TabelHeaderBackGroundColor;
-                    cell2i.HorizontalAlignment = 1;
-                    itemTable.AddCell(cell2i);
-                }
 
+    //            /*
+    //            PdfPCell cell4i = new PdfPCell(new Phrase(ds.Tables[0].Rows[i]["Size"].ToString(), bodyFont));
+    //            //cell4.BackgroundColor = TabelHeaderBackGroundColor;
+    //            cell4i.HorizontalAlignment = 1;
+    //            itemTable.AddCell(cell4i);
+    //            */
 
-                /*
-                PdfPCell cell4i = new PdfPCell(new Phrase(ds.Tables[0].Rows[i]["Size"].ToString(), bodyFont));
-                //cell4.BackgroundColor = TabelHeaderBackGroundColor;
-                cell4i.HorizontalAlignment = 1;
-                itemTable.AddCell(cell4i);
-                */
+    //            PdfPCell cell5i = new PdfPCell(new Phrase(ds.Tables[0].Rows[i]["Quantity1"].ToString(), bodyFont));
+    //            //cell5.BackgroundColor = TabelHeaderBackGroundColor;
+    //            cell5i.HorizontalAlignment = 1;
+    //            itemTable.AddCell(cell5i);
 
-                PdfPCell cell5i = new PdfPCell(new Phrase(ds.Tables[0].Rows[i]["Quantity1"].ToString(), bodyFont));
-                //cell5.BackgroundColor = TabelHeaderBackGroundColor;
-                cell5i.HorizontalAlignment = 1;
-                itemTable.AddCell(cell5i);
+    //            //    PdfPCell cell3i = new PdfPCell(new Phrase("" + dtOrderProducts.Rows[i]["Amount"], bodyFont));
+    //            //    //cell3.BackgroundColor = TabelHeaderBackGroundColor;
+    //            //    cell3i.HorizontalAlignment = 1;
+    //            //    itemTable.AddCell(cell3i);
 
-                //    PdfPCell cell3i = new PdfPCell(new Phrase("" + dtOrderProducts.Rows[i]["Amount"], bodyFont));
-                //    //cell3.BackgroundColor = TabelHeaderBackGroundColor;
-                //    cell3i.HorizontalAlignment = 1;
-                //    itemTable.AddCell(cell3i);
+    //        }
 
-            }
 
 
 
+    //        PdfPCell nesthousingn3 = new PdfPCell(itemTable);
+    //        //  PdfPCell nesthousingn4 = new PdfPCell(totalTable);
 
-            PdfPCell nesthousingn3 = new PdfPCell(itemTable);
-            //  PdfPCell nesthousingn4 = new PdfPCell(totalTable);
 
+    //        //nesthousingn.Border = Rectangle.NO_BORDER;
 
-            //nesthousingn.Border = Rectangle.NO_BORDER;
+    //        //nesthousingn.PaddingBottom = 10f;
+    //        Invoicetable2.AddCell(nesthousingn3);
+    //        // Invoicetable2.AddCell(nesthousingn4);
+    //        // pdfDoc.Add(Invoicetable2);
+    //        #endregion
 
-            //nesthousingn.PaddingBottom = 10f;
-            Invoicetable2.AddCell(nesthousingn3);
-            // Invoicetable2.AddCell(nesthousingn4);
-            // pdfDoc.Add(Invoicetable2);
-            #endregion
 
 
 
 
+    //        PdfPTable noTable1 = new PdfPTable(2);
 
-            PdfPTable noTable1 = new PdfPTable(2);
+    //        noTable1.HorizontalAlignment = 0;
+    //        noTable1.WidthPercentage = 100;
+    //        // itemTable.SetWidths(new float[] {2,30,6,6,6,6,6,6,6,6,6,4,4,7 });  // then set the column's __relative__ widths
+    //        //amtTable.SetWidths(new float[] { 4, 30});
+    //        // amtTable.SpacingAfter = 10;
 
-            noTable1.HorizontalAlignment = 0;
-            noTable1.WidthPercentage = 100;
-            // itemTable.SetWidths(new float[] {2,30,6,6,6,6,6,6,6,6,6,4,4,7 });  // then set the column's __relative__ widths
-            //amtTable.SetWidths(new float[] { 4, 30});
-            // amtTable.SpacingAfter = 10;
+    //        noTable1.DefaultCell.Border = 0;
 
-            noTable1.DefaultCell.Border = 0;
 
+    //        PdfPCell cellnote1 = new PdfPCell(new Phrase("PREPARED BY\nNAME : " + "\nSIGNATURE : " + "\nDATE & TIME : ", EmailFont));
+    //        cellnote1.Border = 0;
+    //        cellnote1.HorizontalAlignment = 0;//0=Left, 1=Centre, 2=Right
 
-            PdfPCell cellnote1 = new PdfPCell(new Phrase("PREPARED BY\nNAME : " + "\nSIGNATURE : " + "\nDATE & TIME : ", EmailFont));
-            cellnote1.Border = 0;
-            cellnote1.HorizontalAlignment = 0;//0=Left, 1=Centre, 2=Right
 
+    //        noTable1.AddCell(cellnote1);
 
-            noTable1.AddCell(cellnote1);
 
 
 
+    //        PdfPCell cellnote3 = new PdfPCell(new Phrase("FOR MORYA TOOLS\n\n\n\nAUTHORIZED SIGNATORY", EmailFont));
+    //        cellnote3.Border = 0;
+    //        cellnote3.HorizontalAlignment = 2;//0=Left, 1=Centre, 2=Right
 
-            PdfPCell cellnote3 = new PdfPCell(new Phrase("FOR MORYA TOOLS\n\n\n\nAUTHORIZED SIGNATORY", EmailFont));
-            cellnote3.Border = 0;
-            cellnote3.HorizontalAlignment = 2;//0=Left, 1=Centre, 2=Right
 
+    //        noTable1.AddCell(cellnote3);
 
-            noTable1.AddCell(cellnote3);
 
 
 
 
+    //        PdfPCell nesthousingn5 = new PdfPCell(noTable1);
+    //        Invoicetable2.AddCell(nesthousingn5);
 
-            PdfPCell nesthousingn5 = new PdfPCell(noTable1);
-            Invoicetable2.AddCell(nesthousingn5);
 
 
+    //        pdfDoc.Add(Invoicetable2);
+    //        pdfDoc.Close();
+    //        writer.Close();
 
-            pdfDoc.Add(Invoicetable2);
-            pdfDoc.Close();
-            writer.Close();
 
 
 
+    //        //flag = DownloadPDF(PDFData, po);
 
-            //flag = DownloadPDF(PDFData, po);
 
 
 
+    //        //Context.Response.Clear();
+    //        //Context.Response.ContentType = "application/json";
+    //        //Context.Response.Flush();
+    //        //Context.Response.Write(finalResult);
+    //        //Context.Response.End();
 
-            //Context.Response.Clear();
-            //Context.Response.ContentType = "application/json";
-            //Context.Response.Flush();
-            //Context.Response.Write(finalResult);
-            //Context.Response.End();
 
 
 
 
 
+    //        //}
+    //    }
+    //    catch { }
+    //    finally { con.Close(); }
 
-            //}
-        }
-        catch { }
-        finally { con.Close(); }
+    //    return flag;
 
-        return flag;
 
-
-    }
-
+    //}
+    
     #endregion
 
     #region--Download PDF

@@ -42,7 +42,16 @@
                             <ItemTemplate>
                                 <tr>
                                     <td style="text-align: center">
-                                        <asp:Label ID="lblAgentId" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+
+                                                <%--<td class="center">
+                                                    <asp:HyperLink ID="lnkDetails" runat="server" NavigateUrl='<%# Eval("ID","~/ShowDetails.aspx?ID={0}") + "&tag=rd" %>' ><%#Eval("PatientName")%></asp:HyperLink>
+
+                                                </td>--%>
+
+
+                                        <%--<asp:Label ID="lblAgentId" runat="server" Text='<%# Eval("id") %>'></asp:Label>--%>
+                                        <asp:HyperLink ID="lblAgentId" runat="server" NavigateUrl='<%# Eval("id","~/articleproduction.aspx?id={0}") %>' ><%#Eval("id")%></asp:HyperLink>
+
                                         <%--<asp:Label ID="lblBankCount" runat="server" Visible="false" Text='<%# Eval("bankcount") %>'></asp:Label>--%>
                                         <%--<asp:Label ID="lblName" runat="server" Text='<%# Eval("vendorName") %>'></asp:Label>--%>
                                     </td>
@@ -50,7 +59,9 @@
                                         <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("createddate") %>'></asp:Label>
                                     </td>
                                     <td style="text-align: center">
-                                        <asp:Label ID="lblMobileno" runat="server" Text='<%# Eval("productid") %>'></asp:Label>
+                                        <%--<asp:Label ID="lblMobileno" runat="server" Text='<%# Eval("productid") %>'></asp:Label>--%>
+                                        <asp:HyperLink ID="lblMobileno" runat="server" NavigateUrl='<%# Eval("id","~/articleproduction.aspx?id={0}") %>' ><%#Eval("productid")%></asp:HyperLink>
+
                                     </td>
                                     <td style="text-align: center">
                                         <asp:Label ID="lblemail" runat="server" Text='<%# Eval("colornames") %>'></asp:Label>

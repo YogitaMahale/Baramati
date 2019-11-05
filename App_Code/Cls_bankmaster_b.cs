@@ -153,6 +153,7 @@ namespace BusinessLayer
         private String _accountholdername;
         private Boolean _isactive;
         private Boolean _isdelete;
+        private Decimal _balance;
         #endregion
 
 
@@ -161,6 +162,12 @@ namespace BusinessLayer
         {
             get { return _bankid; }
             set { _bankid = value; }
+        }
+
+        public Decimal balance
+        {
+            get { return _balance; }
+            set { _balance = value; }
         }
         public String bankname
         {

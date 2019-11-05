@@ -73,7 +73,16 @@
                          
                     </div>
                         </div>
+                    
+                    <div class="form-group row">
 
+                        <div class="col-xs-6"> 
+                        <label for="exampleInputEmail1"> Opening Balance <span style="color:red">*</span></label>
+                        <asp:TextBox ID="txtbalance" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" ControlToValidate="txtbalance" ValidationGroup="gg"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
+                         
+                    </div>
+                        </div>
                     
                     <div class="form-group row">
                     

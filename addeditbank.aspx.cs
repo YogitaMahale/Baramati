@@ -24,8 +24,8 @@ public partial class addeditbank : System.Web.UI.Page
             }
             else
             {
-                hPageTitle.InnerText = "Add Bank";
-                Page.Title = "Add Bank";
+                hPageTitle.InnerText = "New Bank";
+                Page.Title = "New Bank";
                 btnSave.Text = "ADD";
             }
         }
@@ -50,6 +50,7 @@ public partial class addeditbank : System.Web.UI.Page
             txtBankBranch.Text = objbankmaster.bankbranch;
             txtAccountNo.Text = objbankmaster.accountno;
             txtAccountHolderName.Text = objbankmaster.accountholdername;
+            txtbalance.Text = objbankmaster.balance.ToString();
         }
     }
 
@@ -67,6 +68,7 @@ public partial class addeditbank : System.Web.UI.Page
         objbankmaster.bankbranch = txtBankBranch.Text.Trim();
         objbankmaster.accountno = txtAccountNo.Text.Trim();
         objbankmaster.accountholdername = txtAccountHolderName.Text.Trim();
+        objbankmaster.balance = Convert.ToDecimal(txtbalance.Text.Trim());
 
         if (Request.QueryString["id"] != null)
         {

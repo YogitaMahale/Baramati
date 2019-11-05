@@ -116,6 +116,8 @@ namespace DatabaseLayer
                                     objbankmaster.bankbranch = Convert.ToString(ds.Tables[0].Rows[0]["bankbranch"]);
                                     objbankmaster.accountno = Convert.ToString(ds.Tables[0].Rows[0]["accountno"]);
                                     objbankmaster.accountholdername = Convert.ToString(ds.Tables[0].Rows[0]["accountholdername"]);
+                                    objbankmaster.balance = Convert.ToDecimal(ds.Tables[0].Rows[0]["balance"]);
+
                                 }
                             }
                         }
@@ -155,6 +157,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@bankbranch", objbankmaster.bankbranch);
                 cmd.Parameters.AddWithValue("@accountno", objbankmaster.accountno);
                 cmd.Parameters.AddWithValue("@accountholdername", objbankmaster.accountholdername);
+                cmd.Parameters.AddWithValue("@balance", objbankmaster.balance);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
@@ -193,6 +196,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@bankbranch", objbankmaster.bankbranch);
                 cmd.Parameters.AddWithValue("@accountno", objbankmaster.accountno);
                 cmd.Parameters.AddWithValue("@accountholdername", objbankmaster.accountholdername);
+                cmd.Parameters.AddWithValue("@balance", objbankmaster.balance);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();

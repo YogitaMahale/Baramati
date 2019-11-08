@@ -166,6 +166,37 @@ namespace DatabaseLayer
             return ds.Tables[0];
         }
 
+        public DataTable Product_WSSelectAllProductUsingCategoryIdandBrandId(Int64 CategoryId, Int64 brandId)
+        {
+            DataSet ds = new DataSet();
+            SqlDataAdapter da;
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "product_WSSelectAllProductUsingCategoryIdandBrandId";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = ConnectionString;
+                cmd.Parameters.AddWithValue("@cid", CategoryId);
+                     cmd.Parameters.AddWithValue("@brandid", brandId);
+                
+                ConnectionString.Open();
+                da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return null;
+            }
+            finally
+            {
+                ConnectionString.Close();
+            }
+            return ds.Tables[0];
+        }
+
+
+        
         public product SelectById(Int64 pid)
         {
             SqlDataAdapter da;
@@ -231,8 +262,8 @@ namespace DatabaseLayer
                                     objproduct.fk_sizeId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_sizeId"]);
                                     objproduct.packing = Convert.ToInt32(ds.Tables[0].Rows[0]["packing"]);
                                     objproduct.brandid= Convert.ToInt64(ds.Tables[0].Rows[0]["brandid"]);
-
-
+                                    objproduct.maincategoryid = Convert.ToInt64(ds.Tables[0].Rows[0]["maincategoryid"]);
+                                    objproduct.gsttype = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["gsttype"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["gsttype"]);
                                 }
                             }
                         }
@@ -356,7 +387,9 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@packing", objproduct.packing);
                 cmd.Parameters.AddWithValue("@brandid", objproduct.brandid);
 
-
+                cmd.Parameters.AddWithValue("@fk_mainCategoryId", objproduct.maincategoryid);
+                cmd.Parameters.AddWithValue("@gsttype", objproduct.gsttype);
+                
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
                 result = Convert.ToInt64(param.Value);
@@ -423,7 +456,8 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@packing", objproduct.packing);
                 cmd.Parameters.AddWithValue("@brandid", objproduct.brandid);
 
-
+                cmd.Parameters.AddWithValue("@fk_mainCategoryId", objproduct.maincategoryid);
+                cmd.Parameters.AddWithValue("@gsttype", objproduct.gsttype);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();

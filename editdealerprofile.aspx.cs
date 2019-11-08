@@ -57,6 +57,8 @@ public partial class editdealerprofile : System.Web.UI.Page
             txtAddress2.Text = objdealermaster.address2;
             txtCity.Text = objdealermaster.city;
             txtSate.SelectedValue = objdealermaster.state;
+            txtSate_SelectedIndexChanged(null, null);
+            ddldistrict.SelectedValue = objdealermaster.district.ToString();
             ddlUser.SelectedValue = objdealermaster.agentid.ToString();
         }
     }
@@ -76,6 +78,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         objdealermaster.address2 = txtAddress2.Text;
         objdealermaster.city = txtCity.Text;
         objdealermaster.state = txtSate.SelectedValue.ToString();
+        objdealermaster.district = Convert.ToInt64(ddldistrict.SelectedValue.ToString());
         objdealermaster.agentid = Convert.ToInt64(ddlUser.SelectedValue.ToString());
         if (Request.QueryString["id"] != null)
         {
@@ -157,6 +160,8 @@ public partial class editdealerprofile : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@city", objdealermaster.city);
             cmd.Parameters.AddWithValue("@state", objdealermaster.state);
             cmd.Parameters.AddWithValue("@FK_agentId", objdealermaster.agentid);
+            cmd.Parameters.AddWithValue("@district", objdealermaster.district);
+            
             ConnectionString.Open();
             cmd.ExecuteNonQuery();
             result = Convert.ToInt64(param.Value);
@@ -274,5 +279,54 @@ public partial class editdealerprofile : System.Web.UI.Page
             ListItem objListItem = new ListItem("--Select State--", "-1");
             txtSate.Items.Insert(0, objListItem);
         }
+    }
+    private void BindDistrict(Int64 stateId)
+    {
+
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "getDistrict_byStateId";
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@stateid", Convert.ToInt64(stateId));
+        cmd.Connection = con;
+        DataTable dtUser = new DataTable();
+        con.Open();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dtUser);
+        if (dtUser != null)
+        {
+            if (dtUser.Rows.Count > 0)
+            {
+                ddldistrict .DataSource = dtUser;
+                ddldistrict.DataTextField = "cityname";
+                ddldistrict.DataValueField = "id";
+                ddldistrict.DataBind();
+                ListItem objListItem = new ListItem("--Select District--", "-1");
+                ddldistrict.Items.Insert(0, objListItem);
+            }
+            else
+            {
+                ddldistrict.DataSource = dtUser;
+                ddldistrict.DataTextField = "cityname";
+                ddldistrict.DataValueField = "id";
+                ddldistrict.DataBind();
+                ListItem objListItem = new ListItem("--Select District--", "-1");
+                ddldistrict.Items.Insert(0, objListItem);
+            }
+        }
+        else
+        {
+            ddldistrict.DataSource = dtUser;
+            ddldistrict.DataTextField = "cityname";
+            ddldistrict.DataValueField = "id";
+            ddldistrict.DataBind();
+            ListItem objListItem = new ListItem("--Select District--", "-1");
+            ddldistrict.Items.Insert(0, objListItem);
+        }
+    }
+    protected void txtSate_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindDistrict(Convert.ToInt64(txtSate.SelectedValue.ToString()));
     }
 }

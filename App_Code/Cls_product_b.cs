@@ -77,6 +77,21 @@ namespace BusinessLayer
                 return dt;
             }
         }
+        public DataTable Product_WSSelectAllProductUsingCategoryIdandBrandId(Int64 CategoryId, Int64 brandId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Cls_product_db objCls_product_db = new Cls_product_db();
+                dt = objCls_product_db.Product_WSSelectAllProductUsingCategoryIdandBrandId(CategoryId, brandId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return dt;
+            }
+        }
 
         public DataTable SelectProductDetailsUsingProductId(Int64 pid)
         {
@@ -289,7 +304,8 @@ namespace BusinessLayer
         private Int64 _fk_sizeId;
         private Int32 _packing;
         private Int64 _brandid;
-
+        private Int64 _maincategoryid;
+        private Boolean _gsttype;
         #endregion
 
 
@@ -486,8 +502,21 @@ namespace BusinessLayer
             get { return _packing; }
             set { _packing = value; }
         }
+        public Int64 maincategoryid
+        {
+            get { return _maincategoryid; }
+            set { _maincategoryid = value; }
+        }
+        public Boolean gsttype
+        {
+            get { return _gsttype; }
+            set { _gsttype = value; }
 
 
+
+        }
+
+       // gsttype
         #endregion
     }
 

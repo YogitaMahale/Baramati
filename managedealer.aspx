@@ -78,7 +78,7 @@
                         
                              
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body" style="overflow:scroll;">
                             <table  class="table table-bordered table-striped">
                                 <thead>
                                     <tr>

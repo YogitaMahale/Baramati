@@ -63,6 +63,7 @@ namespace BusinessLayer
         private Boolean _isdeleted;
         private System.DateTime _createddate;
         private String _Img;
+        private Int64 _district;
         #endregion
 
 
@@ -161,6 +162,11 @@ namespace BusinessLayer
         {
             get { return _Img; }
             set { _Img = value; }
+        }
+        public Int64 district
+        {
+            get { return _district; }
+            set { _district = value; }
         }
         #endregion
     }

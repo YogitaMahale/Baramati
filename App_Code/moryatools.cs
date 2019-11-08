@@ -840,12 +840,24 @@ public class moryatools : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void SelectAllCategory()
+    public void SelectAllCategory_byMainCategoryId(string mainCategoryId)
     {
         string finalResult = string.Empty;
         try
         {
-            DataTable dtCategory = (new Cls_category_b().category_WSSelectAll());
+            SqlConnection ConnectionString=new SqlConnection (ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString .ToString());
+           // DataTable dtCategory = (new Cls_category_b().category_WSSelectAll());
+            DataTable dtCategory=new DataTable ();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "getSubCategory_fromMaincategory";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = ConnectionString;
+                cmd.Parameters.AddWithValue("@id", Convert.ToInt64(mainCategoryId));
+                ConnectionString.Open();
+             SqlDataAdapter  da = new SqlDataAdapter(cmd);
+                da.Fill(dtCategory);
+
+            
             if (dtCategory != null)
             {
                 if (dtCategory.Rows.Count > 0)
@@ -875,6 +887,85 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.Write(finalResult);
         Context.Response.End();
     }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void SelectAllMainCategory()
+    {
+        string finalResult = string.Empty;
+        try
+        {
+            DataTable dtCategory = (new Cls_maincategory_b().SelectAll());
+            if (dtCategory != null)
+            {
+                if (dtCategory.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtCategory);
+                    finalResult = "{\"success\" : 1, \"message\" : \" Main Category All Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No Main Category \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \" No Main Category \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void SelectAllBrand()
+    {
+        string finalResult = string.Empty;
+        try
+        {
+            DataTable dtCategory = (new Cls_brand_b().SelectAll());
+            if (dtCategory != null)
+            {
+                if (dtCategory.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtCategory);
+                    finalResult = "{\"success\" : 1, \"message\" : \" Brand All Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"Brand Category \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \" Brand Category \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -927,6 +1018,49 @@ public class moryatools : System.Web.Services.WebService
         try
         {
             DataTable dtProducts = (new Cls_product_b().Product_WSSelectAllProductUsingCategoryId(CategoryId));
+            if (dtProducts != null)
+            {
+                if (dtProducts.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtProducts);
+                    finalResult = "{\"success\" : 1, \"message\" : \" Category Wise Product Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No Products Exits This Category \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"No Products Exits This Category \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"No Products Exits This Category \", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void SelectProductsUsingCategoryIdandBrandId(Int64 CategoryId,Int64 brandId)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtProducts = (new Cls_product_b().Product_WSSelectAllProductUsingCategoryIdandBrandId(CategoryId, brandId));
             if (dtProducts != null)
             {
                 if (dtProducts.Rows.Count > 0)
@@ -1921,7 +2055,7 @@ public class moryatools : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void DealerRegistration(Int64 DealerId, string Name, string UserLoginMobileNo, string Password, string WhatAppNo, string Email, string GstNo, string Address1, string Address2, string City, string State)
+    public void DealerRegistration(Int64 DealerId, string Name, string UserLoginMobileNo, string Password, string WhatAppNo, string Email, string GstNo, string Address1, string Address2, string City, string State, string district)
     {
         string finalResult = string.Empty;
         if (CheckMobileNumberExitOrNot(UserLoginMobileNo))
@@ -1962,7 +2096,7 @@ public class moryatools : System.Web.Services.WebService
                     objdealermaster.city = City;
                     objdealermaster.state = State;
                     objdealermaster.guid = Guid.NewGuid().ToString();
-
+                    objdealermaster.district = Convert.ToInt64(district);
                     Int64 Result = (new Cls_dealermaster_b().Insert(objdealermaster));
                     if (Result > 0)
                     {
@@ -4467,4 +4601,175 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.Write(finalResult);
         Context.Response.End();
     }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void customerLedger(string userType, string userId,string fromDate,string toDate)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtUser = new DataTable();
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "WS_CustomerLedger";
+            cmd.Parameters.AddWithValue("@id", Convert.ToInt64(userId) );
+            cmd.Parameters.AddWithValue("@userType", userType );
+            cmd.Parameters.AddWithValue("@from", fromDate);
+            cmd.Parameters.AddWithValue("@to", toDate);         
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sda = new SqlDataAdapter();
+            cmd.Connection = con;
+            sda.SelectCommand = cmd;
+            sda.Fill(dtUser);
+            con.Close();
+            if (dtUser != null)
+            {
+                if (dtUser.Rows.Count > 0)
+                {
+                     
+                        string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
+                        object Total = dtUser.Compute("Sum(totalamount)", string.Empty);
+                        object paid = dtUser.Compute("Sum(paidamount)", string.Empty);
+                        object remaining = dtUser.Compute("Sum(remaining)", string.Empty);
+                        string t = "Total :" + Total.ToString() + ",paid :" + paid + ",Remaiining :" + remaining;
+                        finalResult = "{\"success\" : 1, \"message\" : \"Data Found\", \"Total\" : \"" + Total.ToString() + "\", \"paid\" : \"" + paid.ToString() + "\", \"remaining\" : \"" + remaining.ToString() + "\", \"data\" :" + output + "}";
+                     
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void selectAllState()
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtState = new DataTable();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "getState_byCountryId";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@countryid", Convert.ToInt64("1"));
+            cmd.Connection = con;
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dtState);
+
+
+            if (dtState != null)
+            {
+                if (dtState.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtState);
+                    finalResult = "{\"success\" : 1, \"message\" : \" State Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No   Data Not Exits  \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"No Data  Exits  \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"No Data Exits  \", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void selectAllDistrict_bystateId(string stateId)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtState = new DataTable();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "getDistrict_byStateId";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@stateid", Convert.ToInt64(stateId));
+            cmd.Connection = con;
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dtState);
+
+
+            if (dtState != null)
+            {
+                if (dtState.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtState);
+                    finalResult = "{\"success\" : 1, \"message\" : \" District Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No   Data Not Exits  \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"No Data  Exits  \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"No Data Exits  \", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
 }

@@ -11,7 +11,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
       <div class="row">
         <!-- left column -->
-        <div class="col-md-6">
+        <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -21,73 +21,77 @@
                 <!-- form start -->
 
                 <div class="box-body">
-                    <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-xs-4">
                         <label for="exampleInputEmail1">Dealer Name </label>
                          <asp:TextBox ID="txtDealerName" class="form-control"   runat="server"></asp:TextBox>
                            <asp:RequiredFieldValidator ID="RFVtxtDealerName" runat="server" Display="Dynamic" ControlToValidate="txtDealerName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="d1"></asp:RequiredFieldValidator>
                     </div>
-
-                     <div class="form-group">
-                        <label for="exampleInputEmail1">User Login No. </label>
+                        <div class="col-xs-4">
+                            <label for="exampleInputEmail1">User Login No. </label>
                          <asp:TextBox ID="txtUserLoginNo"   class="form-control"  runat="server"></asp:TextBox>
                          <asp:RequiredFieldValidator ID="RFVtxtUserLoginNo" runat="server" Display="Dynamic" ControlToValidate="txtUserLoginNo" CssClass="error" ErrorMessage="Required Field" ValidationGroup="d1"></asp:RequiredFieldValidator>
                     </div>
-                     <div class="form-group">
-                         <label for="exampleInputEmail1">Password </label>
+                          <div class="col-xs-4">
+                             <label for="exampleInputEmail1">Password </label>
                             <asp:TextBox ID="txtPassword"    class="form-control" runat="server"></asp:TextBox>
                          <asp:RequiredFieldValidator ID="RFVtxtPassword" runat="server" Display="Dynamic" ControlToValidate="txtPassword" CssClass="error" ErrorMessage="Required Field" ValidationGroup="d1"></asp:RequiredFieldValidator>
                  </div>
+                    </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">What App No.</label>
+                    
+
+                    <div class="form-group row">
+                        <div class="col-xs-4"><label for="exampleInputPassword1">What App No.</label>
                          <asp:TextBox ID="txtWhatappNo" class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RFVtxtWhatappNo" runat="server" Display="Dynamic" ControlToValidate="txtWhatappNo" CssClass="error" ErrorMessage="Required Field" ValidationGroup="d1"></asp:RequiredFieldValidator>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Email Id</label>
+                        <div class="col-xs-4"><label for="exampleInputPassword1">Email Id</label>
                           <asp:TextBox ID="txtEmailId" class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RFVtxtEmailId" runat="server" Display="Dynamic" ControlToValidate="txtEmailId" CssClass="error" ErrorMessage="Required Field" ValidationGroup="d1"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="REtxtEmailId" runat="server" Display="Dynamic" CssClass="erroe" ControlToValidate="txtEmailId" ErrorMessage="Invalid Email" ValidationGroup="d1" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
                     </div>
-                     <div class="form-group">
-                        <label for="exampleInputPassword1">GST No</label>
+                        <div class="col-xs-4"><label for="exampleInputPassword1">GST No</label>
                          <asp:TextBox ID="txtGSTNO" class="form-control" runat="server"></asp:TextBox>
                     </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Aadhar No</label>
+                    </div>
+                      <div class="form-group row">
+                       <div class="col-xs-4"> <label for="exampleInputPassword1">Aadhar No</label>
                          <asp:TextBox ID="txtaadharno" class="form-control" runat="server"></asp:TextBox>
                     </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">PAN No</label>
+                          <div class="col-xs-4"><label for="exampleInputPassword1">PAN No</label>
                          <asp:TextBox ID="txtpanno" class="form-control" runat="server"></asp:TextBox>
                     </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1"> Address 1</label>
-                         <asp:TextBox ID="txtAddress1" class="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1"> Address 2</label>
-                         <asp:TextBox ID="txtAddress2" class="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">City</label>
-                            <asp:TextBox ID="txtCity" class="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1"> State</label>
-                        <asp:DropDownList ID="txtSate" runat="server" class="form-control"></asp:DropDownList>
-                       <%-- <asp:TextBox ID="txtSate" class="form-control" runat="server"></asp:TextBox>--%>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1"> Agent Name</label>
+                          <div class="col-xs-4"><label for="exampleInputPassword1"> Agent Name</label>
                         <asp:DropDownList ID="ddlUser" runat="server" class="form-control"></asp:DropDownList>
                         <%--<asp:TextBox ID="TextBox1" class="form-control" runat="server"></asp:TextBox>--%>
                     </div>
-                   
- 
+                      </div>
                       
-
+                    <div class="form-group row">
+                        
+                        <div class="col-xs-4"><label for="exampleInputPassword1"> State</label>
+                        <asp:DropDownList ID="txtSate" runat="server" OnSelectedIndexChanged="txtSate_SelectedIndexChanged" AutoPostBack="true"  class="form-control"></asp:DropDownList>
+                       
+                    </div>
+                        <div class="col-xs-4"><label for="exampleInputPassword1"> District</label>
+                        <asp:DropDownList ID="ddldistrict" runat="server"  class="form-control"></asp:DropDownList>
+                       
+                    </div>
+                        <div class="col-xs-4"><label for="exampleInputPassword1">City</label>
+                            <asp:TextBox ID="txtCity" class="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    </div>
                     
+                    <div class="form-group row">
+                        <div class="col-xs-4"><label for="exampleInputPassword1"> Address 1</label>
+                         <asp:TextBox ID="txtAddress1" class="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
+                    </div>
+                        <div class="col-xs-4"><label for="exampleInputPassword1"> Address 2</label>
+                         <asp:TextBox ID="txtAddress2" class="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
+                    </div>
+                        
+                                            
                 </div>
                 <!-- /.box-body -->
 
@@ -118,7 +122,7 @@
 
         <!--/.col (right) -->
     </div>
-
+</div>
 
     <!-- jQuery 3 -->
     <script src="Template/bower_components/jquery/dist/jquery.min.js"></script>
@@ -166,4 +170,3 @@
 
 
 </asp:Content>
-

@@ -18,6 +18,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             BindUser();
+            Bindstate();
             if (Request.QueryString["id"] != null)
             {
                 hPageTitle.InnerText = "Update Dealer";
@@ -55,7 +56,7 @@ public partial class editdealerprofile : System.Web.UI.Page
             txtAddress1.Text = objdealermaster.address1;
             txtAddress2.Text = objdealermaster.address2;
             txtCity.Text = objdealermaster.city;
-            txtSate.Text = objdealermaster.state;
+            txtSate.SelectedValue = objdealermaster.state;
             ddlUser.SelectedValue = objdealermaster.agentid.ToString();
         }
     }
@@ -74,7 +75,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         objdealermaster.address1 = txtAddress1.Text;
         objdealermaster.address2 = txtAddress2.Text;
         objdealermaster.city = txtCity.Text;
-        objdealermaster.state = txtSate.Text;
+        objdealermaster.state = txtSate.SelectedValue.ToString();
         objdealermaster.agentid = Convert.ToInt64(ddlUser.SelectedValue.ToString());
         if (Request.QueryString["id"] != null)
         {
@@ -122,7 +123,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         txtAddress1.Text = String.Empty;
         txtAddress2.Text = String.Empty;
         txtCity.Text = String.Empty;
-        txtSate.Text = String.Empty;
+        txtSate.SelectedIndex = 0;
         ddlUser.SelectedIndex = 0;
     }
 
@@ -227,6 +228,51 @@ public partial class editdealerprofile : System.Web.UI.Page
             ddlUser.DataBind();
             ListItem objListItem = new ListItem("--Select User--", "-1");
             ddlUser.Items.Insert(0, objListItem);
+        }
+    }
+    private void Bindstate()
+    {
+       
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "getState_byCountryId";
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@countryid", Convert.ToInt64("1"));
+        cmd.Connection = con;
+        DataTable dtUser = new DataTable();
+        con.Open();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dtUser);
+        if (dtUser != null)
+        {
+            if (dtUser.Rows.Count > 0)
+            {
+                txtSate .DataSource = dtUser;
+                txtSate.DataTextField = "statename";
+                txtSate.DataValueField = "id";
+                txtSate.DataBind();
+                ListItem objListItem = new ListItem("--Select State--", "-1");
+                txtSate.Items.Insert(0, objListItem);
+            }
+            else
+            {
+                txtSate.DataSource = dtUser;
+                txtSate.DataTextField = "statename";
+                txtSate.DataValueField = "id";
+                txtSate.DataBind();
+                ListItem objListItem = new ListItem("--Select State--", "-1");
+                txtSate.Items.Insert(0, objListItem);
+            }
+        }
+        else
+        {
+            txtSate.DataSource = dtUser;
+            txtSate.DataTextField = "statename";
+            txtSate.DataValueField = "id";
+            txtSate.DataBind();
+            ListItem objListItem = new ListItem("--Select State--", "-1");
+            txtSate.Items.Insert(0, objListItem);
         }
     }
 }

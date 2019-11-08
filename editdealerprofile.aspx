@@ -75,7 +75,8 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1"> State</label>
-                        <asp:TextBox ID="txtSate" class="form-control" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="txtSate" runat="server" class="form-control"></asp:DropDownList>
+                       <%-- <asp:TextBox ID="txtSate" class="form-control" runat="server"></asp:TextBox>--%>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1"> Agent Name</label>

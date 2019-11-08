@@ -102,11 +102,35 @@ public partial class manageworksheets : System.Web.UI.Page
             HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
             hlEdit.NavigateUrl = Page.ResolveUrl("~/addWorksheet.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "vid").ToString(), true));
 
+
+
             //Image imgCategory = (Image)e.Item.FindControl("imgProfile");
             //imgCategory.ImageUrl = agentFrontPath + DataBinder.Eval(e.Item.DataItem, "img").ToString();
 
         }
     }
 
+    
 
+
+
+
+    protected void repWorksheet_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        //NavigateUrl = '<%# Eval("id","~/articleproduction.aspx?id={0}") %>'
+
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+            HyperLink lblAgentId = (HyperLink)e.Item.FindControl("lblAgentId");
+            lblAgentId.NavigateUrl = Page.ResolveUrl("~/articleproduction.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
+
+            HyperLink lblMobileno = (HyperLink)e.Item.FindControl("lblMobileno");
+            lblMobileno.NavigateUrl = Page.ResolveUrl("~/articleproduction.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
+
+            
+
+
+        }
+
+    }
 }

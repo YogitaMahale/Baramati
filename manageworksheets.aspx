@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <asp:Repeater ID="repWorksheet" runat="server">
+                        <asp:Repeater ID="repWorksheet" runat="server" OnItemDataBound="repWorksheet_ItemDataBound">
                             <ItemTemplate>
                                 <tr>
                                     <td style="text-align: center">
@@ -49,8 +49,7 @@
                                                 </td>--%>
 
 
-                                        <%--<asp:Label ID="lblAgentId" runat="server" Text='<%# Eval("id") %>'></asp:Label>--%>
-                                        <asp:HyperLink ID="lblAgentId" runat="server" NavigateUrl='<%# Eval("id","~/articleproduction.aspx?id={0}") %>' ><%#Eval("id")%></asp:HyperLink>
+                                        <asp:HyperLink ID="lblAgentId" runat="server"  ><%#Eval("id")%></asp:HyperLink>
 
                                         <%--<asp:Label ID="lblBankCount" runat="server" Visible="false" Text='<%# Eval("bankcount") %>'></asp:Label>--%>
                                         <%--<asp:Label ID="lblName" runat="server" Text='<%# Eval("vendorName") %>'></asp:Label>--%>
@@ -59,8 +58,9 @@
                                         <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("createddate") %>'></asp:Label>
                                     </td>
                                     <td style="text-align: center">
-                                        <%--<asp:Label ID="lblMobileno" runat="server" Text='<%# Eval("productid") %>'></asp:Label>--%>
-                                        <asp:HyperLink ID="lblMobileno" runat="server" NavigateUrl='<%# Eval("id","~/articleproduction.aspx?id={0}") %>' ><%#Eval("productid")%></asp:HyperLink>
+                                        
+                                        <%--<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("id","~/articleproduction.aspx?id={0}") %>' ><%#Eval("productid")%></asp:HyperLink>--%>
+                                        <asp:HyperLink ID="lblMobileno" runat="server" ><%#Eval("productid")%></asp:HyperLink>
 
                                     </td>
                                     <td style="text-align: center">

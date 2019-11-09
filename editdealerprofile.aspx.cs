@@ -25,6 +25,7 @@ public partial class editdealerprofile : System.Web.UI.Page
                 Page.Title = "Update Dealer";
                 btnUpdate.Text = "Update";
                 BindDealer(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
+                txtbalance.ReadOnly = true;
 
             }
             else
@@ -60,6 +61,7 @@ public partial class editdealerprofile : System.Web.UI.Page
             txtSate_SelectedIndexChanged(null, null);
             ddldistrict.SelectedValue = objdealermaster.district.ToString();
             ddlUser.SelectedValue = objdealermaster.agentid.ToString();
+            txtbalance.Text = objdealermaster.balance.ToString();
         }
     }
 
@@ -80,6 +82,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         objdealermaster.state = txtSate.SelectedValue.ToString();
         objdealermaster.district = Convert.ToInt64(ddldistrict.SelectedValue.ToString());
         objdealermaster.agentid = Convert.ToInt64(ddlUser.SelectedValue.ToString());
+        objdealermaster.balance = Convert.ToDecimal(txtbalance.Text.Trim());
         if (Request.QueryString["id"] != null)
         {
             objdealermaster.did = Convert.ToInt64(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
@@ -128,6 +131,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         txtCity.Text = String.Empty;
         txtSate.SelectedIndex = 0;
         ddlUser.SelectedIndex = 0;
+        txtbalance.Text = "0";
     }
 
     public Int64 Update(dealermaster objdealermaster)

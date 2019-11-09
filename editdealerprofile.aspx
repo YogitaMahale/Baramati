@@ -87,10 +87,15 @@
                         <div class="col-xs-4"><label for="exampleInputPassword1"> Address 1</label>
                          <asp:TextBox ID="txtAddress1" class="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
                     </div>
-                        <div class="col-xs-4"><label for="exampleInputPassword1"> Address 2</label>
+                        <div class="col-xs-4">
+                            <label for="exampleInputPassword1"> Address 2</label>
                          <asp:TextBox ID="txtAddress2" class="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
                     </div>
-                        
+                        <div class="col-xs-4"><label for="exampleInputPassword1">Opening Balance</label>
+                            <asp:TextBox ID="txtbalance" class="form-control" runat="server"></asp:TextBox>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtbalance" ValidationGroup="gg"  ValidationExpression="^-?([0-9]{0,9}(\.[0-9]{0,2})?|100(\.00?)?)$" ErrorMessage="*" Font-Bold="True" Font-Size="Large" />
+
+                    </div>
                                             
                 </div>
                 <!-- /.box-body -->

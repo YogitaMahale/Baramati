@@ -73,6 +73,7 @@ namespace DatabaseLayer
                                     objdealermaster.guid = Convert.ToString(ds.Tables[0].Rows[0]["guid"]);
                                     objdealermaster.agentid = Convert.ToInt64(ds.Tables[0].Rows[0]["FK_agentId"]);
                                     objdealermaster.district = Convert.ToInt64(ds.Tables[0].Rows[0]["district"]);
+                                    objdealermaster.balance = Convert.ToDecimal(ds.Tables[0].Rows[0]["balance"]);
 
                                 }
                             }
@@ -123,8 +124,9 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@state", objdealermaster.state);
                 cmd.Parameters.AddWithValue("@guid", objdealermaster.guid);
                 cmd.Parameters.AddWithValue("@district", objdealermaster.district);
+                cmd.Parameters.AddWithValue("@balance", objdealermaster.balance);
 
-                
+
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();

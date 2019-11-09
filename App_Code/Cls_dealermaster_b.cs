@@ -64,6 +64,7 @@ namespace BusinessLayer
         private System.DateTime _createddate;
         private String _Img;
         private Int64 _district;
+        private Decimal _balance;
         #endregion
 
 
@@ -72,6 +73,11 @@ namespace BusinessLayer
         {
             get { return _did; }
             set { _did = value; }
+        }
+        public Decimal balance
+        {
+            get { return _balance; }
+            set { _balance = value; }
         }
         public Int64 agentid
         {

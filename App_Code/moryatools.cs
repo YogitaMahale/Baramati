@@ -18,6 +18,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
+using System.Globalization;
 
 public class moryatools : System.Web.Services.WebService
 {
@@ -1582,7 +1583,7 @@ public class moryatools : System.Web.Services.WebService
     //    Context.Response.End();
     //}
     [WebMethod]
-    public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId, string ProductQuantites, string BillPaidorNot, string OrderAmount, string Discount, string Tax, string TotalAmount, string OrderDate, string UserType)
+    public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId, string ProductQuantites, string BillPaidorNot, string OrderAmount, string Discount, string Tax, string TotalAmount, string OrderDate, string UserType,string customerType)
     {
         string finalResult = string.Empty;
         Customer_orders objorders = new Customer_orders();
@@ -1658,6 +1659,18 @@ public class moryatools : System.Web.Services.WebService
         {
             objorders.usertype = UserType;
         }
+
+        int year = int.Parse(DateTime.Now.Year.ToString());
+        string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+        int day = int.Parse(DateTime.Now.Day.ToString());
+        int min = int.Parse(DateTime.Now.Minute.ToString());
+        int hour = int.Parse(DateTime.Now.Hour.ToString());
+
+        string orderno1 = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
+
+        objorders.orderno = orderno1;
+        //objorders.ordertype = "customer";
+        objorders.ordertype = customerType.ToString();
 
         Int64 OrderProductAdd = 0;
         Int64 OrderId = 0;
@@ -2145,7 +2158,7 @@ public class moryatools : System.Web.Services.WebService
     }
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void DealerProfileUpdate(Int64 DealerId, string Name, string WhatAppNo, string Email, string GstNo, string Address1, string Address2, string City, string State, string image1, string image1_extension)
+    public void DealerProfileUpdate(Int64 DealerId, string Name, string WhatAppNo, string Email, string GstNo, string Address1, string Address2, string City, string State, string image1, string image1_extension,string districtId)
     {
         string finalResult = string.Empty;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
@@ -2161,16 +2174,18 @@ public class moryatools : System.Web.Services.WebService
             objdealermaster.address2 = Address2;
             objdealermaster.city = City;
             objdealermaster.state = State;
+            objdealermaster.district = Convert.ToInt64(districtId);
+
             if (!string.IsNullOrEmpty(image1))
             {
                 objdealermaster.Img = DealerProfileImage(image1, image1_extension);
                  
             }
-            else
-            {
-                objdealermaster.Img = string.Empty;
+            //else
+            //{
+            //    objdealermaster.Img = string.Empty;
              
-            }
+            //}
             //objdealermaster.userloginmobileno = UserLoginMobileNo;
             //objdealermaster.password = Password;
             //objdealermaster.guid = Guid.NewGuid().ToString();
@@ -4771,5 +4786,105 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.Write(finalResult);
         Context.Response.End();
     }
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void SelectAllSlider()
+    {
+        string finalResult = string.Empty;
+        try
+        {
+            DataTable dtBanks = (new Cls_slider_b().SelectAll());
+            if (dtBanks != null)
+            {
+                if (dtBanks.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtBanks);
+                    finalResult = "{\"success\" : 1, \"message\" : \" Slider All Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No Slider \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \" No Slider \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void SalesmanLogin(string username, string password)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtUser = new DataTable();
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SalesmanLogin";
+            cmd.Parameters.AddWithValue("@UserName", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sda = new SqlDataAdapter();
+            cmd.Connection = con;
+            sda.SelectCommand = cmd;
+            sda.Fill(dtUser);
+            con.Close();
+            if (dtUser != null)
+            {
+                if (dtUser.Rows.Count > 0)
+                {
+                    //bool Status = Convert.ToBoolean(dtUser.Rows[0]["isactive"]);
+                    //if (Status)
+                    //{
+                        //UpdateLatitudeLongitudeUsingUserId(Convert.ToInt64(dtUser.Rows[0]["uid"]), Convert.ToString(dtUser.Rows[0]["type"]), Latitude, Longitude);
+                        string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
+                        finalResult = "{\"success\" : 1, \"message\" : \"Login Successfully\", \"data\" :" + output + "}";
+                    //}
+                    //else
+                    //{
+                    //    finalResult = "{\"success\" : 0, \"message\" : \"Your Account Under Admin Observation.Please wait for admin confirmation\", \"data\" : \"\"}";
+                    //}
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
 
 }

@@ -125,6 +125,7 @@ public class Cls_PurchaseOrderDetails_b
         private Int64 _CategoryId;
         private Int64 _Quantity;
         private Int64 _Quantity1;
+        private Decimal _Rate;
         private Boolean _isdeleted;
 
         #endregion
@@ -136,6 +137,11 @@ public class Cls_PurchaseOrderDetails_b
         {
             get { return _PurchaseOrderDetailsId; }
             set { _PurchaseOrderDetailsId = value; }
+        }
+        public Decimal Rate
+        {
+            get { return _Rate; }
+            set { _Rate = value; }
         }
         public Int64 PurchaseOrderId
         {

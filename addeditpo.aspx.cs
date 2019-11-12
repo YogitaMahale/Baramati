@@ -24,6 +24,8 @@ public partial class addeditpo : System.Web.UI.Page
 
     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
     String usermail = String.Empty;
+    Decimal totalamount = 0;
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -153,7 +155,6 @@ public partial class addeditpo : System.Web.UI.Page
     {
         DataTable dtProduct = new DataTable();
         dtProduct = GetProducts();
-
         if (ViewState["Products"] != null)
         {
             dtProduct = (DataTable)ViewState["Products"];
@@ -162,6 +163,12 @@ public partial class addeditpo : System.Web.UI.Page
             Repeater1.DataSource = dtProduct;
             Repeater1.DataBind();
             Repeater1.Visible = true;
+
+            foreach(DataRow row in dtProduct.Select()){
+                totalamount += Convert.ToDecimal( row["Total"].ToString()); 
+            }
+
+
         }
         else
         {
@@ -175,6 +182,8 @@ public partial class addeditpo : System.Web.UI.Page
         //ddlProduct.SelectedIndex = 0;
        
         txtquantity.Text = "0";
+        txttotal.Text = "0";
+        txttotalamount.Text = totalamount.ToString();
     }
 
 
@@ -205,7 +214,9 @@ public partial class addeditpo : System.Web.UI.Page
             dtProduct.Columns.Add(new DataColumn("CategoryName", typeof(string)));
             dtProduct.Columns.Add(new DataColumn("ProdId", typeof(int)));
             dtProduct.Columns.Add(new DataColumn("ProductName", typeof(string)));
+            dtProduct.Columns.Add(new DataColumn("Rate", typeof(string)));
             dtProduct.Columns.Add(new DataColumn("Quantity", typeof(string)));
+            dtProduct.Columns.Add(new DataColumn("Total", typeof(string)));
 
             ViewState["Products"] = dtProduct;
         }
@@ -220,7 +231,9 @@ public partial class addeditpo : System.Web.UI.Page
         dtRow["ProdId"] = ddlProduct.SelectedValue;
         dtRow["CategoryName"] = ddlCategory.SelectedItem.ToString();
         dtRow["CatId"] = ddlCategory.SelectedValue;
+        dtRow["Rate"] = txtrate.Text.Trim();
         dtRow["Quantity"] = txtquantity.Text.Trim();
+        dtRow["Total"] = txttotal.Text.Trim();
         dtProduct.Rows.Add(dtRow);
         ViewState["Products"] = dtProduct;
         return dtProduct;
@@ -256,7 +269,9 @@ public partial class addeditpo : System.Web.UI.Page
                 dtProduct.Columns.Add(new DataColumn("SrNo", typeof(int)));
                 dtProduct.Columns.Add(new DataColumn("ProductName", typeof(string)));
                 dtProduct.Columns.Add(new DataColumn("CategoryName", typeof(string)));
+                dtProduct.Columns.Add(new DataColumn("Rate", typeof(string)));
                 dtProduct.Columns.Add(new DataColumn("Quantity", typeof(string)));
+                dtProduct.Columns.Add(new DataColumn("Total", typeof(string)));
 
                 ViewState["Products"] = dtProduct;
             }
@@ -267,6 +282,7 @@ public partial class addeditpo : System.Web.UI.Page
 
 
             // dtProduct = (DataTable)ViewState["Products"];
+            
 
             DataRow[] drr = dtProduct.Select("SrNo=' " + prodid + " ' ");
             foreach (var row in drr)
@@ -280,18 +296,16 @@ public partial class addeditpo : System.Web.UI.Page
             ddlProduct.SelectedIndex = 0;
             ddlCategory.SelectedIndex = 0;
             txtquantity.Text = "0";
-            //if (Request.QueryString["id"] != null)
-            //{
-            //    Int64 OrderID = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
-            //    string s = "delete from Ordersystem_orderproducts where oid=" + OrderID + " and pid=" + pid + "";
-            //    SqlCommand cmd = new SqlCommand(s, con);
-            //    int t = cmd.ExecuteNonQuery();
+            txtrate.Text = "0";
+            txttotal.Text = "0";
+            
 
+            foreach (DataRow row in dtProduct.Select())
+            {
+                totalamount += Convert.ToDecimal(row["Total"].ToString());
+            }
 
-            //}
-            //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Product Remove Successfully');", true);
-            //con.Close();
-
+            txttotalamount.Text = totalamount.ToString();
             ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Product Removed Successfully');", true);
 
         }
@@ -328,6 +342,7 @@ public partial class addeditpo : System.Web.UI.Page
         objcategory.VendorId = Int64.Parse(ddlVendor.SelectedValue);
 
         objcategory.isdeleted = false;
+        objcategory.totalamount = Convert.ToDecimal(txttotalamount.Text);
 
         if (Request.QueryString["id"] != null)
         {
@@ -364,6 +379,7 @@ public partial class addeditpo : System.Web.UI.Page
                     objPod.CategoryId = Convert.ToInt64(row["CatId"]);
                     objPod.Quantity = Convert.ToInt64(row["Quantity"]);
                     objPod.Quantity1 = Convert.ToInt64(row["Quantity"]);
+                    objPod.Rate = Convert.ToDecimal(row["Rate"]);
 
                     Result1 = (new Cls_PurchaseOrderDetails_b().Insert(objPod));
                     
@@ -896,5 +912,11 @@ public partial class addeditpo : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/managepurchaseorder.aspx");
+    }
+
+    protected void txtratequantity_TextChanged(object sender, EventArgs e)
+    {
+        Decimal total = Convert.ToDecimal(txtrate.Text.ToString()) * Convert.ToDecimal(txtquantity.Text.ToString());
+        txttotal.Text = total.ToString();
     }
 }

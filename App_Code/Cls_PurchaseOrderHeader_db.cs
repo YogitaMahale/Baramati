@@ -137,6 +137,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@isdeleted", objPurchaseOrderHeader.isdeleted);
                 cmd.Parameters.AddWithValue("@OrderDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@orderstatus", objPurchaseOrderHeader.orderstatus);
+                cmd.Parameters.AddWithValue("@totalamount", objPurchaseOrderHeader.totalamount);
 
 
 

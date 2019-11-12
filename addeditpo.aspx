@@ -131,9 +131,21 @@
                       <asp:ListItem Text="--Select Product(s)--" Value="0"></asp:ListItem>
                   </asp:DropDownList>
                   </div>
+                        <div class="col-xs-3">
+                        <label for="exampleInputEmail1">Rate</label>
+                      <asp:TextBox ID="txtrate" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtratequantity_TextChanged" Text="0"></asp:TextBox>
+
+                       
+                    </div>
                   <div class="col-xs-3">
                         <label for="exampleInputEmail1">Quantity</label>
-                      <asp:TextBox ID="txtquantity" class="form-control" runat="server" Text="0"></asp:TextBox>
+                      <asp:TextBox ID="txtquantity" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtratequantity_TextChanged" Text="0"></asp:TextBox>
+
+                       
+                    </div>
+                        <div class="col-xs-3">
+                        <label for="exampleInputEmail1">Total</label>
+                      <asp:TextBox ID="txttotal" class="form-control" runat="server" Text="0"></asp:TextBox>
 
                        
                     </div>
@@ -162,7 +174,9 @@
                                               <%--  <th class="center"> test Name </th>                               
                                             	<th class="center"> BRAND  </th>
                                                 <th class="center"> SIZE </th>--%>
+                                                  <th class="center">RATE</th>   
                                                   <th class="center">QUANTITY</th>   
+                                                  <th class="center">TOTAL</th>   
                                                  
                                             </tr>
                                         </thead>
@@ -176,7 +190,9 @@
                                                  <%--<td class="center"><asp:Label ID="Brand" runat="server" Text=' <%#Eval("Brand")%>' > </asp:Label></td>
                                                  <td class="center"><asp:Label ID="Size" runat="server" Text=' <%#Eval("Size")%>' ></asp:Label></td>
                                                  --%>
+                                                <td class="center"><asp:Label ID="Rate" runat="server" Text=' <%#Eval("Rate")%>' ></asp:Label></td>
                                                 <td class="center"><asp:Label ID="Quantity" runat="server" Text=' <%#Eval("Quantity")%>' ></asp:Label></td>
+                                                <td class="center"><asp:Label ID="Total" runat="server" Text=' <%#Eval("Total")%>' ></asp:Label></td>
 
 											</tr>
                                                      </ItemTemplate>
@@ -185,6 +201,12 @@
 										</tbody>
                                     </table>
                       </div>
+                    <div class="col-xs-3">
+                        <label for="exampleInputEmail1">Total Amount</label>
+                      <asp:TextBox ID="txttotalamount" class="form-control" runat="server" Text="0"></asp:TextBox>
+
+                       
+                    </div>
                         <div class="col-md-12">
             <div class="box-footer" style="text-align:center">
                      

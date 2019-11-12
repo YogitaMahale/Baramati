@@ -1668,9 +1668,8 @@ public class moryatools : System.Web.Services.WebService
 
         string orderno1 = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
 
-        objorders.orderno = orderno1;
-        //objorders.ordertype = "customer";
-        objorders.ordertype = customerType.ToString();
+       // objorders.orderno = orderno1;
+        //objorders.ordertype = customerType.ToString();
 
         Int64 OrderProductAdd = 0;
         Int64 OrderId = 0;

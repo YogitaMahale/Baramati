@@ -118,6 +118,7 @@ namespace BusinessLayer
         private Boolean _isdeleted;
         private DateTime _OrderDate;
         private Boolean _orderstatus;
+        private Decimal _totalamount;
 
         #endregion
 
@@ -128,6 +129,12 @@ namespace BusinessLayer
         {
             get { return _PurchaseOrderId; }
             set { _PurchaseOrderId = value; }
+        }
+
+        public Decimal totalamount
+        {
+            get { return _totalamount; }
+            set { _totalamount = value; }
         }
 
         public String PONo

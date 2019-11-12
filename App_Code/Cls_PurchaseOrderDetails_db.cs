@@ -145,6 +145,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@Quantity", objPurchaseOrderDetails.Quantity);
                 //cmd.Parameters.AddWithValue("@isdeleted", objPurchaseOrderDetails.isdeleted);
                 cmd.Parameters.AddWithValue("@Quantity1", objPurchaseOrderDetails.Quantity1);
+                cmd.Parameters.AddWithValue("@Rate", objPurchaseOrderDetails.Rate);
 
 
 

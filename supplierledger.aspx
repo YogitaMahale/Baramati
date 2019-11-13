@@ -24,7 +24,7 @@
                             <div class="form-group row">
                     
                   <div class="col-xs-4">
-                        <label for="exampleInputEmail1">Vendor Name </label>
+                        <label for="exampleInputEmail1">Supplier Name </label>
                         <asp:DropDownList ID="ddlVendor" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlVendor_SelectedIndexChanged"  />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator11" ControlToValidate="ddlVendor"  ValidationGroup="gg"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
                        
@@ -51,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <asp:Repeater ID="repCategory" runat="server" OnItemDataBound="repCategory_ItemDataBound">
+                                    <asp:Repeater ID="repCategory" runat="server" >
                                         <ItemTemplate>
                                             <tr>
                                                 <%--<td class="singleCheckbox" style="text-align: center">
@@ -108,7 +108,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <asp:Repeater ID="reppodetails" runat="server" OnItemDataBound="repCategory_ItemDataBound">
+                                    <asp:Repeater ID="reppodetails" runat="server" OnItemDataBound="reppodetails_ItemDataBound">
                                         <ItemTemplate>
                                             <tr>
                                                 <td style="text-align: center">
@@ -120,11 +120,11 @@
                                                 </td>
                                                 
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="Label2" runat="server" Text='<%# Eval("totalamount") %>'></asp:Label>
+                                                    <asp:Label ID="lbltotalamount" runat="server" Text='<%# Eval("totalamount") %>'></asp:Label>
                                                     
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("pendingamount") %>'></asp:Label>
+                                                    <asp:Label ID="lblpendingamount" runat="server" Text='<%# Eval("pendingamount") %>'></asp:Label>
                                                     
                                                 </td>
                                             </tr>
@@ -133,17 +133,54 @@
                                 </tbody>
                                 <tfoot>
                                     <tr class="tableheader">
-                                        <th style="text-align: center">PO No</th>
+                                        <%--<th style="text-align: center" >PO No</th>
                                         <th style="text-align: center">Date</th>
                                         <th style="text-align: center">Total Amount(Rs.)</th>
                                         <th style="text-align: center">Payment Due(Rs.)</th>
-                                        
-
+                                        --%>
+                                        <td style="text-align: center">
+                                                    <asp:Label ID="lblid" Font-Bold="true" runat="server" Text='TOTALS'></asp:Label>
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="Label1" runat="server"></asp:Label>
+                                                    
+                                                </td>
+                                                
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="lblgrandtotal" Font-Bold="true" runat="server" ></asp:Label>
+                                                    
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="lblgranddue" Font-Bold="true" runat="server" ></asp:Label>
+                                                    
+                                                </td>
                                        
                                     </tr>
 
                                 </tfoot>
                             </table>
+                                <%--<div class="form-group row">
+                    
+                  <div class="col-xs-4">
+                        <label for="exampleInputEmail1">Supplier Name </label>
+                        <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlVendor_SelectedIndexChanged"  />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="ddlVendor"  ValidationGroup="gg"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
+                       
+                    </div>
+
+                            </div>--%>
+                                <table>
+                                
+                                <tbody>
+                                            <tr>
+                                                
+                                            </tr>
+                                    
+                                </tbody>
+                                
+                            </table>
+
+
                                 </div>
 
                         </div>

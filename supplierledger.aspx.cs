@@ -17,6 +17,8 @@ public partial class supplierledger : System.Web.UI.Page
     DataTable dtSuppliers = new DataTable("Suppliers");
     DataTable dtPoDetails = new DataTable();
 
+    Decimal grandtotal = 0, granddue = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -74,14 +76,7 @@ public partial class supplierledger : System.Web.UI.Page
 
     protected void repCategory_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
-        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
-        {
-
-            //HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
-
-
-
-        }
+        
     }
 
 
@@ -164,5 +159,24 @@ public partial class supplierledger : System.Web.UI.Page
 
 
 
+    }
+
+    protected void reppodetails_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        {
+            Label gt = (Label)e.Item.FindControl("lbltotalamount");
+            Label gd = (Label)e.Item.FindControl("lblpendingamount");
+
+            grandtotal += Convert.ToDecimal(gt.Text);
+            granddue += Convert.ToDecimal(gd.Text);
+            //HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
+
+
+
+        }
+
+        lblgrandtotal.Text = grandtotal.ToString();
+        lblgranddue.Text = granddue.ToString();
     }
 }

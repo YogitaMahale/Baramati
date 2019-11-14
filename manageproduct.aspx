@@ -37,7 +37,7 @@
                         </div>
                         <br />
                         <div style="text-align: right;">
-                            <asp:Button ID="btn_updateRealStock" runat="server" Text="Update Stock" class="btn btn-Normal btn-primary" OnClick="btn_updateRealStock_Click" />
+                            <asp:Button ID="btn_updateRealStock" Visible="false"  runat="server" Text="Update Stock" class="btn btn-Normal btn-primary" OnClick="btn_updateRealStock_Click" />
                             <asp:Button ID="btnAddNewProduct" runat="server" Text=" New Product" class="btn btn-Normal btn-primary" OnClick="btnAddNewProduct_Click" />
 
                         </div>
@@ -76,15 +76,15 @@
                                        <%-- <asp:ListItem Value="2">All</asp:ListItem>--%>
                                     </asp:DropDownList></td>
 
-                                <td>
+                                <td >
                                     <asp:Label ID="Label1" runat="server" Width="20"></asp:Label></td>
                                
                                    
-                                <td>
+                                <td style="display:none ">
                                     <label for="exampleInputPassword1">Select</label></td>
-                                <td>
+                                <td style="display:none ">
                                     <asp:Label ID="Labelr2" runat="server" Width="10"></asp:Label></td>
-                                <td>
+                                <td style="display:none ">
                                     <asp:ListBox ID="ListBox1" runat="server" Width="350px">
 
                                         <asp:ListItem Value="Select">Not any Price</asp:ListItem>
@@ -96,15 +96,15 @@
                                     </asp:ListBox>
 
                                 </td>
-                                <td>
+                                <td style="display:none ">
                                     <asp:TextBox ID="txtPath" Visible="false" runat="server" Width="20px"></asp:TextBox>
                                 </td>
-                                <td>
+                                <td style="display:none ">
                                     <label for="exampleInputPassword1"></label>
                                 </td>
-                                <td>
+                                <td style="display:none ">
                                     <asp:Label ID="Label4" runat="server" Width="20"></asp:Label></td>
-                                <td>
+                                <td style="display:none ">
                                     <asp:Button ID="btn_pdfDownload" runat="server" Text="PDF Download" CssClass="btn btn-flickr" OnClick="btn_pdfDownload_Click" />
 
                                 </td>   
@@ -151,7 +151,7 @@
                             <div class="col-md-6" style="text-align: left;">
                                 <asp:Button ID="btnExcelExport" runat="server" class="btn btn-Normal btn-primary" Width="150" Text="Excel Export" OnClick="btnExcelExport_Click" />
 
-                                <asp:Button ID="btnSave" runat="server" class="btn btn-Normal btn-primary" Width="150" Text="Save All" OnClick="btnSave_Click" />
+                                <asp:Button ID="btnSave" runat="server" Visible="false"  class="btn btn-Normal btn-primary" Width="150" Text="Save All" OnClick="btnSave_Click" />
                             </div>
                             <div class="col-md-6" style="text-align: right;">
                                 <table>
@@ -288,7 +288,7 @@
                                     &nbsp;<asp:LinkButton ID="lnkUpdate" runat="server" Visible="false" Text="Update" CssClass="btn btn-sm btn-info"></asp:LinkButton>
                                                     &nbsp;<asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this product?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                     &nbsp;<asp:HyperLink ID="hlAddImageVideo" runat="server" Target="_blank" CssClass="btn btn-sm btn-warning" Text="More Images"></asp:HyperLink>
-                                                     <asp:HyperLink ID="hlAddProcess" runat="server" CssClass="btn btn-sm btn-success" Text="Add Process"></asp:HyperLink>&nbsp;
+                                                     <asp:HyperLink ID="hlAddProcess" runat="server" CssClass="btn btn-sm btn-success" Visible="false"  Text="Add Process"></asp:HyperLink>&nbsp;
                                                 </td>
                                             </tr>
                                         </ItemTemplate>

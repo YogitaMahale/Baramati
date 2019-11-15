@@ -14,6 +14,23 @@ namespace BusinessLayer
 
         }
 
+
+        public DataTable SelectAll()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Cls_dealermaster_db objCls_dealermaster_db = new Cls_dealermaster_db();
+                dt = objCls_dealermaster_db.SelectAll();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return dt;
+            }
+        }
+
         public dealermaster SelectById(Int64 did)
         {
             dealermaster objdealermaster = (new Cls_dealermaster_db().SelectById(did));

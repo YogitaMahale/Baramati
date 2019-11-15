@@ -32,6 +32,40 @@ namespace DatabaseLayer
 
         #endregion Constructor
 
+
+
+
+        public DataTable SelectAll()
+        {
+            DataSet ds = new DataSet();
+           
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "dealer_SelectAllAdmin";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = ConnectionString;
+                ConnectionString.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                
+
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return null;
+            }
+            finally
+            {
+                ConnectionString.Close();
+            }
+            return ds.Tables[0];
+        }
+
+
+
         public dealermaster SelectById(Int64 did)
         {
             SqlDataAdapter da;

@@ -34,49 +34,11 @@ public partial class _Default : System.Web.UI.Page
         Session["usertype"] = null;
 
     }
-
-    private bool SendMail(string Name)
-    {
-        bool send = false;
-        MailMessage mail = new MailMessage();
-        //mail.To.Add(ConfigurationManager.AppSettings["LoginToEmail"].ToString());
-        mail.To.Add("Swapnil.kshatriyask@gmail.com");
-
-        mail.From = new MailAddress("demo@moryatools.com", "Morya Tools App");
-        mail.Subject = Name + " Login Morya Tool Website  7 PM Details";
-        StringBuilder strBul = new StringBuilder("<div>");
-        strBul = strBul.Append("<div>Dear Sir,</div>");
-        strBul = strBul.Append("<br />");
-        strBul = strBul.Append("<br />");
-        strBul = strBul.Append("<div>" + Name + " Login Morya Tool Website After 7 PM , Login Date & Time " + System.DateTime.Now.ToString() + "</div>");
-        strBul = strBul.Append("<br />");
-        strBul = strBul.Append("<br />");
-        strBul = strBul.Append("<div>Thank you,</div>");
-        strBul = strBul.Append("<div>Morya App - Support Team.</div>");
-        strBul = strBul.Append("</div>");
-        mail.Body = strBul.ToString();
-        mail.IsBodyHtml = true;
-        SmtpClient smtp = new SmtpClient();
-        smtp.Host = "103.250.184.62";
-        smtp.Port = 25;
-        smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new System.Net.NetworkCredential("demo@moryatools.com", "vsys@2017");
-        try
-        {
-            smtp.Send(mail);
-            send = true;
-        }
-        catch (Exception ex)
-        {
-            send = false;
-            ErrHandler.writeError(ex.Message, ex.StackTrace);
-        }
-        return send;
-    }
-
+    
     protected void btnLogin_Click(object sender, EventArgs e)
     {
-       
+                        
+
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
@@ -95,19 +57,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     if (dtUser.Rows.Count > 0)
                     {
-                        //if (System.DateTime.Now.Hour <= 19)
-                        //  { 
-                        //	}
-                        // else
-                        // {
-
                         
-                      // SendMail(Convert.ToString(dtUser.Rows[0]["name"].ToString().ToUpper()));
-                       
-
-                        //}
-                        //---update Status----
-
 
                         Cls_userregistration_b obj = new Cls_userregistration_b();
                         Int64 Result = obj.WebsiteUser_Status(txtUserName.Text, txtPassword.Text, true);

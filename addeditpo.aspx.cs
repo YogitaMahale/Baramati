@@ -333,8 +333,11 @@ public partial class addeditpo : System.Web.UI.Page
         int day = int.Parse(DateTime.Now.Day.ToString());
         int min = int.Parse(DateTime.Now.Minute.ToString());
         int hour = int.Parse(DateTime.Now.Hour.ToString());
+        String ticks = DateTime.Now.Ticks.ToString();
+        ticks = ticks.Substring(ticks.Length - 2, 2);
 
-        pono = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
+
+        pono = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min+ ticks;
 
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         PurchaseOrderHeader objcategory = new PurchaseOrderHeader();

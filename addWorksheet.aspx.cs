@@ -428,10 +428,7 @@ public partial class addWorksheet : System.Web.UI.Page
                 }
 
                 con.Close();
-
-                
-                if (Result1>0)
-                    Response.Redirect(Page.ResolveUrl("~/manageworksheets.aspx?mode=i"));
+                Response.Redirect(Page.ResolveUrl("~/manageworksheets.aspx?mode=i"));
             }
             else
             {

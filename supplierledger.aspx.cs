@@ -23,14 +23,14 @@ public partial class supplierledger : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            BindCategory();
+            BindVendors();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             hPageTitle.InnerText = "Supplier Ledger";
         }
 
 
     }
-    private void BindCategory()
+    private void BindVendors()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try

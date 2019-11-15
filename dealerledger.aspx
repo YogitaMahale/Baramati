@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="supplierledger.aspx.cs" Inherits="supplierledger" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="dealerledger.aspx.cs" Inherits="dealerledger" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -24,9 +24,9 @@
                             <div class="form-group row">
                     
                   <div class="col-xs-4">
-                        <label for="exampleInputEmail1">Supplier Name </label>
-                        <asp:DropDownList ID="ddlVendor" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlVendor_SelectedIndexChanged"  />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" ControlToValidate="ddlVendor"  ValidationGroup="gg"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
+                        <label for="exampleInputEmail1">Customer Name </label>
+                        <asp:DropDownList ID="ddlDealer" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDealer_SelectedIndexChanged"  />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" ControlToValidate="ddlDealer"  ValidationGroup="gg"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
                        
                     </div>
 
@@ -68,7 +68,7 @@
                                                     <asp:Label ID="lblStatus" runat="server" Visible ="false" Text='<%# Eval("orderstatus") %>'></asp:Label>
                                                 </td>--%>
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                                    <asp:Label ID="lblid" runat="server" Text='<%# Eval("Payid") %>'></asp:Label>
                                                 </td>
                                                 <td style="text-align: center">
                                                     <asp:Label ID="Label1" runat="server" Text='<%# Eval("createddate") %>'></asp:Label>
@@ -80,7 +80,7 @@
                                                     
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("amount") %>'></asp:Label>
+                                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("Paidamt") %>'></asp:Label>
                                                     
                                                 </td>
                                             </tr>
@@ -114,7 +114,7 @@
                             <table id="tblpodetails" class="display table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr class="tableheader">
-                                        <th style="text-align: center">PO No</th>
+                                        <th style="text-align: center">Invoice No</th>
                                         <th style="text-align: center">Date</th>
                                         <th style="text-align: center">Total Amount(Rs.)</th>
                                         <th style="text-align: center">Payment Due(Rs.)</th>
@@ -126,7 +126,7 @@
                                         <ItemTemplate>
                                             <tr>
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="lblid" runat="server" Text='<%# Eval("PONo") %>'></asp:Label>
+                                                    <asp:Label ID="lblid" runat="server" Text='<%# Eval("orderno") %>'></asp:Label>
                                                 </td>
                                                 <td style="text-align: center">
                                                     <asp:Label ID="Label1" runat="server" Text='<%# Eval("orderdate") %>'></asp:Label>
@@ -134,11 +134,11 @@
                                                 </td>
                                                 
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="lbltotalamount" runat="server" Text='<%# Eval("totalamount") %>'></asp:Label>
+                                                    <asp:Label ID="lbltotalamount" runat="server" Text='<%# Eval("amount") %>'></asp:Label>
                                                     
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <asp:Label ID="lblpendingamount" runat="server" Text='<%# Eval("pendingamount") %>'></asp:Label>
+                                                    <asp:Label ID="lblpendingamount" runat="server" Text='<%# Eval("pendingAmt") %>'></asp:Label>
                                                     
                                                 </td>
                                             </tr>

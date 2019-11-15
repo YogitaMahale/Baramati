@@ -218,38 +218,40 @@ public partial class addeditproduct : System.Web.UI.Page
     protected void btnSave_Click(object sender, EventArgs e)
     {
         Int64 Result = 0;
-        product objproduct = new product();
-        objproduct.productname = txtProductName.Text.Trim();
-        //objproduct.sku = txtSKU.Text.Trim();
-        objproduct.sku = "0";
-        objproduct.customerprice = Convert.ToDecimal(txtCustomerProductPrice.Text.Trim());
-        objproduct.dealerprice = Convert.ToDecimal(txtDealerPrice.Text.Trim());
-        objproduct.discountprice = Convert.ToDecimal(txtDiscountProductPrice.Text.Trim());
-        objproduct.gst = Convert.ToDecimal(txtGST.Text.Trim());
-        objproduct.quantites = Convert.ToInt32(txtQuantites.Text.Trim());
-        objproduct.alertquantites = Convert.ToInt32(txtAlertQuantites.Text.Trim());
-        objproduct.isstock = cbIsStock.Checked;
-        objproduct.shortdescp = txtProductShortDescription.Text;
-        objproduct.longdescp = txtProductDescription.Text;
-        objproduct.cid = Convert.ToInt64(ddlCategory.SelectedValue);
-        objproduct.video1 = txtYouTubeVideo1.Text.Trim();
-        objproduct.video2 = txtYouTubeVideo2.Text.Trim();
-        objproduct.video3 = txtYouTubeVideo3.Text.Trim();
-        objproduct.video4 = txtYouTubeVideo4.Text.Trim();
+        product objproduct = new product
+        {
+            productname = txtProductName.Text.Trim(),
+            //objproduct.sku = txtSKU.Text.Trim();
+            sku = "0",
+            customerprice = Convert.ToDecimal(txtCustomerProductPrice.Text.Trim()),
+            dealerprice = Convert.ToDecimal(txtDealerPrice.Text.Trim()),
+            discountprice = Convert.ToDecimal(txtDiscountProductPrice.Text.Trim()),
+            gst = Convert.ToDecimal(txtGST.Text.Trim()),
+            quantites = Convert.ToInt32(txtQuantites.Text.Trim()),
+            alertquantites = Convert.ToInt32(txtAlertQuantites.Text.Trim()),
+            isstock = cbIsStock.Checked,
+            shortdescp = txtProductShortDescription.Text,
+            longdescp = txtProductDescription.Text,
+            cid = Convert.ToInt64(ddlCategory.SelectedValue),
+            video1 = txtYouTubeVideo1.Text.Trim(),
+            video2 = txtYouTubeVideo2.Text.Trim(),
+            video3 = txtYouTubeVideo3.Text.Trim(),
+            video4 = txtYouTubeVideo4.Text.Trim(),
 
-        objproduct.wholesaleprice = Convert.ToDecimal(txtWholesalePrice.Text);
-        objproduct.superwholesaleprice = Convert.ToDecimal(txtSuperWholesalePrice.Text);
+            wholesaleprice = Convert.ToDecimal(txtWholesalePrice.Text),
+            superwholesaleprice = Convert.ToDecimal(txtSuperWholesalePrice.Text),
 
-        objproduct.video_name_1 = txtYoutubeName1.Text;
-        objproduct.video_name_2 = txtYoutubeName2.Text;
-        objproduct.video_name_3 = txtYoutubeName3.Text;
-        objproduct.video_name_4 = txtYoutubeName4.Text;
+            video_name_1 = txtYoutubeName1.Text,
+            video_name_2 = txtYoutubeName2.Text,
+            video_name_3 = txtYoutubeName3.Text,
+            video_name_4 = txtYoutubeName4.Text,
 
 
-        objproduct.HSNCode = txt_Hsncode.Text;
-        objproduct.RealStock = Convert.ToInt32(txt_RealStock.Text.Trim());
-        objproduct.LandingPrice = Convert.ToDecimal(txt_landingprice.Text);
-        objproduct.isHotproduct = cbIsHotproduct.Checked;
+            HSNCode = txt_Hsncode.Text,
+            RealStock = Convert.ToInt32(txt_RealStock.Text.Trim()),
+            LandingPrice = Convert.ToDecimal(txt_landingprice.Text),
+            isHotproduct = cbIsHotproduct.Checked
+        };
         if (ViewState["fileName"] != null)
         {
             objproduct.mainimage = ViewState["fileName"].ToString();
@@ -485,10 +487,12 @@ public partial class addeditproduct : System.Web.UI.Page
 
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "SELECT cid,categoryname FROM category WHERE isdelete = 0 and maincategoryid = @id";
-            //cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "SELECT cid,categoryname FROM category WHERE isdelete = 0 and isactive = 1 and maincategoryid = @id",
+                //cmd.CommandType = CommandType.StoredProcedure;
+                Connection = ConnectionString
+            };
             cmd.Parameters.AddWithValue("@id", ddlMain.SelectedValue);
             //cmd.Parameters.AddWithValue("@isactive", IsActive);
             ConnectionString.Open();
@@ -503,7 +507,7 @@ public partial class addeditproduct : System.Web.UI.Page
                     ddlCategory.DataTextField = "categoryname";
                     ddlCategory.DataValueField = "cid";
                     ddlCategory.DataBind();
-                    ListItem objListItem = new ListItem("--Select Category--", "0");
+                    ListItem objListItem = new ListItem("--Select Sub Category--", "0");
                     ddlCategory.Items.Insert(0, objListItem);
                 }
             }

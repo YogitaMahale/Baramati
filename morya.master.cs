@@ -11,9 +11,16 @@ public partial class morya : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["usertype"].ToString() == "superadmin" || Session["usertype"].ToString() == "user")
+        if (Session["usertype"] != null)
         {
-            //divUserAuthority.Visible = true;
+            if (Session["usertype"].ToString() == "superadmin" || Session["usertype"].ToString() == "user")
+            {
+                //divUserAuthority.Visible = true;
+            }
+            else
+            {
+                Response.Redirect(Page.ResolveUrl("~/Default.aspx"));
+            }
         }
         else
         {

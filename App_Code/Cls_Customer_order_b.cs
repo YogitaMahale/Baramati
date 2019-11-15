@@ -118,6 +118,11 @@ public class Customer_orders
     private Boolean _isdelete;
     private String _usertype;
     private Boolean _isCreateInvoice;
+      private String _orderno;
+      private String _ordertype;
+
+
+   
     #endregion
 
 
@@ -183,6 +188,17 @@ public class Customer_orders
         get { return _isCreateInvoice; }
         set { _isCreateInvoice = value; }
     }
+    public string orderno
+    {
+        get{return _orderno;}
+        set {_orderno=value;}
+    }
+    public string ordertype
+    {
+        get { return _ordertype; }
+        set { _ordertype = value; }
+    }    
+    
     #endregion
 }
 

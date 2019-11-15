@@ -330,17 +330,28 @@
         function checkFileExtension() {
             var result = false;
             var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+
+            //var fileUploader = $('#<%= fpProduct.ClientID %>');
+            //alert(filetUploader);
+
+            var fileuploader = document.getElementById("fpProduct");
+            alert(fileuploader);
+
             //if (($("#ctl00_ContentPlaceHolder1_fpProduct").val() == "") || ($("#ctl00_ContentPlaceHolder1_fpProduct").val() == null)) {
+            //if ($('#<%=fpProduct.ClientID %>').val() == "" || ($('#<%= fpProduct.ClientID %>').val() == null)) {
             if ((document.getElementById("fpProduct").val() == "") || (document.getElementById("fpProduct").val() == null)) {
                 alert("Please Upload Image.")
                 result = false;
             }
             else {
                 var allowedFiles = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
-                //var fileUpload = document.getElementById("ctl00_ContentPlaceHolder1_fpProduct");
                 var fileUpload = document.getElementById("fpProduct");
-                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+                //var fileUpload = $('#<%=fpProduct.ClientID %>');
+                alert(fileUpload);
+                //fileUpload.value.toLowerCase();
+               var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
                 if (!regex.test(fileUpload.value.toLowerCase())) {
+                //if (!regex.test(fileUpload.val())) {
                     alert("Please upload files having extensions:" + allowedFiles.join(', ') + " only.");
                     result = false;
                 }

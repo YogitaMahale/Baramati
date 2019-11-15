@@ -89,6 +89,9 @@ public class Cls_Customer_order_db
                                 objorders.orderdate = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["orderdate"].ToString()) ? DateTime.MinValue : Convert.ToDateTime(ds.Tables[0].Rows[0]["orderdate"]);
                                 objorders.isdelete = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isdelete"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isdelete"]);
                                 objorders.isCreateInvoice = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isCreateInvoice"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isCreateInvoice"]);
+
+                                objorders.orderno = Convert.ToString(ds.Tables[0].Rows[0]["orderno"]);
+                                objorders.ordertype = Convert.ToString(ds.Tables[0].Rows[0]["ordertype"]);
                             }
                         }
                     }
@@ -132,6 +135,10 @@ public class Cls_Customer_order_db
             cmd.Parameters.AddWithValue("@orderdate", objorders.orderdate);
             cmd.Parameters.AddWithValue("@isdelete", objorders.isdelete);
             cmd.Parameters.AddWithValue("@usertype", objorders.usertype);
+
+            cmd.Parameters.AddWithValue("@orderno", objorders.orderno);
+            cmd.Parameters.AddWithValue("@ordertype", objorders.ordertype);
+        
             ConnectionString.Open();
             cmd.ExecuteNonQuery();
             result = Convert.ToInt64(param.Value);
@@ -171,7 +178,8 @@ public class Cls_Customer_order_db
             cmd.Parameters.AddWithValue("@tax", objorders.tax);
             cmd.Parameters.AddWithValue("@totalamount", objorders.totalamount);
             cmd.Parameters.AddWithValue("@orderdate", objorders.orderdate);
-            cmd.Parameters.AddWithValue("@isdelete", objorders.isdelete);
+         
+            
 
             ConnectionString.Open();
             cmd.ExecuteNonQuery();

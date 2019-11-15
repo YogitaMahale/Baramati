@@ -22,14 +22,7 @@ public partial class dashboard : System.Web.UI.Page
     //IFormatProvider dateFormat = new IFormatProvider("yyyy-MM-dd");
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["usertype"].ToString() == "superadmin" || Session["usertype"].ToString() == "user")
-        {
-            //divUserAuthority.Visible = true;
-        }
-        else
-        {
-            Response.Redirect(Page.ResolveUrl("~/Default.aspx"));
-        }
+        
         HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
         hPageTitle.InnerText = "Dashboard";
         if (!Page.IsPostBack)

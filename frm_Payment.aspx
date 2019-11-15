@@ -72,20 +72,38 @@
                                     <asp:DropDownList ID="ddlPaymentType" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlPaymentType_SelectedIndexChanged">
                                         <asp:ListItem>--Select----- </asp:ListItem>
                                         <asp:ListItem>Cash</asp:ListItem>
-                                        <asp:ListItem>Cheque</asp:ListItem>
+                                        <asp:ListItem>Bank</asp:ListItem>
                                     </asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlPaymentType" CssClass="error" ErrorMessage="Required Field" ValidationGroup="gg"></asp:RequiredFieldValidator>
 
                                 </div>
                                 <div class="col-xs-3">
-                                   
-                                    <label for="exampleInputEmail1"></label>
-                                    <asp:TextBox ID="txtChequeNo" placeholder="Cheque No" Visible="false" runat="server" CssClass="form-control"></asp:TextBox>
+                                     <label  for="exampleInputEmail1">   </label>
 
+                                    <asp:DropDownList ID="ddlPaymentType1" Visible="false"  CssClass="form-control" runat="server" OnSelectedIndexChanged="ddlPaymentType1_SelectedIndexChanged" AutoPostBack="True" >
+                                        <asp:ListItem>--Select----- </asp:ListItem>
+                                        <asp:ListItem>Cheque</asp:ListItem>
+                                        <asp:ListItem>RTGS</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlPaymentType" CssClass="error" ErrorMessage="Required Field" ValidationGroup="gg"></asp:RequiredFieldValidator>
+
+                                   
                                 </div>
                             </div>
 
-                           
+                            <div class="form-group row">
+                                <div class="col-xs-3">
+                                     <label for="exampleInputEmail1"></label>
+                                    <asp:TextBox ID="txtbankName" placeholder="Bank Name" Visible="false" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                <div class="col-xs-3">
+                                     <label for="exampleInputEmail1"></label>
+                                    <asp:TextBox ID="txtChequeNo" placeholder="Cheque No" Visible="false" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                </div> 
+
                             <div class="form-group row">
                                 <div class="col-xs-6">
                                     <label for="exampleInputEmail1">Paid Amount</label>

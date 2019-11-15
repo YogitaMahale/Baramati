@@ -69,7 +69,7 @@ public partial class frm_Payment : System.Web.UI.Page
             try
             {
                 con.Open();
-                if (txtPaidamt.Text == string.Empty  && ddlname.SelectedIndex == 0 )
+                if (txtPaidamt.Text == string.Empty  && ddlname.SelectedIndex == 0 &&ddlPaymentType.SelectedIndex==0 )
                 {
                     ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Please Enter all Fields')", true);
                 }
@@ -98,9 +98,17 @@ public partial class frm_Payment : System.Web.UI.Page
                      
                     cmd.Parameters.AddWithValue("@paymentType", Convert.ToString(ddlPaymentType.SelectedItem.ToString()));
                     cmd.Parameters.AddWithValue("@chequeno", Convert.ToString(txtChequeNo.Text));
-
-
-
+                if(ddlPaymentType.SelectedItem.ToString()== "Cash")
+                {
+                    cmd.Parameters.AddWithValue("@paymentType1", "");
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@paymentType1", Convert.ToString(ddlPaymentType1.SelectedItem.ToString()));
+                }
+                //cmd.Parameters.AddWithValue("@paymentType1", Convert.ToString(ddlPaymentType1.SelectedItem.ToString()));
+                cmd.Parameters.AddWithValue("@bankName", Convert.ToString(txtbankName .Text));
+                 
 
                     int t = cmd.ExecuteNonQuery();
                     Int64 result = Convert.ToInt64(param.Value);
@@ -117,7 +125,9 @@ public partial class frm_Payment : System.Web.UI.Page
                 }
 
             }
-            catch { }
+            catch(Exception p)
+        {
+        }
             finally { con.Close(); }
             #endregion
 
@@ -148,11 +158,22 @@ public partial class frm_Payment : System.Web.UI.Page
     {
         if (ddlPaymentType.SelectedItem.ToString() == "Cash".ToString())
         {
-            txtChequeNo.Visible = false ;
+            ddlPaymentType1.Visible = false;
+            txtChequeNo.Visible = false;
+            txtbankName.Visible = false;
         }
-        else if (ddlPaymentType.SelectedItem.ToString() == "Cheque".ToString())
+        else if (ddlPaymentType.SelectedItem.ToString() == "Bank".ToString())
         {
-            txtChequeNo.Visible = true;
+            ddlPaymentType1.Visible = true  ;
+            txtChequeNo.Visible = false;
+            txtbankName.Visible = false;
+
         }
+    }
+
+    protected void ddlPaymentType1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        txtbankName.Visible = true;
+        txtChequeNo.Visible = true;
     }
 }

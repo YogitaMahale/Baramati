@@ -111,12 +111,24 @@ namespace BusinessLayer
         private Int64 _oid;
         private Int64 _uid;
         private Int64 _pid;
-        private Decimal _productprice;
+        private string _brandid;
+        private string _sizeid;
+        private string _colorid;
+        private Decimal _cart;
+        private string _pack;
+        private Decimal _qty;
+
+        private Decimal _mrp;
+        private Decimal _unitRate;
+        private Decimal _subTotal;
         private Decimal _discount;
-        private Decimal _gst;
-        private Decimal _productafterdiscountprice;
-        private Int32 _quantites;
-        private Decimal _producttotalprice;
+        private Decimal _scheme;
+        private Decimal _taxableamt;
+        private Decimal _CGSTper;
+        private Decimal _SGSTper;
+        private Decimal _IGSTper;
+        private Decimal _GSTamt;
+        private Decimal _TotalAmount;
         private Boolean _isdelete;
         #endregion
 
@@ -141,37 +153,104 @@ namespace BusinessLayer
         {
             get { return _pid; }
             set { _pid = value; }
-        }
-        public Decimal productprice
+        }   
+        
+        
+        public string  brandid
         {
-            get { return _productprice; }
-            set { _productprice = value; }
+            get { return _brandid; }
+            set { _brandid = value; }
         }
-        public Decimal gst
+        public string  sizeid
         {
-            get { return _gst; }
-            set { _gst = value; }
+            get { return _sizeid; }
+            set { _sizeid = value; }
         }
-        public Decimal discount
+        public string  colorid
+        {
+            get { return _colorid; }
+            set { _colorid = value; }
+        }
+        public Decimal cart
+        {
+            get { return _cart; }
+            set { _cart = value; }
+        }
+        public string  pack
+        {
+            get { return _pack; }
+            set { _pack = value; }
+        }
+        public decimal  qty
+        {
+            get { return _qty; }
+            set { _qty = value; }
+        }
+
+
+        public decimal mrp
+        {
+            get { return _mrp; }
+            set { _mrp = value; }
+        }
+        public decimal unitRate
+        {
+            get { return _unitRate; }
+            set { _unitRate = value; }
+        }
+        public decimal subTotal
+        {
+            get { return _subTotal; }
+            set { _subTotal = value; }
+        }
+        public decimal discount
         {
             get { return _discount; }
             set { _discount = value; }
         }
-        public Decimal productafterdiscountprice
+        public decimal scheme
         {
-            get { return _productafterdiscountprice; }
-            set { _productafterdiscountprice = value; }
+            get { return _scheme; }
+            set { _scheme = value; }
         }
-        public Int32 quantites
+        public decimal taxableamt
         {
-            get { return _quantites; }
-            set { _quantites = value; }
+            get { return _taxableamt; }
+            set { _taxableamt = value; }
         }
-        public Decimal producttotalprice
+        public decimal CGSTper
         {
-            get { return _producttotalprice; }
-            set { _producttotalprice = value; }
+            get { return _CGSTper; }
+            set { _CGSTper = value; }
         }
+
+
+        public decimal SGSTper
+        {
+            get { return _SGSTper; }
+            set { _SGSTper = value; }
+        }
+
+        public decimal IGSTper
+        {
+            get { return _IGSTper; }
+            set { _IGSTper = value; }
+        }
+
+        public decimal GSTamt
+        {
+            get { return _GSTamt; }
+            set { _GSTamt = value; }
+        }
+
+        public decimal TotalAmount
+        {
+            get { return _TotalAmount; }
+            set { _TotalAmount = value; }
+        }
+
+
+        
         public Boolean isdelete
         {
             get { return _isdelete; }

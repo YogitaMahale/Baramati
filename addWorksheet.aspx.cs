@@ -26,10 +26,22 @@ public partial class addWorksheet : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //Session["userid"]
-        if (!String.IsNullOrEmpty(Session["userid"].ToString()))
-            createdby = Session["userid"].ToString();
-        //Bind();
-        
+        if (Session["userid"] != null)
+        {
+            if (!String.IsNullOrEmpty(Session["userid"].ToString()))
+            {
+                createdby = Session["userid"].ToString();
+            }
+            else
+            {
+                Response.Redirect(Page.ResolveUrl("~/Default.aspx"));
+            }
+        }
+        else
+        {
+            Response.Redirect(Page.ResolveUrl("~/Default.aspx"));
+        }
+
         if (!IsPostBack)
         {
             Bind();
@@ -1083,6 +1095,19 @@ public bool SendSMS(string Name, string MobileNo)
         DropDownList ddlOR = (DropDownList)sender;
         RepeaterItem row = (RepeaterItem)ddlOR.NamingContainer;
         int srno = int.Parse(((Label)row.FindControl("lblSrNo")).Text);
+        DropDownList ddlOpRep = (DropDownList)row.FindControl("ddlOperationRep");
+        TextBox txtwages = (TextBox)row.FindControl("Wages");
+       
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT wages FROM productparticulars WHERE id = @id";
+        cmd.Connection = con;
+        cmd.Parameters.AddWithValue("@id", ddlOpRep.SelectedValue);
+
+        con.Open();
+        //cmd.ExecuteNonQuery();
+        String wages = cmd.ExecuteScalar().ToString();
+        txtwages.Text = wages;
 
         dtProduct = (DataTable)ViewState["Products"];
         DataRow[] drr = dtProduct.Select("SrNo=' " + srno + " ' ");
@@ -1090,6 +1115,7 @@ public bool SendSMS(string Name, string MobileNo)
         {
             newrow["operationid"] = ddlOR.SelectedValue;
             newrow["operation"] = ddlOR.SelectedItem;
+            newrow["wages"] = wages;
         }
 
         dtProduct.AcceptChanges();
@@ -1192,5 +1218,31 @@ public bool SendSMS(string Name, string MobileNo)
         //Repeater1.DataSource = dtProduct;
         //Repeater1.DataBind();
 
+    }
+
+    protected void ddlOperation_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT wages FROM productparticulars WHERE id = @id";
+            cmd.Connection = con;
+
+            cmd.Parameters.AddWithValue("@id", ddlOperation.SelectedValue);
+
+            con.Open();
+            //cmd.ExecuteNonQuery();
+            String wages = cmd.ExecuteScalar().ToString();
+
+            txtwages.Text = wages;
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+        }
+        finally
+        {
+            con.Close();
+        }
     }
 }

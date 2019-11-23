@@ -97,47 +97,44 @@
 
                                 <div class="col-xs-2">
                                     <label for="exampleInputEmail1">Operation</label>
-                                    <asp:DropDownList ID="ddlOperation" runat="server" CssClass="form-control" />
+                                    <asp:DropDownList ID="ddlOperation" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlOperation_SelectedIndexChanged" CssClass="form-control" />
                                 </div>
                                 <div class="col-xs-2">
                                     <label for="exampleInputEmail1">Date</label>
                                     <asp:TextBox ID="txtWorkDate" runat="server" class="form-control" autocomplete="off"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter Date" ControlToValidate="txtWorkDate" ValidationGroup="gg" ForeColor="Red"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter Date" ControlToValidate="txtWorkDate" ValidationGroup="c1" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtWorkDate" Format="dd/MM/yyyy"></cc1:CalendarExtender>
                                 </div>
                                 <div class="col-xs-2">
                                     <label for="exampleInputEmail1">Employee</label>
                                     <asp:DropDownList ID="ddlEmployee" runat="server" CssClass="form-control" />
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-1">
                                     <label for="exampleInputEmail1">Quantity</label>
                                     <asp:TextBox ID="txtquantity" class="form-control" runat="server" Text="0"></asp:TextBox>
 
 
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-1">
                                     <label for="exampleInputEmail1">Wages</label>
-                                    <asp:TextBox ID="txtwages" class="form-control" runat="server" Text="0"></asp:TextBox>
+                                    <asp:TextBox ID="txtwages" ReadOnly="true" class="form-control" runat="server" Text="0"></asp:TextBox>
 
 
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-1">
                                     <label for="exampleInputEmail1">Remark</label>
                                     <asp:TextBox ID="txtRemark" class="form-control" runat="server"></asp:TextBox>
 
 
                                 </div>
                                 <div class="col-xs-2 pad">
-                                    <label for="exampleInputEmail1"></label>
                                     <br />
-                                    &nbsp;&nbsp;
-                            <asp:Button ID="btnAdd" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="ADD" OnClick="btnAdd_Click" />
-
                                     <%--<br />--%>
-                                    <%--<asp:Button ID="btnAdd" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink" ValidationGroup="gg"  runat="server" Text="ADD" />   <%--onclick="Button1_Click"--%>
-                                </div>
-                                <%--</div>--%>
+                                    
+                            <asp:Button ID="btnAdd" runat="server" class="form-control" CssClass="btn btn-app bg-orange"  CausesValidation="true" ValidationGroup="c1" Text="ADD" OnClick="btnAdd_Click" />
 
+                                </div>
+                                </div>
 
 
 
@@ -190,11 +187,11 @@
 
 
                                                         <td class="center">
-                                                            <asp:TextBox ID="Quantity" runat="server" Text=' <%#Eval("quantity")%>' AutoPostBack="true" OnTextChanged="Quantity_TextChanged"></asp:TextBox></td>
+                                                            <asp:TextBox ID="Quantity" runat="server" class="form-control" Text=' <%#Eval("quantity")%>' AutoPostBack="true" OnTextChanged="Quantity_TextChanged"></asp:TextBox></td>
                                                         <td class="center">
-                                                            <asp:TextBox ID="Wages" runat="server" Text=' <%#Eval("wages")%>' AutoPostBack="true" OnTextChanged="Quantity_TextChanged"></asp:TextBox></td>
+                                                            <asp:TextBox ID="Wages" runat="server" class="form-control" ReadOnly="true" Text=' <%#Eval("wages")%>' ></asp:TextBox></td>
                                                         <td class="center">
-                                                            <asp:TextBox ID="Remark" runat="server" Text=' <%#Eval("remark")%>' AutoPostBack="true" OnTextChanged="Remark_TextChanged"></asp:TextBox></td>
+                                                            <asp:TextBox ID="Remark" runat="server" class="form-control" Text=' <%#Eval("remark")%>' AutoPostBack="true" OnTextChanged="Remark_TextChanged"></asp:TextBox></td>
 
                                                     </tr>
                                                 </ItemTemplate>
@@ -236,7 +233,7 @@
 
                                 <!-- /.box -->
 
-                            </div>
+                            
                             <!--/.col (left) -->
                             <!-- right column -->
 

@@ -38,6 +38,8 @@
                                     <asp:ListBox ID="ddlname" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged"></asp:ListBox>
                                     <asp:HiddenField ID="hfddlnameid" runat="server" />
                                     <asp:HiddenField ID="hfddlname1" runat="server" />
+                                       <asp:RequiredFieldValidator ID="RequiredFieldValidator7" ControlToValidate="ddlname" ValidationGroup="gg" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
+
                                 </div>
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Mobile</label>
@@ -525,7 +527,7 @@
                                 <div class="col-md-12">
                                     <div class="box-footer" style="text-align: center">
 
-                                        <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
+                                        <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="gg" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
                     <asp:Button ID="btnCancel" runat="server" class="btn btn-primary" CssClass="btn btn-info" Text="Cancel" OnClick="btnCancel_Click" />
                                     </div>
                                 </div>

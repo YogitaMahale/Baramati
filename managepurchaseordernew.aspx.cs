@@ -329,7 +329,7 @@ public partial class managepurchaseordernew : System.Web.UI.Page
             hlEditOrder.NavigateUrl = Page.ResolveUrl("~/addeditponew.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
             HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
-            hlInvoice.NavigateUrl = Page.ResolveUrl("~/orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
             //HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
             //hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
@@ -352,7 +352,7 @@ public partial class managepurchaseordernew : System.Web.UI.Page
 
 
             HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
-            hlInvoice.NavigateUrl = Page.ResolveUrl("~/orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
         }
     }
@@ -370,7 +370,7 @@ public partial class managepurchaseordernew : System.Web.UI.Page
 
 
             HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
-            hlInvoice.NavigateUrl = Page.ResolveUrl("~/orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
         }
     }

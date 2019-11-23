@@ -538,7 +538,7 @@
                             <div class="form-group row">
                                 <div class="box-footer" style="text-align: center">
 
-                                    <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
+                                    <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="gg" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
                     <asp:Button ID="btnCancel" runat="server" class="btn btn-primary" CssClass="btn btn-info" Text="Cancel" OnClick="btnCancel_Click" />
                                 </div>
                             </div>

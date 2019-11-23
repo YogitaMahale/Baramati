@@ -269,6 +269,34 @@ namespace DatabaseLayer
             }
             return true;
         }
+        public DataTable Selectorderdetailsbydealerid(Int64 dealerId)
+        {
+            DataSet ds = new DataSet();
+            SqlDataAdapter da;
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "Selectorderdetailsbydealerid";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = ConnectionString;
+                cmd.Parameters.AddWithValue("@uid", dealerId);
+                ConnectionString.Open();
+                da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return null;
+            }
+            finally
+            {
+                ConnectionString.Close();
+            }
+            return ds.Tables[0];
+        }
+
+
         #endregion
 
     }

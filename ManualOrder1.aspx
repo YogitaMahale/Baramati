@@ -105,94 +105,94 @@
                                 </div>
                             </div>
                             <div class="form-group row" style="overflow: scroll;">
-                                 <div class="col-xs-12">
-                                <table>
-                                    <tr>
-                                        <td>Product</td>
-                                        <td>Brand</td>
-                                        <td>Size</td>
-                                        <td>Color</td>
-                                        <td>Cart</td>
-                                        <td>Pack</td>
-                                        <td>Quanity</td>
-                                        <td>Mrp</td>
-                                        <td>Unit Rate</td>
-                                        <td></td>
+                                <div class="col-xs-12">
+                                    <table>
+                                        <tr>
+                                            <td>Product</td>
+                                            <td>Brand</td>
+                                            <td>Size</td>
+                                            <td>Color</td>
+                                            <td>Cart</td>
+                                            <td>Pack</td>
+                                            <td>Quanity</td>
+                                            <td>Mrp</td>
+                                            <td>Unit Rate</td>
+                                            <td></td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <%--<asp:DropDownList ID="ddlProduct" CssClass="form-control" Width="200px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged">
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <%--<asp:DropDownList ID="ddlProduct" CssClass="form-control" Width="200px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged">
                                             </asp:DropDownList>--%>
 
-                                            <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged"></asp:ListBox>
-                                            <asp:HiddenField ID="ddlProductid" runat="server" />
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="ddlProduct" ValidationGroup="bb" runat="server" ErrorMessage="*" Font-Bold="True" Font-Size="Medium"></asp:RequiredFieldValidator>
+                                                <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged"></asp:ListBox>
+                                                <asp:HiddenField ID="ddlProductid" runat="server" />
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="ddlProduct" ValidationGroup="bb" runat="server" ErrorMessage="*" Font-Bold="True" Font-Size="Medium"></asp:RequiredFieldValidator>
 
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="txtBrand" Width="70" runat="server" Enabled="false" placeholder="Brand" Text=""></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtSize" Width="70" runat="server" Enabled="false" placeholder="Size" Text=""></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtColor" Width="70" runat="server" Enabled="false" placeholder="Color" Text=""></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtCart" Width="70" runat="server" placeholder="Cart" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" Text="0"></asp:TextBox></td>
-                                        <asp:RegularExpressionValidator
-                                            ID="RegularExpressionValidator6"
-                                            runat="server"
-                                            ValidationGroup="bb"
-                                            ControlToValidate="txtCart"
-                                            ValidationExpression="^\d+"
-                                            ErrorMessage="Enter only Digit in Cart" Font-Bold="True" Font-Size="Medium"></asp:RegularExpressionValidator>
-                                        <td>
-                                            <asp:TextBox ID="txtPack" Width="70" runat="server" Enabled="false" placeholder="Pack" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtQty" Width="70" runat="server" Enabled="false" placeholder="Qty" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtMrp" Width="70" runat="server" Enabled="false" placeholder="MRP" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtUnitRate" Width="70" runat="server" Enabled="false" placeholder="UnitRate" Text="0"></asp:TextBox></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>SubTotal</td>
-                                        <td>Discount</td>
-                                        <td>Scheme</td>
-                                        <td>Taxable Amt</td>
-                                        <td>CGST</td>
-                                        <td>SGST</td>
-                                        <td>IGST</td>
-                                        <td>GST amt</td>
-                                        <td>Total</td>
-                                        <td></td>
-                                    </tr>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtBrand" Width="70" runat="server" Enabled="false" placeholder="Brand" Text=""></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtSize" Width="70" runat="server" Enabled="false" placeholder="Size" Text=""></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtColor" Width="70" runat="server" Enabled="false" placeholder="Color" Text=""></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtCart" Width="70" runat="server" placeholder="Cart" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" Text="0"></asp:TextBox></td>
+                                            <asp:RegularExpressionValidator
+                                                ID="RegularExpressionValidator6"
+                                                runat="server"
+                                                ValidationGroup="bb"
+                                                ControlToValidate="txtCart"
+                                                ValidationExpression="^\d+"
+                                                ErrorMessage="Enter only Digit in Cart" Font-Bold="True" Font-Size="Medium"></asp:RegularExpressionValidator>
+                                            <td>
+                                                <asp:TextBox ID="txtPack" Width="70" runat="server" Enabled="false" placeholder="Pack" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtQty" Width="70" runat="server" Enabled="false" placeholder="Qty" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtMrp" Width="70" runat="server" Enabled="false" placeholder="MRP" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtUnitRate" Width="70" runat="server" Enabled="false" placeholder="UnitRate" Text="0"></asp:TextBox></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SubTotal</td>
+                                            <td>Discount</td>
+                                            <td>Scheme</td>
+                                            <td>Taxable Amt</td>
+                                            <td>CGST</td>
+                                            <td>SGST</td>
+                                            <td>IGST</td>
+                                            <td>GST amt</td>
+                                            <td>Total</td>
+                                            <td></td>
+                                        </tr>
 
-                                    <tr>
-                                        <td>
-                                            <asp:TextBox ID="txtSubTotal" Width="200" Enabled="false" runat="server" placeholder="SubTotal" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtDiscount" Width="70" Enabled="false" runat="server" placeholder="Dis(%)" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtScheme" Width="70" Enabled="false" runat="server" placeholder="Scheme" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txttaxable" Width="70" Enabled="false" runat="server" placeholder="Taxable" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtCGST" Width="70" Enabled="false" runat="server" placeholder="CGST" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtSgst" Width="70" Enabled="false" runat="server" placeholder="SGST" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtIgst" Width="70" Enabled="false" runat="server" placeholder="IGST" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtGSTtotal" Width="70" Enabled="false" runat="server" placeholder="GSTtotal" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:TextBox ID="txtTotal" Width="70" Enabled="false" runat="server" placeholder="Total" Text="0"></asp:TextBox></td>
-                                        <td>
-                                            <asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" ValidationGroup="bb" OnClick="btnAdd_Click" />&nbsp;&nbsp;
-                                        </td>
-                                    </tr>
-                                </table>
-                                     </div> 
+                                        <tr>
+                                            <td>
+                                                <asp:TextBox ID="txtSubTotal" Width="200" Enabled="false" runat="server" placeholder="SubTotal" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtDiscount" Width="70" Enabled="false" runat="server" placeholder="Dis(%)" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtScheme" Width="70" Enabled="false" runat="server" placeholder="Scheme" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txttaxable" Width="70" Enabled="false" runat="server" placeholder="Taxable" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtCGST" Width="70" Enabled="false" runat="server" placeholder="CGST" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtSgst" Width="70" Enabled="false" runat="server" placeholder="SGST" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtIgst" Width="70" Enabled="false" runat="server" placeholder="IGST" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtGSTtotal" Width="70" Enabled="false" runat="server" placeholder="GSTtotal" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:TextBox ID="txtTotal" Width="70" Enabled="false" runat="server" placeholder="Total" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" ValidationGroup="bb" OnClick="btnAdd_Click" />&nbsp;&nbsp;
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
 
                             <div class="form-group row" style="overflow: scroll;">
@@ -405,7 +405,7 @@
                                     </table>
                                 </div>
                             </div>
-
+                            <%---------------%>
                             <div class="form-group row">
 
                                 <div class="col-xs-2">
@@ -429,8 +429,8 @@
                                                 <asp:TextBox ID="txttradDis" class="form-control" Width="70" runat="server" AutoPostBack="true" OnTextChanged="txttradDis_TextChanged"></asp:TextBox>
 
                                             </td>
-                                         
-                                        
+
+
                                             <td>
                                                 <asp:TextBox ID="txttradAmt" Enabled="false" Width="70" class="form-control" Text="0" runat="server"></asp:TextBox></td>
                                         </tr>
@@ -446,8 +446,8 @@
                                         <tr>
                                             <td>
                                                 <asp:TextBox ID="txttaxableDis" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txttaxableDis_TextChanged"></asp:TextBox></td>
-                                             
-                                        
+
+
                                             <td>
                                                 <asp:TextBox ID="txttaxableDisamt" Enabled="false" Text="0" class="form-control" runat="server"></asp:TextBox></td>
                                         </tr>
@@ -548,7 +548,7 @@
 
 
                     </div>
-            </div>
+                </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

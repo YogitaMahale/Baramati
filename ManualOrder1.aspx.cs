@@ -271,7 +271,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
     }
     public void gridTotal()
     {
-       
+
 
         //-------------------------
         try
@@ -289,6 +289,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
             {
                 double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subTotal"].ToString());
                 double disamt1 = (subTotal1 * discount) / 100;
+
                 double grandtot = subTotal1 - disamt1;
                 dtprodn.Rows[i]["discount"] = txttradDis.Text;
                 dtprodn.Rows[i]["TotalAmount"] = grandtot.ToString();
@@ -314,8 +315,8 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
             txt_Subtotal.Text = t_subtotal.ToString();
             txtTotalGstAmt.Text = t_totalGSTamt.ToString();
-          //  txttradDis.Text = "0";
-          //  txttaxableDis.Text = "0";
+            //  txttradDis.Text = "0";
+            //  txttaxableDis.Text = "0";
             txttaxableAmt.Text = t_taxableamt.ToString();
 
             //double subtot1 = t_subtotal - t_taxableamt;
@@ -342,7 +343,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
             }
 
             //txtotherAmt.Text = "0";
-           // txtfreightdis.Text = "0";
+            // txtfreightdis.Text = "0";
             //txttotalAmtfinal.Text = t_grandTotal.ToString();
             //---------Taxable dis(%) Amount -------------------------------------------
             if (txttaxableAmt.Text == "")
@@ -353,8 +354,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
             {
                 txttaxableDis.Text = "0";
             }
-            decimal disamt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
-            txttaxableDisamt.Text = disamt.ToString();
+
             //-----------Trad Dis(%) And Scheme -------------
             if (txttradDis.Text == "")
             {
@@ -379,31 +379,194 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
             //decimal tradAmt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
             // txttradAmt.Text = tradAmt.ToString();
-             decimal totalamt1 = (Convert.ToDecimal(txt_Subtotal.Text)) - Convert.ToDecimal(txttaxableDisamt.Text);
-             txttotalAmt.Text = System.Math.Round(totalamt1, 2).ToString();  
-             decimal  lastTotal = totalamt1 - Convert.ToDecimal(txtotherAmt.Text) - Convert.ToDecimal(txtfreightdis.Text);
-             txttotalAmtfinal.Text = System.Math.Round(lastTotal, 2).ToString(); 
+            //------------------------
+            decimal totalamt1 = 0;
+            txttradAmt.Text = "0";
+            txttaxableDisamt.Text = "0";
+            totalamt1 = (Convert.ToDecimal(txt_Subtotal.Text));
+            txttotalAmt.Text = System.Math.Round(totalamt1, 2).ToString();
+            if (Convert.ToDecimal(txttradDis.Text) > 0)
+            {
+                decimal tradDisamt = ((Convert.ToDecimal(txt_Subtotal.Text)) * Convert.ToDecimal(txttradDis.Text)) / 100;
+                txttradAmt.Text = tradDisamt.ToString();
+                totalamt1 = (Convert.ToDecimal(txt_Subtotal.Text)) - tradDisamt;
+                txttotalAmt.Text = System.Math.Round(totalamt1, 2).ToString();
+            }
+            else if (Convert.ToDecimal(txttaxableDis.Text) > 0)
+            {
+                decimal disamt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
+                txttaxableDisamt.Text = disamt.ToString();
+
+                totalamt1 = (Convert.ToDecimal(txt_Subtotal.Text)) - Convert.ToDecimal(txttaxableDisamt.Text);
+                txttotalAmt.Text = System.Math.Round(totalamt1, 2).ToString();
+            }
+
+
+            //------------------------------------------------------------------
+
+            //------------------------------------------------------------------
+
+
+
+
+            decimal lastTotal = totalamt1 - Convert.ToDecimal(txtotherAmt.Text) - Convert.ToDecimal(txtfreightdis.Text);
+            txttotalAmtfinal.Text = System.Math.Round(lastTotal, 2).ToString();
 
 
             //-------------update in table
-             dtprodn.AcceptChanges();
-             ViewState["dtprod"] = dtprodn;
-             Repeater1.DataSource = dtprodn;
-             Repeater1.DataBind();
-//            txttradDis
-//txttradAmt
-//txt_Subtotal
-//txttotalAmt
-//txttotalAmtfinal
-//txtotherAmt
-//txtfreightdis
+            dtprodn.AcceptChanges();
+            ViewState["dtprod"] = dtprodn;
+            Repeater1.DataSource = dtprodn;
+            Repeater1.DataBind();
+            //            txttradDis
+            //txttradAmt
+            //txt_Subtotal
+            //txttotalAmt
+            //txttotalAmtfinal
+            //txtotherAmt
+            //txtfreightdis
 
- 
+
         }
         catch { }
 
 
     }
+    //    public void gridTotal()
+    //    {
+
+
+    //        //-------------------------
+    //        try
+    //        {
+    //            DataTable dtprodn = new DataTable();
+    //            dtprodn = (DataTable)ViewState["dtprod"];
+    //            double t_subtotal = 0, t_totalGSTamt = 0, t_totalGSTamt1 = 0, t_taxableamt = 0, t_CGST = 0, t_SGST = 0, t_IGST = 0, t_grandTotal = 0;
+    //            if (txttradDis.Text == "")
+    //            {
+    //                txttradDis.Text = "0";
+    //            }
+    //            double discount = Convert.ToDouble(txttradDis.Text);
+
+    //            for (int i = 0; i < dtprodn.Rows.Count; i++)
+    //            {
+    //                double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subTotal"].ToString());
+    //                double disamt1 = (subTotal1 * discount) / 100;
+    //                double grandtot = subTotal1 - disamt1;
+    //                dtprodn.Rows[i]["discount"] = txttradDis.Text;
+    //                dtprodn.Rows[i]["TotalAmount"] = grandtot.ToString();
+
+    //                string t_subtotal1 = dtprodn.Rows[i]["subTotal"].ToString();
+    //                string t_totalGSTamt11 = dtprodn.Rows[i]["GSTamt"].ToString();
+    //                string t_taxableamt1 = dtprodn.Rows[i]["taxableamt"].ToString();
+    //                string t_CGST1 = dtprodn.Rows[i]["CGSTper"].ToString();
+    //                string t_SGST1 = dtprodn.Rows[i]["SGSTper"].ToString();
+    //                string t_IGST1 = dtprodn.Rows[i]["IGSTper"].ToString();
+    //                string t_grandTotal1 = dtprodn.Rows[i]["TotalAmount"].ToString();
+
+    //                t_subtotal += Convert.ToDouble(t_subtotal1);
+    //                t_totalGSTamt += Convert.ToDouble(t_totalGSTamt11);
+    //                t_taxableamt += Convert.ToDouble(t_taxableamt1);
+    //                t_CGST += Convert.ToDouble(t_CGST1);
+    //                t_SGST += Convert.ToDouble(t_SGST1);
+    //                t_IGST += Convert.ToDouble(t_IGST1);
+    //                t_grandTotal += Convert.ToDouble(t_grandTotal1);
+
+
+    //            }
+
+    //            txt_Subtotal.Text = t_subtotal.ToString();
+    //            txtTotalGstAmt.Text = t_totalGSTamt.ToString();
+    //          //  txttradDis.Text = "0";
+    //          //  txttaxableDis.Text = "0";
+    //            txttaxableAmt.Text = t_taxableamt.ToString();
+
+    //            //double subtot1 = t_subtotal - t_taxableamt;
+    //            //txttotalAmt.Text = subtot1.ToString();
+
+    //            txtcsgtfinal.Text = (t_totalGSTamt / 2).ToString();
+    //            txtsgstfinal.Text = (t_totalGSTamt / 2).ToString();
+    //            txtIgstfinal.Text = t_totalGSTamt.ToString();
+    //            if (t_CGST == 0)
+    //            {
+    //                txtcsgtfinal.Text = "0";
+
+    //            }
+    //            else if (t_SGST == 0)
+    //            {
+
+    //                txtsgstfinal.Text = "0";
+
+    //            }
+    //            else if (t_IGST == 0)
+    //            {
+
+    //                txtIgstfinal.Text = "0";
+    //            }
+
+    //            //txtotherAmt.Text = "0";
+    //           // txtfreightdis.Text = "0";
+    //            //txttotalAmtfinal.Text = t_grandTotal.ToString();
+    //            //---------Taxable dis(%) Amount -------------------------------------------
+    //            if (txttaxableAmt.Text == "")
+    //            {
+    //                txttaxableAmt.Text = "0";
+    //            }
+    //            if (txttaxableDis.Text == "")
+    //            {
+    //                txttaxableDis.Text = "0";
+    //            }
+    //            decimal disamt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
+    //            txttaxableDisamt.Text = disamt.ToString();
+    //            //-----------Trad Dis(%) And Scheme -------------
+    //            if (txttradDis.Text == "")
+    //            {
+    //                txttradDis.Text = "0";
+    //            }
+    //            if (txt_Subtotal.Text == "")
+    //            {
+    //                txt_Subtotal.Text = "0";
+    //            }
+    //            if (txtotherAmt.Text == "")
+    //            {
+    //                txtotherAmt.Text = "0";
+    //            }
+    //            if (txtfreightdis.Text == "")
+    //            {
+    //                txtfreightdis.Text = "0";
+    //            }
+    //            if (txttaxableDis.Text == "")
+    //            {
+    //                txttaxableDis.Text = "0";
+    //            }
+
+    //            //decimal tradAmt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
+    //            // txttradAmt.Text = tradAmt.ToString();
+    //             decimal totalamt1 = (Convert.ToDecimal(txt_Subtotal.Text)) - Convert.ToDecimal(txttaxableDisamt.Text);
+    //             txttotalAmt.Text = System.Math.Round(totalamt1, 2).ToString();  
+    //             decimal  lastTotal = totalamt1 - Convert.ToDecimal(txtotherAmt.Text) - Convert.ToDecimal(txtfreightdis.Text);
+    //             txttotalAmtfinal.Text = System.Math.Round(lastTotal, 2).ToString(); 
+
+
+    //            //-------------update in table
+    //             dtprodn.AcceptChanges();
+    //             ViewState["dtprod"] = dtprodn;
+    //             Repeater1.DataSource = dtprodn;
+    //             Repeater1.DataBind();
+    ////            txttradDis
+    ////txttradAmt
+    ////txt_Subtotal
+    ////txttotalAmt
+    ////txttotalAmtfinal
+    ////txtotherAmt
+    ////txtfreightdis
+
+
+    //        }
+    //        catch { }
+
+
+    //    }
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         try

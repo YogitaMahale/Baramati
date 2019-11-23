@@ -19,164 +19,248 @@ public class Cls_PurchaseOrderDetails_b
 		// TODO: Add constructor logic here
 		//
 	}
-    #region Public Methods
-    /*
-    public DataTable SelectAll(PurchaseOrderDetails objPurchaseOrderDetails)
-    {
-        DataTable dt = new DataTable();
-        try
+        #region Public Methods
+        public DataTable SelectAll()
         {
-            Cls_PurchaseOrderDetails_db objCls_PurchaseOrderDetails_db = new Cls_PurchaseOrderDetails_db();
-
-            dt = objCls_PurchaseOrderDetails_db.SelectAll(objPurchaseOrderDetails);
-            return dt;
-        }
-        catch (Exception ex)
-        {
-            //ErrHandler.writeError(ex.Message, ex.StackTrace);
-            return dt;
-        }
-    }
-    public PurchaseOrderDetails SelectById(Int64 id)
-    {
-        PurchaseOrderDetails objPurchaseOrderDetails = new PurchaseOrderDetails();
-        try
-        {
-            Cls_PurchaseOrderDetails_db objCls_PurchaseOrderDetails_db = new Cls_PurchaseOrderDetails_db();
-
-            objPurchaseOrderDetails = objCls_PurchaseOrderDetails_db.SelectById(id);
-            return objPurchaseOrderDetails;
-        }
-        catch (Exception ex)
-        {
-            //ErrHandler.writeError(ex.Message, ex.StackTrace);
-            return objPurchaseOrderDetails;
-        }
-    }
-     * /
-     * */
-    public Int64 Insert(PurchaseOrderDetails objPurchaseOrderDetails)
-    {
-        Int64 result = 0;
-        try
-        {
-            Cls_PurchaseOrderDetails_db objCls_PurchaseOrderDetails_db = new Cls_PurchaseOrderDetails_db();
-
-            result = Convert.ToInt64(objCls_PurchaseOrderDetails_db.Insert(objPurchaseOrderDetails));
-            return result;
-        }
-        catch (Exception ex)
-        {
-            ////ErrHandler.writeError(ex.Message, ex.StackTrace);
-            return result;
-        }
-    }
-
-    /*
-    public Int64 Update(PurchaseOrderDetails objPurchaseOrderDetails)
-    {
-        Int64 result = 0;
-        try
-        {
-            Cls_PurchaseOrderDetails_db objCls_PurchaseOrderDetails_db = new Cls_PurchaseOrderDetails_db();
-
-            result = Convert.ToInt64(objCls_PurchaseOrderDetails_db.Update(objPurchaseOrderDetails));
-            return result;
-        }
-        catch (Exception ex)
-        {
-            ////ErrHandler.writeError(ex.Message, ex.StackTrace);
-            return result;
-        }
-    }
-    public bool Delete(Int64 id)
-    {
-        try
-        {
-            Cls_PurchaseOrderDetails_db objCls_PurchaseOrderDetails_db = new Cls_PurchaseOrderDetails_db();
-
-            if (objCls_PurchaseOrderDetails_db.Delete(id))
+            DataTable dt = new DataTable();
+            try
             {
-                return true;
-            }
-            return false;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-     * 
-     * */
-    #endregion
+                Cls_PurchaseOrderDetails_db  objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
 
-}
- public partial class PurchaseOrderDetails
+                dt = objCls_orderproducts_db.SelectAll();
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return dt;
+            }
+        }
+        public PurchaseOrderDetails  SelectById(Int64 opid)
+        {
+            PurchaseOrderDetails  objorderproducts = new PurchaseOrderDetails ();
+            try
+            {
+                Cls_PurchaseOrderDetails_db objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
+
+                objorderproducts = objCls_orderproducts_db.SelectById(opid);
+                return objorderproducts;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return objorderproducts;
+            }
+        }
+        public Int64 Insert(PurchaseOrderDetails  objorderproducts)
+        {
+            Int64 result = 0;
+            try
+            {
+                Cls_PurchaseOrderDetails_db objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
+
+                result = Convert.ToInt64(objCls_orderproducts_db.Insert(objorderproducts));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return result;
+            }
+        }
+        public Int64 Update(PurchaseOrderDetails  objorderproducts)
+        {
+            Int64 result = 0;
+            try
+            {
+                Cls_PurchaseOrderDetails_db objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
+
+                result = Convert.ToInt64(objCls_orderproducts_db.Update(objorderproducts));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return result;
+            }
+        }
+        public bool Delete(Int64 opid)
+        {
+            try
+            {
+                Cls_PurchaseOrderDetails_db objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
+
+                if (objCls_orderproducts_db.Delete(opid))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+
+    }
+    public class PurchaseOrderDetails
     {
         public PurchaseOrderDetails()
         { }
 
-        //PurchaseOrderDetailsId, PurchaseOrderId, ProdId, CategoryId, Quantity, isdeleted, Quantity1
-
         #region Private Variables
-        private Int64 _PurchaseOrderDetailsId;
-        private Int64 _PurchaseOrderId;
-        private Int64 _ProdId;
-        private Int64 _CategoryId;
-        private Int64 _Quantity;
-        private Int64 _Quantity1;
-        private Decimal _Rate;
-        private Boolean _isdeleted;
+        private Int64 _opid;
+        private Int64 _oid;
+        private Int64 _uid;
+        private Int64 _pid;
+        private string _brandid;
+        private string _sizeid;
+        private string _colorid;
+        private Decimal _cart;
+        private string _pack;
+        private Decimal _qty;
 
+        private Decimal _mrp;
+        private Decimal _unitRate;
+        private Decimal _subTotal;
+        private Decimal _discount;
+        private Decimal _scheme;
+        private Decimal _taxableamt;
+        private Decimal _CGSTper;
+        private Decimal _SGSTper;
+        private Decimal _IGSTper;
+        private Decimal _GSTamt;
+        private Decimal _TotalAmount;
+        private Boolean _isdelete;
         #endregion
 
 
         #region Public Properties
-
-        public Int64 PurchaseOrderDetailsId
+        public Int64 opid
         {
-            get { return _PurchaseOrderDetailsId; }
-            set { _PurchaseOrderDetailsId = value; }
+            get { return _opid; }
+            set { _opid = value; }
         }
-        public Decimal Rate
+        public Int64 oid
         {
-            get { return _Rate; }
-            set { _Rate = value; }
+            get { return _oid; }
+            set { _oid = value; }
         }
-        public Int64 PurchaseOrderId
+        public Int64 uid
         {
-            get { return _PurchaseOrderId; }
-            set { _PurchaseOrderId = value; }
+            get { return _uid; }
+            set { _uid = value; }
         }
-        public Int64 ProdId
+        public Int64 pid
         {
-            get { return _ProdId; }
-            set { _ProdId = value; }
-        }
-
-        public Int64 CategoryId
-        {
-            get { return _CategoryId; }
-            set { _CategoryId = value; }
+            get { return _pid; }
+            set { _pid = value; }
         }
 
-        public Boolean isdeleted
-        {
-            get { return _isdeleted; }
-            set { _isdeleted = value; }
-        }
-        public Int64 Quantity
-        {
-            get { return _Quantity; }
-            set { _Quantity = value; }
-        }
-        public Int64 Quantity1
-        {
-            get { return _Quantity1; }
-            set { _Quantity1 = value; }
-        }
-        
 
+        public string brandid
+        {
+            get { return _brandid; }
+            set { _brandid = value; }
+        }
+        public string sizeid
+        {
+            get { return _sizeid; }
+            set { _sizeid = value; }
+        }
+        public string colorid
+        {
+            get { return _colorid; }
+            set { _colorid = value; }
+        }
+        public Decimal cart
+        {
+            get { return _cart; }
+            set { _cart = value; }
+        }
+        public string pack
+        {
+            get { return _pack; }
+            set { _pack = value; }
+        }
+        public decimal qty
+        {
+            get { return _qty; }
+            set { _qty = value; }
+        }
+
+
+        public decimal mrp
+        {
+            get { return _mrp; }
+            set { _mrp = value; }
+        }
+        public decimal unitRate
+        {
+            get { return _unitRate; }
+            set { _unitRate = value; }
+        }
+        public decimal subTotal
+        {
+            get { return _subTotal; }
+            set { _subTotal = value; }
+        }
+        public decimal discount
+        {
+            get { return _discount; }
+            set { _discount = value; }
+        }
+        public decimal scheme
+        {
+            get { return _scheme; }
+            set { _scheme = value; }
+        }
+        public decimal taxableamt
+        {
+            get { return _taxableamt; }
+            set { _taxableamt = value; }
+        }
+        public decimal CGSTper
+        {
+            get { return _CGSTper; }
+            set { _CGSTper = value; }
+        }
+
+
+        public decimal SGSTper
+        {
+            get { return _SGSTper; }
+            set { _SGSTper = value; }
+        }
+
+        public decimal IGSTper
+        {
+            get { return _IGSTper; }
+            set { _IGSTper = value; }
+        }
+
+        public decimal GSTamt
+        {
+            get { return _GSTamt; }
+            set { _GSTamt = value; }
+        }
+
+        public decimal TotalAmount
+        {
+            get { return _TotalAmount; }
+            set { _TotalAmount = value; }
+        }
+
+
+
+        public Boolean isdelete
+        {
+            get { return _isdelete; }
+            set { _isdelete = value; }
+        }
         #endregion
     }
+
 }

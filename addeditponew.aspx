@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="ManualOrder1.aspx.cs" Inherits="ManualOrder1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="addeditponew.aspx.cs" Inherits="addeditponew" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
@@ -31,7 +31,7 @@
 
                                 <div class="col-xs-4">
 
-                                    <label for="exampleInputEmail1">Customer Name </label>
+                                    <label for="exampleInputEmail1">Vendor Name </label>
                                     <%-- <asp:DropDownList ID="ddlname" CssClass="form-control" Width="350px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged">
                                     </asp:DropDownList>--%>
 
@@ -79,7 +79,8 @@
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Invoice No </label>
 
-                                    <asp:TextBox ID="txt_InvoieNo" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txt_InvoieNo" class="form-control" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="txt_InvoieNo" ValidationGroup="gg" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
 
                                 </div>
                             </div>
@@ -105,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="form-group row" style="overflow: scroll;">
-                                 <div class="col-xs-12">
+                                 <div class="col-md-12">
                                 <table>
                                     <tr>
                                         <td>Product</td>
@@ -127,8 +128,6 @@
 
                                             <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged"></asp:ListBox>
                                             <asp:HiddenField ID="ddlProductid" runat="server" />
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="ddlProduct" ValidationGroup="bb" runat="server" ErrorMessage="*" Font-Bold="True" Font-Size="Medium"></asp:RequiredFieldValidator>
-
                                         </td>
                                         <td>
                                             <asp:TextBox ID="txtBrand" Width="70" runat="server" Enabled="false" placeholder="Brand" Text=""></asp:TextBox></td>
@@ -138,13 +137,6 @@
                                             <asp:TextBox ID="txtColor" Width="70" runat="server" Enabled="false" placeholder="Color" Text=""></asp:TextBox></td>
                                         <td>
                                             <asp:TextBox ID="txtCart" Width="70" runat="server" placeholder="Cart" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" Text="0"></asp:TextBox></td>
-                                        <asp:RegularExpressionValidator
-                                            ID="RegularExpressionValidator6"
-                                            runat="server"
-                                            ValidationGroup="bb"
-                                            ControlToValidate="txtCart"
-                                            ValidationExpression="^\d+"
-                                            ErrorMessage="Enter only Digit in Cart" Font-Bold="True" Font-Size="Medium"></asp:RegularExpressionValidator>
                                         <td>
                                             <asp:TextBox ID="txtPack" Width="70" runat="server" Enabled="false" placeholder="Pack" Text="0"></asp:TextBox></td>
                                         <td>
@@ -188,7 +180,7 @@
                                         <td>
                                             <asp:TextBox ID="txtTotal" Width="70" Enabled="false" runat="server" placeholder="Total" Text="0"></asp:TextBox></td>
                                         <td>
-                                            <asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" ValidationGroup="bb" OnClick="btnAdd_Click" />&nbsp;&nbsp;
+                                            <asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" OnClick="btnAdd_Click" />&nbsp;&nbsp;
                                         </td>
                                     </tr>
                                 </table>
@@ -196,144 +188,144 @@
                             </div>
 
                             <div class="form-group row" style="overflow: scroll;">
-                                <div class="col-xs-12">
+                                <div class="col-md-12">
+                                   
+                                <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                    <thead>
+                                        <tr>
+                                            <th>sr</th>
+                                            <th>Product</th>
+                                            <th>Brand</th>
+                                            <th>Size</th>
+                                            <th>Color</th>
+                                            <th>Cart</th>
+                                            <th>Pack</th>
+                                            <th>Quanity</th>
+                                            <th>Mrp</th>
+                                            <th>Unit Rate</th>
+                                            <th>SubTotal</th>
+                                            <th>Discount</th>
+                                            <th>Scheme</th>
+                                            <th>Taxable Amt</th>
+                                            <th>CGST</th>
+                                            <th>SGST</th>
+                                            <th>IGST</th>
+                                            <th>GST amt</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <asp:Repeater ID="Repeater1" runat="server">
+                                            <ItemTemplate>
+                                                <tr class="odd gradeX">
+                                                    <td class="center">
+                                                        <asp:Label ID="txtsr" runat="server" Text='<%# Eval("sr") %>'></asp:Label>
 
-                                    <table class="table table-hover table-checkable order-column full-width" id="example4">
-                                        <thead>
-                                            <tr>
-                                                <th>sr</th>
-                                                <th>Product</th>
-                                                <th>Brand</th>
-                                                <th>Size</th>
-                                                <th>Color</th>
-                                                <th>Cart</th>
-                                                <th>Pack</th>
-                                                <th>Quanity</th>
-                                                <th>Mrp</th>
-                                                <th>Unit Rate</th>
-                                                <th>SubTotal</th>
-                                                <th>Discount</th>
-                                                <th>Scheme</th>
-                                                <th>Taxable Amt</th>
-                                                <th>CGST</th>
-                                                <th>SGST</th>
-                                                <th>IGST</th>
-                                                <th>GST amt</th>
-                                                <th>Total</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <asp:Repeater ID="Repeater1" runat="server">
-                                                <ItemTemplate>
-                                                    <tr class="odd gradeX">
-                                                        <td class="center">
-                                                            <asp:Label ID="txtsr" runat="server" Text='<%# Eval("sr") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="txtsr" ReadOnly="true" Width="20" runat="server" Text=' <%#Eval("sr")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
-                                                            <asp:Label ID="rep_txtproductid" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
-
-
-                                                            <%--<asp:TextBox ID="rep_txtproductName" ReadOnly="true" Width="100" runat="server" Text=' <%#Eval("productName")%>'></asp:TextBox>--%>
-                                                            <%--<asp:TextBox ID="rep_txtproductid" runat="server" Visible="false" Text=' <%#Eval("pid")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtBrand" runat="server" Text='<%# Eval("brandid") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtBrand" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("brandid")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-
-                                                            <asp:Label ID="rep_txtSize" runat="server" Text='<%# Eval("sizeid") %>'></asp:Label>
-                                                            <%--<asp:TextBox ID="rep_txtSize" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("sizeid")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtColor" runat="server" Text='<%# Eval("colorid") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtColor" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("colorid")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
+                                                        <%--<asp:TextBox ID="txtsr" ReadOnly="true" Width="20" runat="server" Text=' <%#Eval("sr")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
+                                                        <asp:Label ID="rep_txtproductid" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
 
 
-                                                            <asp:TextBox ID="rep_txtCart" Width="50" AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" runat="server" Text=' <%#Eval("cart")%>'></asp:TextBox>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtpacking" runat="server" Text='<%# Eval("pack") %>'></asp:Label>
+                                                        <%--<asp:TextBox ID="rep_txtproductName" ReadOnly="true" Width="100" runat="server" Text=' <%#Eval("productName")%>'></asp:TextBox>--%>
+                                                        <%--<asp:TextBox ID="rep_txtproductid" runat="server" Visible="false" Text=' <%#Eval("pid")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtBrand" runat="server" Text='<%# Eval("brandid") %>'></asp:Label>
 
-                                                            <%--<asp:TextBox ID="rep_txtpacking" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("pack")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtqty" runat="server" Text='<%# Eval("qty") %>'></asp:Label>
+                                                        <%--<asp:TextBox ID="rep_txtBrand" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("brandid")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
 
-                                                            <%--<asp:TextBox ID="rep_txtqty" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("qty")%>'></asp:TextBox>--%>
+                                                        <asp:Label ID="rep_txtSize" runat="server" Text='<%# Eval("sizeid") %>'></asp:Label>
+                                                        <%--<asp:TextBox ID="rep_txtSize" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("sizeid")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtColor" runat="server" Text='<%# Eval("colorid") %>'></asp:Label>
 
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtMrp" runat="server" Text='<%# Eval("mrp") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtMrp" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("mrp")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtUnitRate" runat="server" Text='<%# Eval("unitRate") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtUnitRate" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("unitRate")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtSubtotal" runat="server" Text='<%# Eval("subTotal") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtSubtotal" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("subTotal")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtDiscount" runat="server" Text='<%# Eval("discount") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtDiscount" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("discount")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtScheme" runat="server" Text='<%# Eval("scheme") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtScheme" ReadOnly="true" Width="40" runat="server" Text=' <%#Eval("scheme")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtTaxableAmt" runat="server" Text='<%# Eval("taxableamt") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtTaxableAmt" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("taxableamt")%>'></asp:TextBox>--%>
-
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtCGST" runat="server" Text='<%# Eval("CGSTper") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtCGST" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("CGSTper")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtSGST" runat="server" Text='<%# Eval("SGSTper") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtSGST" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("SGSTper")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtIGST" runat="server" Text='<%# Eval("IGSTper") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtIGST" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("IGSTper")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtGSTamt" runat="server" Text='<%# Eval("GSTamt") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtGSTamt" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("GSTamt")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td class="center">
-                                                            <asp:Label ID="rep_txtfinalTotal" runat="server" Text='<%# Eval("TotalAmount") %>'></asp:Label>
-
-                                                            <%--<asp:TextBox ID="rep_txtfinalTotal" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("TotalAmount")%>'></asp:TextBox>--%>
-                                                        </td>
-                                                        <td style="text-align: center">
+                                                        <%--<asp:TextBox ID="rep_txtColor" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("colorid")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
 
 
-                                                            <asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" class="btn btn-danger" OnClientClick="return confirm('Do you want to delete this  ?');" OnClick="lnkDelete_Click"></asp:LinkButton>
-                                                        </td>
-                                                    </tr>
-                                                    <%--<tr class="odd gradeX">
+                                                        <asp:TextBox ID="rep_txtCart" Width="50" AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" runat="server" Text=' <%#Eval("cart")%>'></asp:TextBox>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtpacking" runat="server" Text='<%# Eval("pack") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtpacking" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("pack")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtqty" runat="server" Text='<%# Eval("qty") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtqty" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("qty")%>'></asp:TextBox>--%>
+
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtMrp" runat="server" Text='<%# Eval("mrp") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtMrp" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("mrp")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtUnitRate" runat="server" Text='<%# Eval("unitRate") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtUnitRate" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("unitRate")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtSubtotal" runat="server" Text='<%# Eval("subTotal") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtSubtotal" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("subTotal")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtDiscount" runat="server" Text='<%# Eval("discount") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtDiscount" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("discount")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtScheme" runat="server" Text='<%# Eval("scheme") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtScheme" ReadOnly="true" Width="40" runat="server" Text=' <%#Eval("scheme")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtTaxableAmt" runat="server" Text='<%# Eval("taxableamt") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtTaxableAmt" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("taxableamt")%>'></asp:TextBox>--%>
+
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtCGST" runat="server" Text='<%# Eval("CGSTper") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtCGST" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("CGSTper")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtSGST" runat="server" Text='<%# Eval("SGSTper") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtSGST" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("SGSTper")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtIGST" runat="server" Text='<%# Eval("IGSTper") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtIGST" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("IGSTper")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtGSTamt" runat="server" Text='<%# Eval("GSTamt") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtGSTamt" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("GSTamt")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td class="center">
+                                                        <asp:Label ID="rep_txtfinalTotal" runat="server" Text='<%# Eval("TotalAmount") %>'></asp:Label>
+
+                                                        <%--<asp:TextBox ID="rep_txtfinalTotal" ReadOnly="true" Width="80" runat="server" Text=' <%#Eval("TotalAmount")%>'></asp:TextBox>--%>
+                                                    </td>
+                                                    <td style="text-align: center">
+
+
+                                                        <asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" class="btn btn-danger" OnClientClick="return confirm('Do you want to delete this  ?');" OnClick="lnkDelete_Click"></asp:LinkButton>
+                                                    </td>
+                                                </tr>
+                                                <%--<tr class="odd gradeX">
                                                     <td class="center">
                                                         <asp:TextBox ID="txtsr" ReadOnly="true" Width="20" runat="server" Text=' <%#Eval("sr")%>'></asp:TextBox>
                                                     </td>
@@ -398,12 +390,12 @@
                                                         <asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" class="btn btn-danger" OnClientClick="return confirm('Do you want to delete this  ?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                     </td>
                                                 </tr>--%>
-                                                </ItemTemplate>
-                                            </asp:Repeater>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
+                                     </div> 
                             </div>
 
                             <div class="form-group row">
@@ -426,11 +418,7 @@
                                         <tr>
 
                                             <td>
-                                                <asp:TextBox ID="txttradDis" class="form-control" Width="70" runat="server" AutoPostBack="true" OnTextChanged="txttradDis_TextChanged"></asp:TextBox>
-
-                                            </td>
-                                         
-                                        
+                                                <asp:TextBox ID="txttradDis" class="form-control" Width="70" runat="server" AutoPostBack="true" OnTextChanged="txttradDis_TextChanged"></asp:TextBox></td>
                                             <td>
                                                 <asp:TextBox ID="txttradAmt" Enabled="false" Width="70" class="form-control" Text="0" runat="server"></asp:TextBox></td>
                                         </tr>
@@ -446,8 +434,6 @@
                                         <tr>
                                             <td>
                                                 <asp:TextBox ID="txttaxableDis" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txttaxableDis_TextChanged"></asp:TextBox></td>
-                                             
-                                        
                                             <td>
                                                 <asp:TextBox ID="txttaxableDisamt" Enabled="false" Text="0" class="form-control" runat="server"></asp:TextBox></td>
                                         </tr>
@@ -536,19 +522,32 @@
 
                             </div>
                             <div class="form-group row">
-                                <div class="box-footer" style="text-align: center">
+                                <div class="col-md-12">
+                                    <div class="box-footer" style="text-align: center">
 
-                                    <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
+                                        <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
                     <asp:Button ID="btnCancel" runat="server" class="btn btn-primary" CssClass="btn btn-info" Text="Cancel" OnClick="btnCancel_Click" />
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
 
 
 
+
+
+
+
+
+
+
+
+
                     </div>
-            </div>
+
+                </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -618,4 +617,5 @@
 
     </script>
 </asp:Content>
+
 

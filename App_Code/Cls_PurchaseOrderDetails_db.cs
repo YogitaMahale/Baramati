@@ -31,11 +31,9 @@ namespace DatabaseLayer
             }
             ConnectionString.ConnectionString = ConfigurationManager.ConnectionStrings[conname].ConnectionString;
         }
+        
         #region Public Methods
-
-        #region SelectAll and SelectById not in use
-        /*
-        public DataTable SelectAll(PurchaseOrderDetails objPurchaseOrderDetails)
+        public DataTable SelectAll()
         {
             DataSet ds = new DataSet();
             SqlDataAdapter da;
@@ -45,14 +43,13 @@ namespace DatabaseLayer
                 cmd.CommandText = "PurchaseOrderDetails_SelectAll";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
-
                 ConnectionString.Open();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
             }
             catch (Exception ex)
             {
-                ////ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return null;
             }
             finally
@@ -61,18 +58,18 @@ namespace DatabaseLayer
             }
             return ds.Tables[0];
         }
-        public PurchaseOrderDetails SelectById(Int64 id)
+        public PurchaseOrderDetails  SelectById(Int64 opid)
         {
             SqlDataAdapter da;
             DataSet ds = new DataSet();
-            PurchaseOrderDetails objPurchaseOrderDetails = new PurchaseOrderDetails();
+            PurchaseOrderDetails objorderproducts = new PurchaseOrderDetails();
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "PurchaseOrderDetails_SelectById";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
-                cmd.Parameters.AddWithValue("@PurchaseOrderId", id);
+                cmd.Parameters.AddWithValue("@opid", opid);
                 ConnectionString.Open();
                 da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
@@ -85,21 +82,35 @@ namespace DatabaseLayer
                         {
                             if (ds.Tables[0].Rows.Count > 0)
                             {
+                                {
+                                    objorderproducts.opid = Convert.ToInt64(ds.Tables[0].Rows[0]["opid"]);
+                                    objorderproducts.oid = Convert.ToInt64(ds.Tables[0].Rows[0]["oid"]);
+                                    objorderproducts.uid = Convert.ToInt64(ds.Tables[0].Rows[0]["uid"]);
+                                    objorderproducts.pid = Convert.ToInt64(ds.Tables[0].Rows[0]["pid"]);
+                                    objorderproducts.brandid = Convert.ToString(ds.Tables[0].Rows[0]["brandid"]);
 
-                                //PurchaseOrderId, VendorId, isdeleted, OrderDate
-                                objPurchaseOrderDetails.PurchaseOrderDetailsId = Convert.ToInt64(ds.Tables[0].Rows[0]["PurchaseOrderDetailsId"]);
+                                    objorderproducts.sizeid = Convert.ToString(ds.Tables[0].Rows[0]["sizeid"]);
+                                    objorderproducts.colorid = Convert.ToString(ds.Tables[0].Rows[0]["colorid"]);
+                                    objorderproducts.cart = Convert.ToDecimal(ds.Tables[0].Rows[0]["cart"]);
+                                    objorderproducts.pack = Convert.ToString(ds.Tables[0].Rows[0]["pack"]);
+                                    objorderproducts.qty = Convert.ToDecimal(ds.Tables[0].Rows[0]["qty"]);
 
-                                objPurchaseOrderDetails.PurchaseOrderId = Convert.ToInt64(ds.Tables[0].Rows[0]["PurchaseOrderId"]);
-                                objPurchaseOrderDetails.ProdId = Convert.ToInt64(ds.Tables[0].Rows[0]["ProdId"]);
-                                objPurchaseOrderDetails.CategoryId = Convert.ToInt64(ds.Tables[0].Rows[0]["CategoryId"]);
-                                objPurchaseOrderDetails.isdeleted = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isdeleted"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isdeleted"]);
-                                objPurchaseOrderDetails.Quantity1 = Convert.ToInt64(ds.Tables[0].Rows[0]["Quantity1"]);
-                                objPurchaseOrderDetails.Quantity = Convert.ToInt64(ds.Tables[0].Rows[0]["Quantity"]);
+                                    objorderproducts.mrp = Convert.ToDecimal(ds.Tables[0].Rows[0]["mrp"]);
+                                    objorderproducts.unitRate = Convert.ToDecimal(ds.Tables[0].Rows[0]["unitRate"]);
+                                    objorderproducts.subTotal = Convert.ToDecimal(ds.Tables[0].Rows[0]["subTotal"]);
+                                    objorderproducts.discount = Convert.ToDecimal(ds.Tables[0].Rows[0]["discount"]);
+                                    objorderproducts.scheme = Convert.ToDecimal(ds.Tables[0].Rows[0]["scheme"]);
 
 
 
+                                    objorderproducts.taxableamt = Convert.ToDecimal(ds.Tables[0].Rows[0]["taxableamt"]);
+                                    objorderproducts.CGSTper = Convert.ToDecimal(ds.Tables[0].Rows[0]["CGSTper"]);
+                                    objorderproducts.SGSTper = Convert.ToDecimal(ds.Tables[0].Rows[0]["SGSTper"]);
+                                    objorderproducts.IGSTper = Convert.ToDecimal(ds.Tables[0].Rows[0]["IGSTper"]);
+                                    objorderproducts.GSTamt = Convert.ToDecimal(ds.Tables[0].Rows[0]["GSTamt"]);
+                                    objorderproducts.TotalAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["TotalAmount"]);
 
-
+                                }
                             }
                         }
                     }
@@ -107,20 +118,16 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-                ////ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return null;
             }
             finally
             {
                 ConnectionString.Close();
             }
-            return objPurchaseOrderDetails;
+            return objorderproducts;
         }
-        */
-        #endregion
-
-
-        public Int64 Insert(PurchaseOrderDetails objPurchaseOrderDetails)
+        public Int64 Insert(PurchaseOrderDetails  objorderproducts)
         {
             Int64 result = 0;
             try
@@ -131,23 +138,33 @@ namespace DatabaseLayer
                 cmd.Connection = ConnectionString;
 
                 SqlParameter param = new SqlParameter();
-                param.ParameterName = "@PurchaseOrderDetailsId";
-                param.Value = objPurchaseOrderDetails.PurchaseOrderDetailsId;
+                param.ParameterName = "@opid";
+                param.Value = objorderproducts.opid;
                 param.SqlDbType = SqlDbType.BigInt;
                 param.Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add(param);
+                cmd.Parameters.AddWithValue("@oid", objorderproducts.oid);
+                cmd.Parameters.AddWithValue("@uid", objorderproducts.uid);
+                cmd.Parameters.AddWithValue("@pid", objorderproducts.pid);
+                cmd.Parameters.AddWithValue("@brandid", objorderproducts.brandid);
+                cmd.Parameters.AddWithValue("@sizeid", objorderproducts.sizeid);
+                cmd.Parameters.AddWithValue("@colorid", objorderproducts.colorid);
+                cmd.Parameters.AddWithValue("@cart", objorderproducts.cart);
+                cmd.Parameters.AddWithValue("@pack", objorderproducts.pack);
 
-                //PurchaseOrderId, ProdId, CategoryId, Quantity, isdeleted, Quantity1
+                cmd.Parameters.AddWithValue("@qty", objorderproducts.qty);
+                cmd.Parameters.AddWithValue("@mrp", objorderproducts.mrp);
+                cmd.Parameters.AddWithValue("@unitRate", objorderproducts.unitRate);
+                cmd.Parameters.AddWithValue("@subTotal", objorderproducts.subTotal);
+                cmd.Parameters.AddWithValue("@discount", objorderproducts.discount);
+                cmd.Parameters.AddWithValue("@scheme", objorderproducts.scheme);
+                cmd.Parameters.AddWithValue("@taxableamt", objorderproducts.taxableamt);
+                cmd.Parameters.AddWithValue("@CGSTper", objorderproducts.CGSTper);
 
-                cmd.Parameters.AddWithValue("@PurchaseOrderId", objPurchaseOrderDetails.PurchaseOrderId);
-                cmd.Parameters.AddWithValue("@ProdId", objPurchaseOrderDetails.ProdId);
-                cmd.Parameters.AddWithValue("@CategoryId", objPurchaseOrderDetails.CategoryId);
-                cmd.Parameters.AddWithValue("@Quantity", objPurchaseOrderDetails.Quantity);
-                //cmd.Parameters.AddWithValue("@isdeleted", objPurchaseOrderDetails.isdeleted);
-                cmd.Parameters.AddWithValue("@Quantity1", objPurchaseOrderDetails.Quantity1);
-                cmd.Parameters.AddWithValue("@Rate", objPurchaseOrderDetails.Rate);
-
-
+                cmd.Parameters.AddWithValue("@SGSTper", objorderproducts.SGSTper);
+                cmd.Parameters.AddWithValue("@IGSTper", objorderproducts.IGSTper);
+                cmd.Parameters.AddWithValue("@GSTamt", objorderproducts.GSTamt);
+                cmd.Parameters.AddWithValue("@TotalAmount", objorderproducts.TotalAmount);
 
 
                 ConnectionString.Open();
@@ -156,7 +173,7 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-                //ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return result;
             }
             finally
@@ -165,10 +182,7 @@ namespace DatabaseLayer
             }
             return result;
         }
-
-        #region Update Not in use
-        /*
-        public Int64 Update(PurchaseOrderDetails objPurchaseOrderDetails)
+        public Int64 Update(PurchaseOrderDetails  objorderproducts)
         {
             Int64 result = 0;
             try
@@ -179,20 +193,42 @@ namespace DatabaseLayer
                 cmd.Connection = ConnectionString;
 
                 SqlParameter param = new SqlParameter();
-                param.ParameterName = "@PurchaseOrderId";
-                param.Value = objPurchaseOrderDetails.PurchaseOrderId;
+                param.ParameterName = "@opid";
+                param.Value = objorderproducts.opid;
                 param.SqlDbType = SqlDbType.BigInt;
                 param.Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add(param);
+                //cmd.Parameters.AddWithValue("@oid", objorderproducts.oid);
+                //cmd.Parameters.AddWithValue("@uid", objorderproducts.uid);
+                //cmd.Parameters.AddWithValue("@pid", objorderproducts.pid);
+                //cmd.Parameters.AddWithValue("@productprice", objorderproducts.productprice);
+                //cmd.Parameters.AddWithValue("@gst", objorderproducts.gst);
+                //cmd.Parameters.AddWithValue("@discount", objorderproducts.discount);
+                //cmd.Parameters.AddWithValue("@productafterdiscountprice", objorderproducts.discount);
+                //cmd.Parameters.AddWithValue("@quantites", objorderproducts.quantites);
+                cmd.Parameters.AddWithValue("@oid", objorderproducts.oid);
+                cmd.Parameters.AddWithValue("@uid", objorderproducts.uid);
+                cmd.Parameters.AddWithValue("@pid", objorderproducts.pid);
+                cmd.Parameters.AddWithValue("@brandid", objorderproducts.brandid);
+                cmd.Parameters.AddWithValue("@sizeid", objorderproducts.sizeid);
+                cmd.Parameters.AddWithValue("@colorid", objorderproducts.colorid);
+                cmd.Parameters.AddWithValue("@cart", objorderproducts.cart);
+                cmd.Parameters.AddWithValue("@pack", objorderproducts.pack);
 
-                //PurchaseOrderId, VendorId, isdeleted
+                cmd.Parameters.AddWithValue("@qty", objorderproducts.qty);
+                cmd.Parameters.AddWithValue("@mrp", objorderproducts.mrp);
+                cmd.Parameters.AddWithValue("@unitRate", objorderproducts.unitRate);
+                cmd.Parameters.AddWithValue("@subTotal", objorderproducts.subTotal);
+                cmd.Parameters.AddWithValue("@discount", objorderproducts.discount);
+                cmd.Parameters.AddWithValue("@scheme", objorderproducts.scheme);
+                cmd.Parameters.AddWithValue("@taxableamt", objorderproducts.taxableamt);
+                cmd.Parameters.AddWithValue("@CGSTper", objorderproducts.CGSTper);
 
-                cmd.Parameters.AddWithValue("@PONo", objPurchaseOrderDetails.PONo);
-                cmd.Parameters.AddWithValue("@VendorId", objPurchaseOrderDetails.VendorId);
+                cmd.Parameters.AddWithValue("@SGSTper", objorderproducts.SGSTper);
+                cmd.Parameters.AddWithValue("@IGSTper", objorderproducts.IGSTper);
+                cmd.Parameters.AddWithValue("@GSTamt", objorderproducts.GSTamt);
+                cmd.Parameters.AddWithValue("@TotalAmount", objorderproducts.TotalAmount);
 
-                cmd.Parameters.AddWithValue("@isdeleted", objPurchaseOrderDetails.isdeleted);
-                cmd.Parameters.AddWithValue("@OrderDate", objPurchaseOrderDetails.OrderDate);
-                cmd.Parameters.AddWithValue("@orderstatus", objPurchaseOrderDetails.orderstatus);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
@@ -200,7 +236,7 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-                //ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return result;
             }
             finally
@@ -209,14 +245,7 @@ namespace DatabaseLayer
             }
             return result;
         }
-        */
-        #endregion
-
-
-
-        #region Delete Not in use
-/*
-        public bool Delete(Int64 ID)
+        public bool Delete(Int64 opid)
         {
             try
             {
@@ -225,14 +254,14 @@ namespace DatabaseLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = ConnectionString;
 
-                cmd.Parameters.AddWithValue("@PurchaseOrderId", ID);
+                cmd.Parameters.AddWithValue("@opid", opid);
 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                //ErrHandler.writeError(ex.Message, ex.StackTrace);
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
                 return false;
             }
             finally
@@ -241,14 +270,8 @@ namespace DatabaseLayer
             }
             return true;
         }
-
-        */
-#endregion
-
-
-
         #endregion
 
-
     }
+
 }

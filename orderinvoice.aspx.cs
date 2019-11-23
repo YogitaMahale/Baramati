@@ -42,10 +42,17 @@ public partial class orderinvoice : System.Web.UI.Page
                     if (ds.Tables[0].Rows.Count > 0)
                     {
                         sminvoiceNo.InnerText = ds.Tables[0].Rows[0]["oid"].ToString();
+
+
                         smOrderDate.InnerText = "Order Date : " + ds.Tables[0].Rows[0]["orderdate"].ToString();
-                        spnSubTotal.InnerText = ds.Tables[0].Rows[0]["amount"].ToString();
-                        spnTax.InnerText = ds.Tables[0].Rows[0]["tax"].ToString();
-                        spnTotal.InnerText = ds.Tables[0].Rows[0]["totalamount"].ToString();
+
+                        spnTotal.InnerText = ds.Tables[0].Rows[0]["grandTotal"].ToString();
+
+
+                        sporder2.InnerText =  ds.Tables[0].Rows[0]["orderno"].ToString();
+                        spdeliverth.InnerText = ds.Tables[0].Rows[0]["DeliveredThrough"].ToString();
+                        spdeliveryDetails.InnerText = ds.Tables[0].Rows[0]["DeliveredDetails"].ToString();
+                        spReferenceby.InnerText = ds.Tables[0].Rows[0]["Referenceby"].ToString();
                     }
                 }
 

@@ -106,20 +106,38 @@ namespace BusinessLayer
         { }
 
         #region Private Variables
+
+        #endregion
         private Int64 _oid;
         private Int64 _uid;
-        private Int32 _productquantites;
-        private Boolean _billpaidornot;
-        private Decimal _amount;
-        private Decimal _discount;
-        private Decimal _tax;
-        private Decimal _totalamount;
-        private System.DateTime _orderdate;
-        private Boolean _isdelete;
-        private String _usertype;
-        #endregion
-
-
+        private string _paymentType;
+        private string _invoicetype;
+        private string _orderno;
+        private string   _paymentMode;
+        private DateTime  _orderdate;
+        private decimal _subamount;
+        private decimal _totalGSTAmount;
+        private decimal _per_tradeDisandScheme;
+        private decimal _amt_tradeDisandScheme;
+        private decimal _per_taxableDiscount;
+        private decimal _amt_taxableDiscount;
+        private decimal _TaxableAmount;
+        private decimal _TotalAmount;
+        private decimal _CGSTamt;
+        private decimal _SGSTamt;
+        private decimal _IGSTamt;
+        private decimal _otheramt;
+        private decimal  _freightDiscount;
+        private DateTime  _duedate;
+        private decimal _grandTotal;
+        private string  _Referenceby;
+        private string  _DeliveredThrough;
+        private string  _DeliveredDetails;
+        private Int64 _OrderStatus;
+        private string  _ordertype;
+        private decimal _pendingAmt;
+        private bool _isconfirmed;
+    
         #region Public Properties
         public Int64 oid
         {
@@ -131,51 +149,147 @@ namespace BusinessLayer
             get { return _uid; }
             set { _uid = value; }
         }
-        public Int32 productquantites
+        public string  paymentType
         {
-            get { return _productquantites; }
-            set { _productquantites = value; }
+            get { return _paymentType; }
+            set { _paymentType = value; }
         }
-        public Boolean billpaidornot
+       
+        public string invoicetype
         {
-            get { return _billpaidornot; }
-            set { _billpaidornot = value; }
+            get { return _invoicetype; }
+            set { _invoicetype = value; }
         }
-        public Decimal amount
+        public string orderno
         {
-            get { return _amount; }
-            set { _amount = value; }
+            get { return _orderno; }
+            set { _orderno = value; }
         }
-        public Decimal discount
+        public string paymentMode
         {
-            get { return _discount; }
-            set { _discount = value; }
+            get { return _paymentMode; }
+            set { _paymentMode = value; }
         }
-        public Decimal tax
-        {
-            get { return _tax; }
-            set { _tax = value; }
-        }
-        public Decimal totalamount
-        {
-            get { return _totalamount; }
-            set { _totalamount = value; }
-        }
-        public System.DateTime orderdate
+        public DateTime orderdate
         {
             get { return _orderdate; }
             set { _orderdate = value; }
         }
-        public Boolean isdelete
+        public decimal  subamount
         {
-            get { return _isdelete; }
-            set { _isdelete = value; }
+            get { return _subamount; }
+            set { _subamount = value; }
         }
-        public String usertype
+        public decimal totalGSTAmount
         {
-            get { return _usertype; }
-            set { _usertype = value; }
+            get { return _totalGSTAmount; }
+            set { _totalGSTAmount = value; }
         }
+        public decimal per_tradeDisandScheme
+        {
+            get { return _per_tradeDisandScheme; }
+            set { _per_tradeDisandScheme = value; }
+        }
+        public decimal amt_tradeDisandScheme
+        {
+            get { return _amt_tradeDisandScheme; }
+            set { _amt_tradeDisandScheme = value; }
+        }
+        public decimal per_taxableDiscount
+        {
+            get { return _per_taxableDiscount; }
+            set { _per_taxableDiscount = value; }
+        }
+        public decimal amt_taxableDiscount
+        {
+            get { return _amt_taxableDiscount; }
+            set { _amt_taxableDiscount = value; }
+        }
+        public decimal TaxableAmount
+        {
+            get { return _TaxableAmount; }
+            set { _TaxableAmount = value; }
+        }
+        public decimal TotalAmount
+        {
+            get { return _TotalAmount; }
+            set { _TotalAmount = value; }
+        }
+        public decimal CGSTamt
+        {
+            get { return _CGSTamt; }
+            set { _CGSTamt = value; }
+        }
+        public decimal SGSTamt
+        {
+            get { return _SGSTamt; }
+            set { _SGSTamt = value; }
+        }
+        public decimal IGSTamt
+        {
+            get { return _IGSTamt; }
+            set { _IGSTamt = value; }
+        }
+        public decimal otheramt
+        {
+            get { return _otheramt; }
+            set { _otheramt = value; }
+        }
+        public decimal freightDiscount
+        {
+            get { return _freightDiscount; }
+            set { _freightDiscount = value; }
+        }
+        public DateTime  duedate
+        {
+            get { return _duedate; }
+            set { _duedate = value; }
+        }
+        public decimal grandTotal
+        {
+            get { return _grandTotal; }
+            set { _grandTotal = value; }
+        }
+        public string  Referenceby
+        {
+            get { return _Referenceby; }
+            set { _Referenceby = value; }
+        }
+        public string DeliveredThrough
+        {
+            get { return _DeliveredThrough; }
+            set { _DeliveredThrough = value; }
+        }
+        public string DeliveredDetails
+        {
+            get { return _DeliveredDetails; }
+            set { _DeliveredDetails = value; }
+        }
+        public Int64 OrderStatus
+        {
+            get { return _OrderStatus; }
+            set { _OrderStatus = value; }
+        }
+        public string  ordertype
+        {
+            get { return _ordertype; }
+            set { _ordertype = value; }
+        }
+        public decimal  pendingAmt
+        {
+            get { return _pendingAmt; }
+            set { _pendingAmt = value; }
+        }
+
+        public bool  isconfirmed
+        {
+            get { return _isconfirmed; }
+            set { _isconfirmed = value; }
+        }
+
+
+
+
         #endregion
     }
 

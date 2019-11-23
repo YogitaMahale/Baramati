@@ -24,6 +24,24 @@ public partial class manageCustomerOrder : System.Web.UI.Page
         {
             SelectAll();
         }
+        if (!Page.IsPostBack)
+        {
+            if (Request.QueryString["mode"] == "u")
+            {
+                
+                spnMessage.Visible = true;
+                spnMessage.Style.Add("color", "green");
+                spnMessage.InnerText = "Order Updated Successfully";
+
+            }
+            else if (Request.QueryString["mode"] == "i")
+            {
+                
+                spnMessage.Visible = true;
+                spnMessage.Style.Add("color", "green");
+                spnMessage.InnerText = "Order Inserted Successfully";
+            }
+        }
     }
 
     public void SelectAll()
@@ -306,10 +324,13 @@ public partial class manageCustomerOrder : System.Web.UI.Page
             //hlMoryaImage.NavigateUrl = Page.ResolveUrl("~/ordermoryainvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
             HyperLink hlEditOrder = (HyperLink)e.Item.FindControl("hlEditOrder");
-            hlEditOrder.NavigateUrl = Page.ResolveUrl("~/ManualOrder.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlEditOrder.NavigateUrl = Page.ResolveUrl("~/ManualOrder1.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
             HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
-            hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlInvoice.NavigateUrl = Page.ResolveUrl("~/orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+
+            //HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
+            //hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
         }
     }
 
@@ -324,12 +345,13 @@ public partial class manageCustomerOrder : System.Web.UI.Page
 
 
             HyperLink hlEditOrder = (HyperLink)e.Item.FindControl("hlEditOrder");
-            hlEditOrder.NavigateUrl = Page.ResolveUrl("~/ManualOrder.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlEditOrder.NavigateUrl = Page.ResolveUrl("~/ManualOrder1.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
 
 
             HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
-            hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlInvoice.NavigateUrl = Page.ResolveUrl("~/orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+
         }
     }
 
@@ -342,11 +364,12 @@ public partial class manageCustomerOrder : System.Web.UI.Page
             //HyperLink hlMoryaImage = (HyperLink)e.Item.FindControl("hlMoryaImage");
             //hlMoryaImage.NavigateUrl = Page.ResolveUrl("~/ordermoryainvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
             HyperLink hlEditOrder = (HyperLink)e.Item.FindControl("hlEditOrder");
-            hlEditOrder.NavigateUrl = Page.ResolveUrl("~/ManualOrder.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlEditOrder.NavigateUrl = Page.ResolveUrl("~/ManualOrder1.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
 
 
             HyperLink hlInvoice = (HyperLink)e.Item.FindControl("hlInvoice");
-            hlInvoice.NavigateUrl = Page.ResolveUrl("~/Customer_orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+            hlInvoice.NavigateUrl = Page.ResolveUrl("~/orderinvoice.aspx?oid=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "oid").ToString(), true));
+
         }
     }
 
@@ -514,6 +537,7 @@ public partial class manageCustomerOrder : System.Web.UI.Page
     }
     protected void lnkConfirmedOrder_Click(object sender, EventArgs e)
     {
+        /*
         LinkButton lnkConfirmedOrder = (LinkButton)sender;
         RepeaterItem item = (RepeaterItem)lnkConfirmedOrder.NamingContainer;
         Int64 OrderId_old = Convert.ToInt64(lnkConfirmedOrder.CommandArgument);
@@ -673,6 +697,7 @@ public partial class manageCustomerOrder : System.Web.UI.Page
             spnMessage.Style.Add("color", "green");
             spnMessage.InnerText = "Order Not Deleted";
         }
+         */ 
     }
 
     private void Product_StockUpdate(Int64 ProductId, int Quantites)
@@ -699,4 +724,9 @@ public partial class manageCustomerOrder : System.Web.UI.Page
         }
     }
 
+    protected void btnNewOrder_Click(object sender, EventArgs e)
+    {
+        Response.Redirect(Page.ResolveUrl("~/ManualOrder1.aspx"));
+        
+    }
 }

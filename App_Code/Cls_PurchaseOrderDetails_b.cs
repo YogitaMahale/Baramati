@@ -11,21 +11,21 @@ using System.Web;
 /// 
 namespace BusinessLayer
 {
-public class Cls_PurchaseOrderDetails_b
-{
-	public Cls_PurchaseOrderDetails_b()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public class Cls_PurchaseOrderDetails_b
+    {
+        public Cls_PurchaseOrderDetails_b()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+        }
         #region Public Methods
         public DataTable SelectAll()
         {
             DataTable dt = new DataTable();
             try
             {
-                Cls_PurchaseOrderDetails_db  objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
+                Cls_PurchaseOrderDetails_db objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
 
                 dt = objCls_orderproducts_db.SelectAll();
                 return dt;
@@ -36,9 +36,9 @@ public class Cls_PurchaseOrderDetails_b
                 return dt;
             }
         }
-        public PurchaseOrderDetails  SelectById(Int64 opid)
+        public PurchaseOrderDetails SelectById(Int64 opid)
         {
-            PurchaseOrderDetails  objorderproducts = new PurchaseOrderDetails ();
+            PurchaseOrderDetails objorderproducts = new PurchaseOrderDetails();
             try
             {
                 Cls_PurchaseOrderDetails_db objCls_orderproducts_db = new Cls_PurchaseOrderDetails_db();
@@ -52,7 +52,7 @@ public class Cls_PurchaseOrderDetails_b
                 return objorderproducts;
             }
         }
-        public Int64 Insert(PurchaseOrderDetails  objorderproducts)
+        public Int64 Insert(PurchaseOrderDetails objorderproducts)
         {
             Int64 result = 0;
             try
@@ -68,7 +68,7 @@ public class Cls_PurchaseOrderDetails_b
                 return result;
             }
         }
-        public Int64 Update(PurchaseOrderDetails  objorderproducts)
+        public Int64 Update(PurchaseOrderDetails objorderproducts)
         {
             Int64 result = 0;
             try
@@ -115,29 +115,22 @@ public class Cls_PurchaseOrderDetails_b
         private Int64 _oid;
         private Int64 _uid;
         private Int64 _pid;
-        private string _brandid;
-        private string _sizeid;
-        private string _colorid;
-        private Decimal _cart;
-        private string _pack;
-        private Decimal _qty;
-
-        private Decimal _mrp;
-        private Decimal _unitRate;
-        private Decimal _subTotal;
+        private Int64 _qty;
+        private decimal _rate;
+        private decimal _subtotal;
         private Decimal _discount;
-        private Decimal _scheme;
+        private decimal _scheme;
+        private Decimal _frieghtamt;
         private Decimal _taxableamt;
-        private Decimal _CGSTper;
-        private Decimal _SGSTper;
-        private Decimal _IGSTper;
-        private Decimal _GSTamt;
-        private Decimal _TotalAmount;
-        private Boolean _isdelete;
-        #endregion
+        private Decimal _csgtper;
+        private Decimal _sgstper;
+        private Decimal _igstper;
+        private Decimal _gstamt;
+        private Decimal _total;
+        private Decimal _netrate;
 
 
-        #region Public Properties
+
         public Int64 opid
         {
             get { return _opid; }
@@ -160,53 +153,24 @@ public class Cls_PurchaseOrderDetails_b
         }
 
 
-        public string brandid
-        {
-            get { return _brandid; }
-            set { _brandid = value; }
-        }
-        public string sizeid
-        {
-            get { return _sizeid; }
-            set { _sizeid = value; }
-        }
-        public string colorid
-        {
-            get { return _colorid; }
-            set { _colorid = value; }
-        }
-        public Decimal cart
-        {
-            get { return _cart; }
-            set { _cart = value; }
-        }
-        public string pack
-        {
-            get { return _pack; }
-            set { _pack = value; }
-        }
-        public decimal qty
+        public Int64 qty
         {
             get { return _qty; }
             set { _qty = value; }
         }
+        public decimal rate
+        {
+            get { return _rate; }
+            set { _rate = value; }
+        }
+        public decimal subtotal
+        {
+            get { return _subtotal; }
+            set { _subtotal = value; }
+        }
 
 
-        public decimal mrp
-        {
-            get { return _mrp; }
-            set { _mrp = value; }
-        }
-        public decimal unitRate
-        {
-            get { return _unitRate; }
-            set { _unitRate = value; }
-        }
-        public decimal subTotal
-        {
-            get { return _subTotal; }
-            set { _subTotal = value; }
-        }
+
         public decimal discount
         {
             get { return _discount; }
@@ -217,48 +181,58 @@ public class Cls_PurchaseOrderDetails_b
             get { return _scheme; }
             set { _scheme = value; }
         }
+        public decimal frieghtamt
+        {
+            get { return _frieghtamt; }
+            set { _frieghtamt = value; }
+        }
+
+
+
+
+
         public decimal taxableamt
         {
             get { return _taxableamt; }
             set { _taxableamt = value; }
         }
-        public decimal CGSTper
+
+
+        public decimal csgtper
         {
-            get { return _CGSTper; }
-            set { _CGSTper = value; }
+            get { return _csgtper; }
+            set { _csgtper = value; }
+        }
+
+        public decimal sgstper
+        {
+            get { return _sgstper; }
+            set { _sgstper = value; }
+        }
+        public decimal igstper
+        {
+            get { return _igstper; }
+            set { _igstper = value; }
+        }
+        public decimal gstamt
+        {
+            get { return _gstamt; }
+            set { _gstamt = value; }
         }
 
 
-        public decimal SGSTper
+        public decimal total
         {
-            get { return _SGSTper; }
-            set { _SGSTper = value; }
-        }
-
-        public decimal IGSTper
-        {
-            get { return _IGSTper; }
-            set { _IGSTper = value; }
-        }
-
-        public decimal GSTamt
-        {
-            get { return _GSTamt; }
-            set { _GSTamt = value; }
-        }
-
-        public decimal TotalAmount
-        {
-            get { return _TotalAmount; }
-            set { _TotalAmount = value; }
+            get { return _total; }
+            set { _total = value; }
         }
 
 
 
-        public Boolean isdelete
+        public decimal  netrate
         {
-            get { return _isdelete; }
-            set { _isdelete = value; }
+            get { return _netrate; }
+            set { _netrate = value; }
         }
         #endregion
     }

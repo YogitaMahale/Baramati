@@ -46,13 +46,13 @@ public partial class Customer_orderinvoice : System.Web.UI.Page
 
                         smOrderDate.InnerText = "Order Date : " + ds.Tables[0].Rows[0]["orderdate"].ToString();
 
-                        spnTotal.InnerText = ds.Tables[0].Rows[0]["grandTotal"].ToString();
+                        spnTotal.InnerText = ds.Tables[0].Rows[0]["grandtotal"].ToString();
 
 
-                        sporder2.InnerText = ds.Tables[0].Rows[0]["orderno"].ToString();
-                        spdeliverth.InnerText = ds.Tables[0].Rows[0]["DeliveredThrough"].ToString();
-                        spdeliveryDetails.InnerText = ds.Tables[0].Rows[0]["DeliveredDetails"].ToString();
-                        spReferenceby.InnerText = ds.Tables[0].Rows[0]["Referenceby"].ToString();
+                        sporder2.InnerText = ds.Tables[0].Rows[0]["invoiceno"].ToString();
+                        //spdeliverth.InnerText = ds.Tables[0].Rows[0]["DeliveredThrough"].ToString();
+                        //spdeliveryDetails.InnerText = ds.Tables[0].Rows[0]["DeliveredDetails"].ToString();
+                        //spReferenceby.InnerText = ds.Tables[0].Rows[0]["Referenceby"].ToString();
                     }
                 }
 

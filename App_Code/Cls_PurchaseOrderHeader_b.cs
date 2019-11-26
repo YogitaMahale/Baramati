@@ -16,7 +16,7 @@ namespace BusinessLayer
         #endregion
 
         #region Public Methods
-        public DataSet  SelectAll()
+        public DataSet SelectAll()
         {
             DataSet dt = new DataSet();
             try
@@ -31,9 +31,9 @@ namespace BusinessLayer
                 return dt;
             }
         }
-        public PurchaseOrderHeader  SelectById(Int64 oid)
+        public PurchaseOrderHeader SelectById(Int64 oid)
         {
-            PurchaseOrderHeader  objorders = new PurchaseOrderHeader ();
+            PurchaseOrderHeader objorders = new PurchaseOrderHeader();
             try
             {
                 Cls_PurchaseOrderHeader_db objCls_orders_db = new Cls_PurchaseOrderHeader_db();
@@ -47,7 +47,7 @@ namespace BusinessLayer
                 return objorders;
             }
         }
-        public Int64 Insert(PurchaseOrderHeader  objorders)
+        public Int64 Insert(PurchaseOrderHeader objorders)
         {
             Int64 result = 0;
             try
@@ -63,7 +63,7 @@ namespace BusinessLayer
                 return result;
             }
         }
-        public Int64 Update(PurchaseOrderHeader  objorders)
+        public Int64 Update(PurchaseOrderHeader objorders)
         {
             Int64 result = 0;
             try
@@ -105,39 +105,30 @@ namespace BusinessLayer
         public PurchaseOrderHeader()
         { }
 
-        #region Private Variables
-
-        #endregion
+        #region Private Variables        
         private Int64 _oid;
         private Int64 _uid;
-        private string _paymentType;
         private string _invoicetype;
-        private string _orderno;
-        private string _paymentMode;
+        private string _invoiceno;
         private DateTime _orderdate;
-        private decimal _subamount;
-        private decimal _totalGSTAmount;
-        private decimal _per_tradeDisandScheme;
-        private decimal _amt_tradeDisandScheme;
-        private decimal _per_taxableDiscount;
-        private decimal _amt_taxableDiscount;
-        private decimal _TaxableAmount;
-        private decimal _TotalAmount;
+        private string _accountYear;
+        private decimal _subtotal;
+        private decimal _discandScheme;
+        private decimal _frieghtamount;
+        private decimal _taxableamount;
         private decimal _CGSTamt;
         private decimal _SGSTamt;
         private decimal _IGSTamt;
+        private decimal _totalAmt;
+        private decimal _transportamt;
+        private decimal _packingamt;
         private decimal _otheramt;
-        private decimal _freightDiscount;
-        private DateTime _duedate;
-        private decimal _grandTotal;
-        private string _Referenceby;
-        private string _DeliveredThrough;
-        private string _DeliveredDetails;
-        private Int64 _OrderStatus;
-        private string _ordertype;
+        private decimal _dicountamt;
+        private decimal _grandtotal;
         private decimal _pendingAmt;
-        private bool _isconfirmed;
 
+        private DateTime _stockdate;
+        #endregion
         #region Public Properties
         public Int64 oid
         {
@@ -149,72 +140,56 @@ namespace BusinessLayer
             get { return _uid; }
             set { _uid = value; }
         }
-        public string paymentType
-        {
-            get { return _paymentType; }
-            set { _paymentType = value; }
-        }
+
 
         public string invoicetype
         {
             get { return _invoicetype; }
             set { _invoicetype = value; }
         }
-        public string orderno
+        public string invoiceno
         {
-            get { return _orderno; }
-            set { _orderno = value; }
+            get { return _invoiceno; }
+            set { _invoiceno = value; }
         }
-        public string paymentMode
-        {
-            get { return _paymentMode; }
-            set { _paymentMode = value; }
-        }
+        
         public DateTime orderdate
         {
             get { return _orderdate; }
             set { _orderdate = value; }
         }
-        public decimal subamount
+        public string accountYear
         {
-            get { return _subamount; }
-            set { _subamount = value; }
+            get { return _accountYear; }
+            set { _accountYear = value; }
         }
-        public decimal totalGSTAmount
+
+       
+
+
+        public decimal subtotal
         {
-            get { return _totalGSTAmount; }
-            set { _totalGSTAmount = value; }
+            get { return _subtotal; }
+            set { _subtotal = value; }
         }
-        public decimal per_tradeDisandScheme
+        public decimal discandScheme
         {
-            get { return _per_tradeDisandScheme; }
-            set { _per_tradeDisandScheme = value; }
+            get { return _discandScheme; }
+            set { _discandScheme = value; }
         }
-        public decimal amt_tradeDisandScheme
+        public decimal frieghtamount
         {
-            get { return _amt_tradeDisandScheme; }
-            set { _amt_tradeDisandScheme = value; }
+            get { return _frieghtamount; }
+            set { _frieghtamount = value; }
         }
-        public decimal per_taxableDiscount
+        public decimal taxableamount
         {
-            get { return _per_taxableDiscount; }
-            set { _per_taxableDiscount = value; }
+            get { return _taxableamount; }
+            set { _taxableamount = value; }
         }
-        public decimal amt_taxableDiscount
-        {
-            get { return _amt_taxableDiscount; }
-            set { _amt_taxableDiscount = value; }
-        }
-        public decimal TaxableAmount
-        {
-            get { return _TaxableAmount; }
-            set { _TaxableAmount = value; }
-        }
-        public decimal TotalAmount
-        {
-            get { return _TotalAmount; }
-            set { _TotalAmount = value; }
-        }
+
+      
+
         public decimal CGSTamt
         {
             get { return _CGSTamt; }
@@ -230,66 +205,49 @@ namespace BusinessLayer
             get { return _IGSTamt; }
             set { _IGSTamt = value; }
         }
+        public decimal totalAmt
+        {
+            get { return _totalAmt; }
+            set { _totalAmt = value; }
+        }
+        public decimal transportamt
+        {
+            get { return _transportamt; }
+            set { _transportamt = value; }
+        }
+       
+
+        public decimal packingamt
+        {
+            get { return _packingamt; }
+            set { _packingamt = value; }
+        }
         public decimal otheramt
         {
             get { return _otheramt; }
             set { _otheramt = value; }
         }
-        public decimal freightDiscount
+        public decimal dicountamt
         {
-            get { return _freightDiscount; }
-            set { _freightDiscount = value; }
+            get { return _dicountamt; }
+            set { _dicountamt = value; }
         }
-        public DateTime duedate
+        public decimal grandtotal
         {
-            get { return _duedate; }
-            set { _duedate = value; }
-        }
-        public decimal grandTotal
-        {
-            get { return _grandTotal; }
-            set { _grandTotal = value; }
-        }
-        public string Referenceby
-        {
-            get { return _Referenceby; }
-            set { _Referenceby = value; }
-        }
-        public string DeliveredThrough
-        {
-            get { return _DeliveredThrough; }
-            set { _DeliveredThrough = value; }
-        }
-        public string DeliveredDetails
-        {
-            get { return _DeliveredDetails; }
-            set { _DeliveredDetails = value; }
-        }
-        public Int64 OrderStatus
-        {
-            get { return _OrderStatus; }
-            set { _OrderStatus = value; }
-        }
-        public string ordertype
-        {
-            get { return _ordertype; }
-            set { _ordertype = value; }
+            get { return _grandtotal; }
+            set { _grandtotal = value; }
         }
         public decimal pendingAmt
         {
             get { return _pendingAmt; }
             set { _pendingAmt = value; }
         }
-
-        public bool isconfirmed
+        public DateTime stockdate
         {
-            get { return _isconfirmed; }
-            set { _isconfirmed = value; }
+            get { return _stockdate; }
+            set { _stockdate = value; }
         }
-
-
-
-
+        
         #endregion
     }
 

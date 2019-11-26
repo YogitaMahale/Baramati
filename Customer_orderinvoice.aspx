@@ -69,14 +69,14 @@
                         <div class="col-sm-4 invoice-col">
                             To
                             <address>
-                                 Order No: <strong id="sporder2" runat="server"></strong>
+                                 Invoice No: <strong id="sporder2" runat="server"></strong>
                                
-                                <br />
+                             <%--   <br />
                                 Delivery Details :<span id="spdeliveryDetails" runat="server"></span>
                                 <br />
                                 Reference by : <span id="spReferenceby" runat="server"></span>
                                 <br />
-                              Delivered Through :  <span id="spdeliverth" runat="server" > </span>   
+                              Delivered Through :  <span id="spdeliverth" runat="server" > </span>   --%>
                             </address>
                         </div>
                     </div>
@@ -88,121 +88,68 @@
                                 <thead>
                                     <tr>
                                         <th>sr</th>
-                                            <th>Product</th>
-                                            <th>Brand</th>
-                                            <th>Size</th>
-                                            <th>Color</th>
-                                            <th>Cart</th>
-                                            <th>Pack</th>
-                                            <th>Quanity</th>
-                                            <th>Mrp</th>
-                                            <th>Unit Rate</th>
-                                            <th>SubTotal</th>
-                                            <th>Discount</th>
-                                            <th>Scheme</th>
-                                            <th>Taxable Amt</th>
-                                            <th>CGST</th>
-                                            <th>SGST</th>
-                                            <th>IGST</th>
-                                            <th>GST amt</th>
-                                            <th>Total</th>
+                                                <td>Product</td>
+                                                <td>Quantity</td>
+                                                <td>Rate</td>
+                                                <td>SubTotal</td>
+                                                <td>Discount</td>
+                                                <td>Scheme</td>
+                                                <td>Frieght Amount</td>
+                                                <td>Taxable Amt</td>
+                                                <td>CGST</td>
+                                                <td>SGST</td>
+                                                <td>IGST</td>
+                                                <td>GST amt</td>
+                                                <td>Total</td>
+                                                <td>Net Rate</td>
+                                               
                                             
                                     </tr>
-                                   <%-- <tr>
-                                        <th style="text-align: center">Product Name</th>
-                                        <th style="text-align: center">SKU</th>
-                                        <th style="text-align: center">Product Price</th>
-                                        <th style="text-align: center">Quantites</th>
-                                        <th style="text-align: center">GST</th>
-                                        <th style="text-align: center">Product Basic Price</th>
-                                        <th style="text-align: center">Product Basic Amount</th>
-                                        <th style="text-align: center">Product Total Price</th>
-                                    </tr>--%>
+                                  
                                 </thead>
                                 <tbody>
                                     <asp:Repeater ID="repOrderProducts" runat="server">
                                         <ItemTemplate>
                                             <tr>
                                                 <tr class="odd gradeX">
-                                                    <td class="center">
-                                                         <asp:Label ID="lblProductName" runat="server" Text=' <%#Eval("sr")%>'></asp:Label>
-                                                        
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label3" runat="server" Text=' <%#Eval("productName")%>'></asp:Label>
-                                                       
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label4" runat="server" Text='<%# Eval("brandid") %>'></asp:Label>
+                                                      <td class="center">
+                                                            <asp:Label ID="txtsr" runat="server" Text='<%# Eval("sr") %>'></asp:Label>
 
-                                                         
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label5" runat="server" Text='<%# Eval("sizeid") %>'></asp:Label>
-                                                      
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label7" runat="server" Text='<%# Eval("colorid") %>'></asp:Label>
-                                                          
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label8" runat="server" Text='<%# Eval("cart") %>'></asp:Label>
-                                                        
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label9" runat="server" Text='<%# Eval("pack") %>'></asp:Label>
-                                                         
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label10" runat="server" Text='<%# Eval("qty") %>'></asp:Label>
-                                                       
+                                                            <%--<asp:TextBox ID="txtsr" ReadOnly="true" Width="20" runat="server" Text=' <%#Eval("sr")%>'></asp:TextBox>--%>
+                                                        </td>
+                                                        <td class="center">
+                                                            <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtproductid" Visible="false"  runat="server" Text='<%# Eval("pid") %>'></asp:Label>
 
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label11" runat="server" Text='<%# Eval("mrp") %>'></asp:Label>
-                                                       
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label12" runat="server" Text='<%# Eval("unitRate") %>'></asp:Label>
-                                                        
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label13" runat="server" Text='<%# Eval("subTotal") %>'></asp:Label>
-                                           
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label14" runat="server" Text='<%# Eval("discount") %>'></asp:Label>
-                                                      
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label15" runat="server" Text='<%# Eval("scheme") %>'></asp:Label>
-                                                        
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label16" runat="server" Text='<%# Eval("taxableamt") %>'></asp:Label>
-                                                      
+                                                        </td>
 
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label17" runat="server" Text='<%# Eval("CGSTper") %>'></asp:Label>
-                                                       
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label18" runat="server" Text='<%# Eval("SGSTper") %>'></asp:Label>
-                                                      
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label19" runat="server" Text='<%# Eval("IGSTper") %>'></asp:Label>
-                                                         
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label20" runat="server" Text='<%# Eval("GSTamt") %>'></asp:Label>
-                                                      
-                                                    </td>
-                                                    <td class="center">
-                                                         <asp:Label ID="Label21" runat="server" Text='<%# Eval("TotalAmount") %>'></asp:Label>
-                                                  
-                                                    </td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtQty" Text='<%# Eval("qty") %>' AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" Width="70" runat="server" Enabled="true" placeholder="Qty"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtRate" Text='<%# Eval("rate") %>' Width="70" runat="server" Enabled="false" placeholder="MRP"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtSubTotal" Text='<%# Eval("subtotal") %>' Width="70" Enabled="false" runat="server" placeholder="SubTotal" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtDiscount" Text='<%# Eval("discount") %>' Width="70" Enabled="false" runat="server" placeholder="Dis(%)" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtScheme"  Text='<%# Eval("scheme") %>' Width="70" Enabled="false" runat="server" placeholder="Scheme" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtFrieghtAmt" Text='<%# Eval("frieghtamt") %>' Enabled="false" Width="70" runat="server" placeholder="Cart" AutoPostBack="true" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txttaxable" Text='<%# Eval("taxableamt") %>' Width="70" Enabled="false" runat="server" placeholder="Taxable" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtCGST" Text='<%# Eval("csgtper") %>' Width="70" Enabled="false" runat="server" placeholder="CGST" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtSgst"  Text='<%# Eval("sgstper") %>'  Width="70" Enabled="false" runat="server" placeholder="SGST" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtIgst" Text='<%# Eval("igstper") %>' Width="70" Enabled="false" runat="server" placeholder="IGST" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtGSTtotal" Text='<%# Eval("gstamt") %>' Width="70" Enabled="false" runat="server" placeholder="GSTtotal"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label   ID="rep_txtTotal"  Text='<%# Eval("total") %>' Width="70" Enabled="false" runat="server" placeholder="Total" ></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label  ID="rep_txtNetRate" Text='<%# Eval("netrate") %>' Width="70" runat="server" Enabled="false" placeholder="UnitRate" ></asp:Label></td>
+                                                        
                                                      
                                                 </tr>
                                             </tr>

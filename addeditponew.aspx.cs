@@ -13,19 +13,19 @@ using System.Web.UI.WebControls;
 public partial class addeditponew : System.Web.UI.Page
 {
     common ocommon = new common();
+    Int64 addbtnClick = 0;
     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
-        //txt_Date.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-        //txtduedate.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
 
         txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
-        txtduedate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
+        txtStockDate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
+       
         //-------------------------------------------------
         if (!IsPostBack)
         {
-
+            ddlinvoiceType.SelectedValue = "Including GST";
             BindRepeater();
             Bindvendor();
             BindProducts();
@@ -172,6 +172,7 @@ public partial class addeditponew : System.Web.UI.Page
 
     protected void ddlProduct_SelectedIndexChanged(object sender, EventArgs e)
     {
+
         try
         {
             if (ddlname.SelectedIndex == 0 || ddlProduct.SelectedIndex == 0)
@@ -195,17 +196,12 @@ public partial class addeditponew : System.Web.UI.Page
                 if (dt != null)
                 {
                     // ddlProduct
-                    txtBrand.Text = dt.Rows[0]["brandName"].ToString();
-                    txtSize.Text = dt.Rows[0]["sizeid"].ToString();
-                    txtColor.Text = dt.Rows[0]["colorid"].ToString();
-                    txtCart.Text = "0";
-                    txtPack.Text = dt.Rows[0]["packing"].ToString();
                     txtQty.Text = "0";
-                    txtMrp.Text = dt.Rows[0]["MRP"].ToString();
-                    txtUnitRate.Text = dt.Rows[0]["unitRate"].ToString();
+                    txtRate.Text = dt.Rows[0]["MRP"].ToString();
                     txtSubTotal.Text = "0";
                     txtDiscount.Text = "0";
                     txtScheme.Text = "0";
+                    txtFrieghtAmt.Text = "0";
                     txttaxable.Text = "0";
                     decimal cgst1 = Convert.ToDecimal(dt.Rows[0]["CGST"].ToString());
                     txtCGST.Text = System.Math.Round(cgst1, 2).ToString();
@@ -213,58 +209,112 @@ public partial class addeditponew : System.Web.UI.Page
                     txtSgst.Text = System.Math.Round(sgst1, 2).ToString();
                     decimal Igst1 = Convert.ToDecimal(dt.Rows[0]["IGST"].ToString());
                     txtIgst.Text = System.Math.Round(Igst1, 2).ToString();
+
+
                     txtGSTtotal.Text = "0";
                     txtTotal.Text = "0";
-                    //pid,productname,brandid,brandName,sizeid,colorid,packing,MRP,unitRate,CGST,SGST,IGST
+                    txtNetRate.Text = dt.Rows[0]["MRP"].ToString();
+
+
                 }
                 con.Close();
                 //salegrid_byproductId
             }
         }
         catch { }
+
     }
     protected void txtCart_TextChanged(object sender, EventArgs e)
     {
-        try
-        {
-            if (txttradDis.Text == "")
-            {
-                txttradDis.Text = "0";
-            }
+        //        
+        //
 
-            if (txtCart.Text == "")
-            {
-                txtCart.Text = "0";
-            }
-            double cartqty = Convert.ToDouble(txtCart.Text);
-            double packing = Convert.ToDouble(txtPack.Text);
-            double unitRate = Convert.ToDouble(txtUnitRate.Text);
-            double gst = Convert.ToDouble(txtCGST.Text) + Convert.ToDouble(txtSgst.Text) + Convert.ToDouble(txtIgst.Text);
-            double totalQty = cartqty * packing;
-            txtQty.Text = totalQty.ToString();
-            double subtotal = totalQty * unitRate;
-            txtSubTotal.Text = System.Math.Round(subtotal, 2).ToString();
+        //try
+        //{
+        //    if (txtDiscount.Text == "")
+        //    {
+        //        txtDiscount.Text = "0";
+        //    }
 
-            double disamt = (subtotal * Convert.ToDouble(txttradDis.Text)) / 100;
+        //    if (txtQty.Text == "")
+        //    {
+        //        txtQty.Text = "0";
+        //    }
 
-
-
-            double d1 = subtotal / (gst + 100);
-            double taxableamt = d1 * 100;
-            txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
+        //    decimal qty = Convert.ToDecimal(txtQty.Text);
+        //    decimal rate = Convert.ToDecimal(txtRate.Text);
+        //    decimal discount = Convert.ToDecimal(txtDiscount.Text);
+        //    decimal subtotal = qty * rate;
+        //    txtSubTotal.Text = subtotal.ToString();
+        //    decimal disamt = (subtotal * discount) / 100;
+        //    decimal tot1 = subtotal - disamt;
 
 
-            //grand
-            double p = subtotal - disamt;
-            txtTotal.Text = System.Math.Round(p, 2).ToString();
 
-            double gstamt = subtotal - taxableamt;
-            txtGSTtotal.Text = System.Math.Round(gstamt, 2).ToString();
+        //    decimal gst = Convert.ToDecimal (txtCGST.Text) + Convert.ToDecimal(txtSgst.Text) + Convert.ToDecimal(txtIgst.Text);
+        //    decimal d1 = subtotal / (gst + 100);
+        //    decimal taxableamt = d1 * 100;
+        //    txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
+
+        //    decimal gstamt = (Convert.ToDecimal(txtSubTotal.Text)*gst)/100;
+        //    txtGSTtotal.Text = gstamt.ToString();
+        //    if (string.Equals("Excluding GST", ddlinvoiceType.SelectedValue.ToString()))
+        //    {
+        //        txtTotal.Text =( tot1+ gstamt).ToString();
+
+        //    }
+        //    else if (string.Equals("Including GST", ddlinvoiceType.SelectedValue.ToString()) )
+        //    {
+        //        txtTotal.Text = tot1.ToString();
+        //    }
+        //    ////////double cartqty = Convert.ToDouble(txtCart.Text);
+        //    ////////double packing = Convert.ToDouble(txtPack.Text);
+        //    ////////double unitRate = Convert.ToDouble(txtUnitRate.Text);
+        //    ////////double gst = Convert.ToDouble(txtCGST.Text) + Convert.ToDouble(txtSgst.Text) + Convert.ToDouble(txtIgst.Text);
+        //    ////////double totalQty = cartqty * packing;
+        //    ////////txtQty.Text = totalQty.ToString();
+        //    ////////double subtotal = totalQty * unitRate;
+        //    ////////txtSubTotal.Text = System.Math.Round(subtotal, 2).ToString();
+
+        //    ////////double disamt = (subtotal * Convert.ToDouble(txttradDis.Text)) / 100;
 
 
-            txtDiscount.Text = txttradDis.Text;
-        }
-        catch { }
+
+        //    ////////double d1 = subtotal / (gst + 100);
+        //    ////////double taxableamt = d1 * 100;
+        //    ////////txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
+
+
+        //    //////////grand
+        //    ////////double p = subtotal - disamt;
+        //    ////////txtTotal.Text = System.Math.Round(p, 2).ToString();
+
+        //    ////////double gstamt = subtotal - taxableamt;
+        //    ////////txtGSTtotal.Text = System.Math.Round(gstamt, 2).ToString();
+
+
+        //    ////////txtDiscount.Text = txttradDis.Text;
+
+
+        //    //            ddlProduct
+        //    //            txtQty
+        //    //txtRate
+        //    //txtSubTotal
+        //    //txtDiscount
+        //    //txtScheme
+        //    //txtFrieghtAmt
+        //    //txttaxable
+        //    //txtCGST
+        //    //txtSgst
+        //    //txtIgst
+        //    //txtGSTtotal
+        //    //txtTotal
+        //    //txtNetRate
+
+
+
+        //}
+        //catch { }
 
     }
     public void gridTotal()
@@ -280,24 +330,34 @@ public partial class addeditponew : System.Web.UI.Page
             if (txttradDis.Text == "")
             {
                 txttradDis.Text = "0";
+
+            }
+            if (txtFriegtAmt.Text == "")
+            {
+                txtFriegtAmt.Text = "0";
             }
             double discount = Convert.ToDouble(txttradDis.Text);
+            double frieghtamt = Convert.ToDouble(txtFriegtAmt.Text);
 
             for (int i = 0; i < dtprodn.Rows.Count; i++)
             {
-                double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subTotal"].ToString());
+                double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subtotal"].ToString());
                 double disamt1 = (subTotal1 * discount) / 100;
+                double gst = Convert.ToDouble(dtprodn.Rows[i]["gstamt"].ToString());
+                
                 double grandtot = subTotal1 - disamt1;
+                double final = grandtot - frieghtamt;
                 dtprodn.Rows[i]["discount"] = txttradDis.Text;
-                dtprodn.Rows[i]["TotalAmount"] = grandtot.ToString();
+                dtprodn.Rows[i]["frieghtamt"] = txtFriegtAmt.Text;
+                dtprodn.Rows[i]["total"] = (final+gst).ToString();
 
-                string t_subtotal1 = dtprodn.Rows[i]["subTotal"].ToString();
-                string t_totalGSTamt11 = dtprodn.Rows[i]["GSTamt"].ToString();
+                string t_subtotal1 = dtprodn.Rows[i]["subtotal"].ToString();
+                string t_totalGSTamt11 = dtprodn.Rows[i]["gstamt"].ToString();
                 string t_taxableamt1 = dtprodn.Rows[i]["taxableamt"].ToString();
-                string t_CGST1 = dtprodn.Rows[i]["CGSTper"].ToString();
-                string t_SGST1 = dtprodn.Rows[i]["SGSTper"].ToString();
-                string t_IGST1 = dtprodn.Rows[i]["IGSTper"].ToString();
-                string t_grandTotal1 = dtprodn.Rows[i]["TotalAmount"].ToString();
+                string t_CGST1 = dtprodn.Rows[i]["csgtper"].ToString();
+                string t_SGST1 = dtprodn.Rows[i]["sgstper"].ToString();
+                string t_IGST1 = dtprodn.Rows[i]["igstper"].ToString();
+                string t_grandTotal1 = dtprodn.Rows[i]["total"].ToString();
 
                 t_subtotal += Convert.ToDouble(t_subtotal1);
                 t_totalGSTamt += Convert.ToDouble(t_totalGSTamt11);
@@ -311,90 +371,41 @@ public partial class addeditponew : System.Web.UI.Page
             }
 
             txt_Subtotal.Text = t_subtotal.ToString();
-            txtTotalGstAmt.Text = t_totalGSTamt.ToString();
-            //  txttradDis.Text = "0";
-            //  txttaxableDis.Text = "0";
+
             txttaxableAmt.Text = t_taxableamt.ToString();
 
-            //double subtot1 = t_subtotal - t_taxableamt;
-            //txttotalAmt.Text = subtot1.ToString();
 
             txtcsgtfinal.Text = (t_totalGSTamt / 2).ToString();
             txtsgstfinal.Text = (t_totalGSTamt / 2).ToString();
             txtIgstfinal.Text = t_totalGSTamt.ToString();
-            if (t_CGST == 0)
-            {
-                txtcsgtfinal.Text = "0";
 
-            }
-            else if (t_SGST == 0)
-            {
+            txttotalAmt.Text = t_grandTotal.ToString();
 
-                txtsgstfinal.Text = "0";
 
-            }
-            else if (t_IGST == 0)
+            if (txttransport.Text == "")
             {
-
-                txtIgstfinal.Text = "0";
+                txttransport.Text = "0";
             }
-
-            //txtotherAmt.Text = "0";
-            // txtfreightdis.Text = "0";
-            //txttotalAmtfinal.Text = t_grandTotal.ToString();
-            //---------Taxable dis(%) Amount -------------------------------------------
-            if (txttaxableAmt.Text == "")
+            if (txtpacking.Text == "")
             {
-                txttaxableAmt.Text = "0";
-            }
-            if (txttaxableDis.Text == "")
-            {
-                txttaxableDis.Text = "0";
-            }
-            decimal disamt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
-            txttaxableDisamt.Text = disamt.ToString();
-            //-----------Trad Dis(%) And Scheme -------------
-            if (txttradDis.Text == "")
-            {
-                txttradDis.Text = "0";
-            }
-            if (txt_Subtotal.Text == "")
-            {
-                txt_Subtotal.Text = "0";
+                txtpacking.Text = "0";
             }
             if (txtotherAmt.Text == "")
             {
                 txtotherAmt.Text = "0";
             }
-            if (txtfreightdis.Text == "")
-            {
-                txtfreightdis.Text = "0";
-            }
-            if (txttaxableDis.Text == "")
-            {
-                txttaxableDis.Text = "0";
-            }
+            decimal final11 = Convert.ToDecimal(t_grandTotal) - Convert.ToDecimal(txttransport.Text) - Convert.ToDecimal(txtpacking.Text) - Convert.ToDecimal(txtotherAmt.Text);
+            txttotalAmtfinal.Text = System.Math.Round(final11, 2).ToString();
 
-            //decimal tradAmt = (Convert.ToDecimal(txttaxableAmt.Text) * Convert.ToDecimal(txttaxableDis.Text)) / 100;
-            // txttradAmt.Text = tradAmt.ToString();
-            decimal totalamt1 = (Convert.ToDecimal(txt_Subtotal.Text)) - Convert.ToDecimal(txttaxableDisamt.Text);
-            txttotalAmt.Text = System.Math.Round(totalamt1, 2).ToString();
-            decimal lastTotal = totalamt1 - Convert.ToDecimal(txtotherAmt.Text) - Convert.ToDecimal(txtfreightdis.Text);
-            txttotalAmtfinal.Text = System.Math.Round(lastTotal, 2).ToString();
+
 
 
             //-------------update in table
-            dtprodn.AcceptChanges();
-            ViewState["dtprod"] = dtprodn;
-            Repeater1.DataSource = dtprodn;
-            Repeater1.DataBind();
-            //            txttradDis
-            //txttradAmt
-            //txt_Subtotal
-            //txttotalAmt
-            //txttotalAmtfinal
-            //txtotherAmt
-            //txtfreightdis
+            //dtprodn.AcceptChanges();
+            //ViewState["dtprod"] = dtprodn;
+            //Repeater1.DataSource = dtprodn;
+            //Repeater1.DataBind();
+
 
 
         }
@@ -404,94 +415,14 @@ public partial class addeditponew : System.Web.UI.Page
     }
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-        try
-        {
 
 
-            if (ddlProduct.SelectedIndex == 0 || txtCart.Text == string.Empty)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Enter Proper Value ');", true);
-                return;
-            }
-
-            DataTable dtprodn = new DataTable();
-            dtprodn = (DataTable)ViewState["dtprod"];
-
-            DataRow[] drr = dtprodn.Select("pid='" + ddlProduct.SelectedValue.ToString() + " ' ");
-            if (drr.Length > 0)
-            {
-                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('This Product already add')", true);
-            }
-            else
-            {
-                DataRow dr = dtprodn.NewRow();
-                int rowcnt = dtprodn.Rows.Count + 1;
-
-
-                dr["sr"] = rowcnt.ToString();
-                dr["productName"] = ddlProduct.SelectedItem.ToString();
-                dr["pid"] = Convert.ToInt64(ddlProduct.SelectedValue.ToString());
-                dr["brandid"] = Convert.ToString(txtBrand.Text);
-                dr["sizeid"] = Convert.ToString(txtSize.Text);
-                dr["colorid"] = Convert.ToString(txtColor.Text);
-                dr["cart"] = Convert.ToDecimal(txtCart.Text);
-                dr["pack"] = Convert.ToDecimal(txtPack.Text);
-                dr["qty"] = Convert.ToDecimal(txtQty.Text);
-                dr["mrp"] = Convert.ToDecimal(txtMrp.Text);
-                dr["unitRate"] = Convert.ToDecimal(txtUnitRate.Text);
-                dr["subTotal"] = Convert.ToDecimal(txtSubTotal.Text);
-                dr["discount"] = Convert.ToDecimal(txtDiscount.Text);
-                dr["scheme"] = Convert.ToDecimal(txtScheme.Text);
-                dr["taxableamt"] = Convert.ToDecimal(txttaxable.Text);
-                dr["CGSTper"] = Convert.ToDecimal(txtCGST.Text);
-                dr["SGSTper"] = Convert.ToDecimal(txtSgst.Text);
-                dr["IGSTper"] = Convert.ToDecimal(txtIgst.Text);
-                dr["GSTamt"] = Convert.ToDecimal(txtGSTtotal.Text);
-                dr["TotalAmount"] = Convert.ToDecimal(txtTotal.Text);
-
-
-                dtprodn.Rows.Add(dr);
-                Repeater1.DataSource = dtprodn;
-                Repeater1.DataBind();
-                ViewState["dtprod"] = dtprodn;
-
-
-                //clear
-                txtBrand.Text = "";
-                txtSize.Text = "";
-                txtColor.Text = "";
-                txtCart.Text = "0";
-                txtPack.Text = "0";
-                txtQty.Text = "0";
-                txtMrp.Text = "0";
-                txtUnitRate.Text = "0";
-                txtSubTotal.Text = "0";
-                txtDiscount.Text = "0";
-                txtScheme.Text = "0";
-                txttaxable.Text = "0";
-                txtCGST.Text = "0";
-                txtSgst.Text = "0";
-                txtIgst.Text = "0";
-                txtGSTtotal.Text = "0";
-                txtTotal.Text = "0";
-                ddlProduct.SelectedIndex = 0;
-                //GridTotals();
-                //total Calculationd
-                gridTotal();
-
-            }
-        }
-        catch (Exception ex)
-        {
-
-            Response.Write(ex.Message + ex.StackTrace);
-        }
 
     }
     private void BindRepeater()
     {
 
-        string productdata = "select '' as sr,'' as productName,pid,brandid,sizeid, colorid, cart, pack, qty, mrp, unitRate, subTotal, discount, scheme, taxableamt, CGSTper, SGSTper, IGSTper, GSTamt, TotalAmount from saleorder_product where oid=-1";
+        string productdata = "select '' as sr,'' as productName,pid, qty, rate, subtotal, discount, scheme, frieghtamt, taxableamt, csgtper, sgstper, igstper, gstamt, total, netrate  from PurchaseOrderDetails where oid=-1";
         SqlDataAdapter daproduct = new SqlDataAdapter(productdata, con);
         DataTable dtprod = new DataTable();
         daproduct.Fill(dtprod);
@@ -501,7 +432,8 @@ public partial class addeditponew : System.Web.UI.Page
     }
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        if (Repeater1.Items.Count == 0||ddlname.SelectedIndex==0)
+
+        if (Repeater1.Items.Count == 0 || ddlname.SelectedIndex == 0)
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Fill all Details ');", true);
         }
@@ -515,14 +447,14 @@ public partial class addeditponew : System.Web.UI.Page
 
                 con.Open();
 
-
                 string finalResult = string.Empty;
                 PurchaseOrderHeader objorders = new PurchaseOrderHeader();
 
                 objorders.uid = Convert.ToInt64(ddlname.SelectedValue.ToString());
-                objorders.paymentType = Convert.ToString(ddlPaymentType.SelectedValue.ToString());
-                objorders.invoicetype = Convert.ToString(ddlinvoiceType.SelectedValue.ToString());
 
+                objorders.invoicetype = Convert.ToString(ddlinvoiceType.SelectedValue.ToString());
+                objorders.invoiceno = Convert.ToString(txt_InvoieNo.Text);
+                objorders.accountYear = Convert.ToString(ddlaccountYear.SelectedItem.ToString());
 
                 string paymentmode1 = "";
                 if (rdoCash.Checked)
@@ -533,33 +465,29 @@ public partial class addeditponew : System.Web.UI.Page
                 {
                     paymentmode1 = "Credit";
                 }
-                objorders.paymentMode = Convert.ToString(paymentmode1);
+
+
+
                 objorders.orderdate = Convert.ToDateTime(txt_Date.Text);
-                objorders.subamount = Convert.ToDecimal(txt_Subtotal.Text);
-                objorders.totalGSTAmount = Convert.ToDecimal(txtTotalGstAmt.Text);
-                objorders.per_tradeDisandScheme = Convert.ToDecimal(txttradDis.Text);
-                objorders.amt_tradeDisandScheme = Convert.ToDecimal(txttradAmt.Text);
-
-                objorders.per_taxableDiscount = Convert.ToDecimal(txttaxableDis.Text);
-                objorders.amt_taxableDiscount = Convert.ToDecimal(txttaxableDisamt.Text);
-                objorders.TaxableAmount = Convert.ToDecimal(txttaxableAmt.Text);
-
-                objorders.TotalAmount = Convert.ToDecimal(txttotalAmt.Text);
+                objorders.stockdate = Convert.ToDateTime(txtStockDate.Text);
+                objorders.subtotal = Convert.ToDecimal(txt_Subtotal.Text);
+                objorders.discandScheme = Convert.ToDecimal(txttradDis.Text);
+                objorders.frieghtamount = Convert.ToDecimal(txtFriegtAmt.Text);
+                objorders.taxableamount = Convert.ToDecimal(txttaxableAmt.Text);
                 objorders.CGSTamt = Convert.ToDecimal(txtcsgtfinal.Text);
                 objorders.SGSTamt = Convert.ToDecimal(txtsgstfinal.Text);
+
                 objorders.IGSTamt = Convert.ToDecimal(txtIgstfinal.Text);
-                objorders.totalGSTAmount = Convert.ToDecimal(txtTotalGstAmt.Text);
-                objorders.freightDiscount = Convert.ToDecimal(txtfreightdis.Text);
-                objorders.duedate = Convert.ToDateTime(txtduedate.Text);
+                objorders.totalAmt = Convert.ToDecimal(txttotalAmt.Text);
+                objorders.transportamt = Convert.ToDecimal(txttransport.Text);
+                objorders.packingamt = Convert.ToDecimal(txtpacking.Text);
+
                 objorders.otheramt = Convert.ToDecimal(txtotherAmt.Text);
-                objorders.grandTotal = Convert.ToDecimal(txttotalAmtfinal.Text);
-                objorders.Referenceby = Convert.ToString(txtreferenceby.Text);
-                objorders.DeliveredThrough = Convert.ToString(txtdeliveredthrough.Text);
-                objorders.DeliveredDetails = Convert.ToString(txtdelivereddetails.Text);
-                objorders.ordertype = "";
+               
+                objorders.grandtotal = Convert.ToDecimal(txttotalAmtfinal.Text);
                 objorders.pendingAmt = Convert.ToDecimal(txttotalAmtfinal.Text);
-                objorders.isconfirmed = true;
-                objorders.orderno = Convert.ToString(txt_InvoieNo.Text);
+                objorders.stockdate = Convert.ToDateTime(txtStockDate.Text);
+                objorders.dicountamt  = Convert.ToDecimal ("0");
                 Int64 OrderProductAdd = 0;
 
                 DataTable ds = new DataTable();
@@ -583,26 +511,21 @@ public partial class addeditponew : System.Web.UI.Page
                                     objorderproducts.oid = OrderId;
                                     objorderproducts.uid = Convert.ToInt64(ddlname.SelectedValue.ToString());
                                     objorderproducts.pid = Convert.ToInt64(ds.Rows[i]["pid"]);
-                                    objorderproducts.brandid = Convert.ToString(ds.Rows[i]["brandid"]);
-                                    objorderproducts.sizeid = Convert.ToString(ds.Rows[i]["sizeid"]);
-                                    objorderproducts.colorid = Convert.ToString(ds.Rows[i]["colorid"]);
-                                    objorderproducts.cart = Convert.ToDecimal(ds.Rows[i]["cart"]);
-                                    objorderproducts.pack = Convert.ToString(ds.Rows[i]["pack"]);
-                                    objorderproducts.qty = Convert.ToDecimal(ds.Rows[i]["qty"]);
-                                    objorderproducts.mrp = Convert.ToDecimal(ds.Rows[i]["mrp"]);
-                                    objorderproducts.unitRate = Convert.ToDecimal(ds.Rows[i]["unitRate"]);
-                                    objorderproducts.subTotal = Convert.ToDecimal(ds.Rows[i]["subTotal"]);
-
+                                    objorderproducts.qty = Convert.ToInt64 (ds.Rows[i]["qty"]);
+                                    objorderproducts.rate = Convert.ToDecimal(ds.Rows[i]["rate"]);
+                                    objorderproducts.subtotal = Convert.ToDecimal(ds.Rows[i]["subtotal"]);
                                     objorderproducts.discount = Convert.ToDecimal(ds.Rows[i]["discount"]);
                                     objorderproducts.scheme = Convert.ToDecimal(ds.Rows[i]["scheme"]);
+                                    objorderproducts.frieghtamt = Convert.ToDecimal(ds.Rows[i]["frieghtamt"]);
                                     objorderproducts.taxableamt = Convert.ToDecimal(ds.Rows[i]["taxableamt"]);
+                                    objorderproducts.csgtper = Convert.ToDecimal(ds.Rows[i]["csgtper"]);
+                                    objorderproducts.sgstper = Convert.ToDecimal(ds.Rows[i]["sgstper"]);
 
-                                    objorderproducts.CGSTper = Convert.ToDecimal(ds.Rows[i]["CGSTper"]);
-                                    objorderproducts.SGSTper = Convert.ToDecimal(ds.Rows[i]["SGSTper"]);
-                                    objorderproducts.IGSTper = Convert.ToDecimal(ds.Rows[i]["IGSTper"]);
-                                    objorderproducts.GSTamt = Convert.ToDecimal(ds.Rows[i]["GSTamt"]);
-                                    objorderproducts.TotalAmount = Convert.ToDecimal(ds.Rows[i]["TotalAmount"]);
-                                    objorderproducts.isdelete = false;
+                                    objorderproducts.igstper = Convert.ToDecimal(ds.Rows[i]["igstper"]);
+                                    objorderproducts.gstamt = Convert.ToDecimal(ds.Rows[i]["gstamt"]);
+                                    objorderproducts.total = Convert.ToDecimal(ds.Rows[i]["total"]);
+
+                                    objorderproducts.netrate = Convert.ToDecimal(ds.Rows[i]["netrate"]);
 
 
 
@@ -650,30 +573,26 @@ public partial class addeditponew : System.Web.UI.Page
                                     objorderproducts.oid = OrderId;
                                     objorderproducts.uid = Convert.ToInt64(ddlname.SelectedValue.ToString());
                                     objorderproducts.pid = Convert.ToInt64(ds.Rows[i]["pid"]);
-                                    objorderproducts.brandid = Convert.ToString(ds.Rows[i]["brandid"]);
-                                    objorderproducts.sizeid = Convert.ToString(ds.Rows[i]["sizeid"]);
-                                    objorderproducts.colorid = Convert.ToString(ds.Rows[i]["colorid"]);
-                                    objorderproducts.cart = Convert.ToDecimal(ds.Rows[i]["cart"]);
-                                    objorderproducts.pack = Convert.ToString(ds.Rows[i]["pack"]);
-                                    objorderproducts.qty = Convert.ToDecimal(ds.Rows[i]["qty"]);
-                                    objorderproducts.mrp = Convert.ToDecimal(ds.Rows[i]["mrp"]);
-                                    objorderproducts.unitRate = Convert.ToDecimal(ds.Rows[i]["unitRate"]);
-                                    objorderproducts.subTotal = Convert.ToDecimal(ds.Rows[i]["subTotal"]);
-
+                                    objorderproducts.qty = Convert.ToInt64(ds.Rows[i]["qty"]);
+                                    objorderproducts.rate = Convert.ToDecimal(ds.Rows[i]["rate"]);
+                                    objorderproducts.subtotal = Convert.ToDecimal(ds.Rows[i]["subtotal"]);
                                     objorderproducts.discount = Convert.ToDecimal(ds.Rows[i]["discount"]);
                                     objorderproducts.scheme = Convert.ToDecimal(ds.Rows[i]["scheme"]);
+                                    objorderproducts.frieghtamt = Convert.ToDecimal(ds.Rows[i]["frieghtamt"]);
                                     objorderproducts.taxableamt = Convert.ToDecimal(ds.Rows[i]["taxableamt"]);
+                                    objorderproducts.csgtper = Convert.ToDecimal(ds.Rows[i]["csgtper"]);
+                                    objorderproducts.sgstper = Convert.ToDecimal(ds.Rows[i]["sgstper"]);
 
-                                    objorderproducts.CGSTper = Convert.ToDecimal(ds.Rows[i]["CGSTper"]);
-                                    objorderproducts.SGSTper = Convert.ToDecimal(ds.Rows[i]["SGSTper"]);
-                                    objorderproducts.IGSTper = Convert.ToDecimal(ds.Rows[i]["IGSTper"]);
-                                    objorderproducts.GSTamt = Convert.ToDecimal(ds.Rows[i]["GSTamt"]);
-                                    objorderproducts.TotalAmount = Convert.ToDecimal(ds.Rows[i]["TotalAmount"]);
-                                    objorderproducts.isdelete = false;
+                                    objorderproducts.igstper = Convert.ToDecimal(ds.Rows[i]["igstper"]);
+                                    objorderproducts.gstamt = Convert.ToDecimal(ds.Rows[i]["gstamt"]);
+                                    objorderproducts.total = Convert.ToDecimal(ds.Rows[i]["total"]);
+
+                                    objorderproducts.netrate = Convert.ToDecimal(ds.Rows[i]["netrate"]);
 
 
                                     try
                                     {
+                                        con.Close();
                                         con.Open();
                                         string sel = "select * from PurchaseOrderDetails  where oid=" + OrderId + " and pid=" + Convert.ToInt64(ds.Rows[i]["pid"]) + "";
                                         SqlCommand sel_cmd = new SqlCommand(sel, con);
@@ -697,7 +616,8 @@ public partial class addeditponew : System.Web.UI.Page
 
                                         }
                                     }
-                                    catch { }
+                                    catch(Exception p)
+                                    { }
                                     finally { con.Close(); }
 
 
@@ -728,7 +648,7 @@ public partial class addeditponew : System.Web.UI.Page
 
 
 
-                ////******************
+                ///*****************
                 //string s_update = "update Customer_orders set isCreateInvoice=1,ConfirmedInvoiceId='" + OrderId + "' where oid=" + OrderId_old;
                 //SqlCommand cmd_update = new SqlCommand(s_update, con);
                 //tt = cmd_update.ExecuteNonQuery();
@@ -739,7 +659,8 @@ public partial class addeditponew : System.Web.UI.Page
 
 
             }
-            catch { }
+            catch(Exception p)
+            { }
             finally { con.Close(); }
 
             if (OrderId > 0)
@@ -757,41 +678,33 @@ public partial class addeditponew : System.Web.UI.Page
             }
         }
 
+
     }
     public void clear()
     {
 
-
-        txtPhone.Text = String.Empty;
-        txtAddress.Text = String.Empty;
         ddlname.SelectedIndex = 0;
         ddlPaymentType.SelectedIndex = 0;
-        ddlinvoiceType.SelectedIndex = 0;
-        txt_InvoieNo.Text = String.Empty;
-        rdoCash.Checked = true;
-        rdoCredit.Checked = false;
-        txt_Date.Text = String.Empty;
-
-
-        txt_Subtotal.Text = String.Empty;
-        txtTotalGstAmt.Text = String.Empty;
-        txttradDis.Text = String.Empty;
-        txttradAmt.Text = String.Empty;
-        txttaxableDis.Text = String.Empty;
-        txttaxableDisamt.Text = String.Empty;
-        txttaxableAmt.Text = String.Empty;
-        txttotalAmt.Text = String.Empty;
-        txtcsgtfinal.Text = String.Empty;
-        txtsgstfinal.Text = String.Empty;
-        txtIgstfinal.Text = String.Empty;
-        txtotherAmt.Text = String.Empty;
-        txtfreightdis.Text = String.Empty;
-        txttotalAmtfinal.Text = String.Empty;
-        txtduedate.Text = String.Empty;
-        txtreferenceby.Text = String.Empty;
-        txtdeliveredthrough.Text = String.Empty;
-        txtdelivereddetails.Text = String.Empty;
-
+        //ddlinvoiceType
+        txt_InvoieNo.Text = string.Empty;
+        //rdoCredit.che
+        //rdoCash
+        //txt_Date
+        //ddlaccountYear.sel
+        //txtStockDate
+        txt_Subtotal.Text = "0";
+txttradDis.Text = "0";
+        txtFriegtAmt.Text = "0";
+        txttaxableAmt.Text = "0";
+        txtcsgtfinal.Text = "0";
+        txtsgstfinal.Text = "0";
+        txtIgstfinal.Text = "0";
+        txttotalAmt.Text = "0";
+        txttransport.Text = "0";
+        txtpacking.Text = "0";
+        txtotherAmt.Text = "0";
+        txtdiscountamt.Text = "0";
+        txttotalAmtfinal.Text = "0";
         DataTable dtprodn = new DataTable();
         dtprodn = (DataTable)ViewState["dtprod"];
         dtprodn.Rows.Clear();
@@ -799,13 +712,10 @@ public partial class addeditponew : System.Web.UI.Page
         Repeater1.DataBind();
         ViewState["dtprod"] = dtprodn;
 
-        txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
-        txtduedate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
-
-
     }
     public void BindOrders(Int64 Oid)
     {
+       
         try
         {
             con.Open();
@@ -823,40 +733,41 @@ public partial class addeditponew : System.Web.UI.Page
             {
                 ddlname.SelectedValue = ds.Tables[0].Rows[0]["uid"].ToString();
                 ddlname_SelectedIndexChanged(null, null);
-                ddlPaymentType.SelectedValue = ds.Tables[0].Rows[0]["paymentType"].ToString();
+                
                 ddlinvoiceType.SelectedValue = ds.Tables[0].Rows[0]["invoicetype"].ToString();
-                txt_InvoieNo.Text = ds.Tables[0].Rows[0]["orderno"].ToString();
-                if (ds.Tables[0].Rows[0]["orderno"].ToString() == "Cash")
-                {
-                    rdoCash.Checked = true;
-                    rdoCredit.Checked = false;
+                txt_InvoieNo.Text = ds.Tables[0].Rows[0]["invoiceno"].ToString();
+                //if (ds.Tables[0].Rows[0]["orderno"].ToString() == "Cash")
+                //{
+                //    rdoCash.Checked = true;
+                //    rdoCredit.Checked = false;
 
-                }
-                else if (ds.Tables[0].Rows[0]["orderno"].ToString() == "Credit")
-                {
-                    rdoCash.Checked = false;
-                    rdoCredit.Checked = true;
-                }
+                //}
+                //else if (ds.Tables[0].Rows[0]["orderno"].ToString() == "Credit")
+                //{
+                //    rdoCash.Checked = false;
+                //    rdoCredit.Checked = true;
+                //}
+                ddlaccountYear.SelectedValue = ds.Tables[0].Rows[0]["accountYear"].ToString();
 
                 txt_Date.Text = ds.Tables[0].Rows[0]["orderdate"].ToString();
-                txt_Subtotal.Text = ds.Tables[0].Rows[0]["subamount"].ToString();
-                txtTotalGstAmt.Text = ds.Tables[0].Rows[0]["totalGSTAmount"].ToString();
-                txttradDis.Text = ds.Tables[0].Rows[0]["per_tradeDisandScheme"].ToString();
-                txttradAmt.Text = ds.Tables[0].Rows[0]["amt_tradeDisandScheme"].ToString();
-                txttaxableDis.Text = ds.Tables[0].Rows[0]["per_taxableDiscount"].ToString();
-                txttaxableDisamt.Text = ds.Tables[0].Rows[0]["amt_taxableDiscount"].ToString();
-                txttaxableAmt.Text = ds.Tables[0].Rows[0]["TaxableAmount"].ToString();
-                txttotalAmt.Text = ds.Tables[0].Rows[0]["TotalAmount"].ToString();
+                 
+                txt_Subtotal.Text = ds.Tables[0].Rows[0]["subtotal"].ToString();
+                txttradDis.Text = ds.Tables[0].Rows[0]["discandScheme"].ToString();
+                txtFriegtAmt.Text = ds.Tables[0].Rows[0]["frieghtamount"].ToString();
+
+                txttaxableAmt.Text = ds.Tables[0].Rows[0]["taxableamount"].ToString();
                 txtcsgtfinal.Text = ds.Tables[0].Rows[0]["CGSTamt"].ToString();
                 txtsgstfinal.Text = ds.Tables[0].Rows[0]["SGSTamt"].ToString();
                 txtIgstfinal.Text = ds.Tables[0].Rows[0]["IGSTamt"].ToString();
+                txttotalAmt.Text = ds.Tables[0].Rows[0]["totalAmt"].ToString();
+
+                txttransport.Text = ds.Tables[0].Rows[0]["transportamt"].ToString();
+                txtpacking.Text = ds.Tables[0].Rows[0]["packingamt"].ToString();
                 txtotherAmt.Text = ds.Tables[0].Rows[0]["otheramt"].ToString();
-                txtfreightdis.Text = ds.Tables[0].Rows[0]["freightDiscount"].ToString();
-                txttotalAmtfinal.Text = ds.Tables[0].Rows[0]["grandTotal"].ToString();
-                txtduedate.Text = ds.Tables[0].Rows[0]["duedate"].ToString();
-                txtreferenceby.Text = ds.Tables[0].Rows[0]["Referenceby"].ToString();
-                txtdeliveredthrough.Text = ds.Tables[0].Rows[0]["DeliveredThrough"].ToString();
-                txtdelivereddetails.Text = ds.Tables[0].Rows[0]["DeliveredDetails"].ToString();
+                txtdiscountamt.Text = ds.Tables[0].Rows[0]["dicountamt"].ToString();
+                txttotalAmtfinal.Text = ds.Tables[0].Rows[0]["grandtotal"].ToString();
+                txtStockDate.Text = ds.Tables[0].Rows[0]["stockdate"].ToString();
+ 
 
                 DataTable dtprodn = new DataTable();
                 dtprodn = (DataTable)ViewState["dtprod"];
@@ -867,24 +778,25 @@ public partial class addeditponew : System.Web.UI.Page
                     dr["sr"] = (i + 1).ToString();
                     dr["productName"] = ds.Tables[1].Rows[i]["productName"].ToString();
                     dr["pid"] = Convert.ToInt64(ds.Tables[1].Rows[i]["pid"].ToString());
-                    dr["brandid"] = Convert.ToString(ds.Tables[1].Rows[i]["brandid"].ToString());
-                    dr["sizeid"] = Convert.ToString(ds.Tables[1].Rows[i]["sizeid"].ToString());
-                    dr["colorid"] = Convert.ToString(ds.Tables[1].Rows[i]["colorid"].ToString());
-                    dr["cart"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["cart"].ToString());
-                    dr["pack"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["pack"].ToString());
-                    dr["qty"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["qty"].ToString());
-                    dr["mrp"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["mrp"].ToString());
-                    dr["unitRate"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["unitRate"].ToString());
-                    dr["subTotal"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["subTotal"].ToString());
+                 //  qty,rate,subtotal,discount,scheme,frieghtamt,taxableamt,csgtper,sgstper,igstper,gstamt,total,netrate
+
+                   dr["qty"] = Convert.ToInt64(ds.Tables[1].Rows[i]["qty"].ToString());
+                    dr["rate"] = Convert.ToString(ds.Tables[1].Rows[i]["rate"].ToString());
+                    dr["subtotal"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["subtotal"].ToString());
                     dr["discount"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["discount"].ToString());
                     dr["scheme"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["scheme"].ToString());
+                    dr["frieghtamt"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["frieghtamt"].ToString());
                     dr["taxableamt"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["taxableamt"].ToString());
-                    dr["CGSTper"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["CGSTper"].ToString());
-                    dr["SGSTper"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["SGSTper"].ToString());
-                    dr["IGSTper"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["IGSTper"].ToString());
-                    dr["GSTamt"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["GSTamt"].ToString());
-                    dr["TotalAmount"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["TotalAmount"].ToString());
+                    dr["csgtper"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["csgtper"].ToString());
+                    dr["sgstper"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["sgstper"].ToString());
+                    dr["igstper"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["igstper"].ToString());
+                    dr["gstamt"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["gstamt"].ToString());
+                    dr["total"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["total"].ToString());
+                    dr["netrate"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["netrate"].ToString());
+                    
 
+                    //qty,rate,subtotal,discount,scheme,frieghtamt,taxableamt,csgtper,sgstper,igstper,gstamt,total,netrate
+                 
                     dtprodn.Rows.Add(dr);
                 }
 
@@ -901,10 +813,11 @@ public partial class addeditponew : System.Web.UI.Page
         }
         catch { }
         finally { con.Close(); }
-
+       
     }
     protected void rep_txtCart_TextChanged(object sender, EventArgs e)
     {
+
         try
         {
             RepeaterItem row = ((RepeaterItem)((TextBox)sender).NamingContainer);
@@ -913,77 +826,79 @@ public partial class addeditponew : System.Web.UI.Page
             dtprodn = (DataTable)ViewState["dtprod"];
 
             Label txtsr = (Label)row.FindControl("txtsr");
+
+
             Label rep_txtproductName = (Label)row.FindControl("rep_txtproductName");
             Label rep_txtproductid = (Label)row.FindControl("rep_txtproductid");
-            Label rep_txtBrand = (Label)row.FindControl("rep_txtBrand");
-            Label rep_txtSize = (Label)row.FindControl("rep_txtSize");
-            Label rep_txtColor = (Label)row.FindControl("rep_txtColor");
-            TextBox rep_txtCart = (TextBox)row.FindControl("rep_txtCart");
-            Label rep_txtpacking = (Label)row.FindControl("rep_txtpacking");
-            Label rep_txtqty = (Label)row.FindControl("rep_txtqty");
-            Label rep_txtMrp = (Label)row.FindControl("rep_txtMrp");
-            Label rep_txtUnitRate = (Label)row.FindControl("rep_txtUnitRate");
-            Label rep_txtSubtotal = (Label)row.FindControl("rep_txtSubtotal");
-            Label rep_txtDiscount = (Label)row.FindControl("rep_txtDiscount");
-            Label rep_txtScheme = (Label)row.FindControl("rep_txtScheme");
-            Label rep_txtTaxableAmt = (Label)row.FindControl("rep_txtTaxableAmt");
-            Label rep_txtCGST = (Label)row.FindControl("rep_txtCGST");
-            Label rep_txtSGST = (Label)row.FindControl("rep_txtSGST");
-            Label rep_txtIGST = (Label)row.FindControl("rep_txtIGST");
-            Label rep_txtGSTamt = (Label)row.FindControl("rep_txtGSTamt");
-            Label rep_txtfinalTotal = (Label)row.FindControl("rep_txtfinalTotal");
+            TextBox rep_txtQty = (TextBox)row.FindControl("rep_txtQty");
+            TextBox rep_txtRate = (TextBox)row.FindControl("rep_txtRate");
+            TextBox rep_txtSubTotal = (TextBox)row.FindControl("rep_txtSubTotal");
+            TextBox rep_txtDiscount = (TextBox)row.FindControl("rep_txtDiscount");
+
+            TextBox rep_txtScheme = (TextBox)row.FindControl("rep_txtScheme");
+            TextBox rep_txtFrieghtAmt = (TextBox)row.FindControl("rep_txtFrieghtAmt");
+            TextBox rep_txttaxable = (TextBox)row.FindControl("rep_txttaxable");
+            TextBox rep_txtCGST = (TextBox)row.FindControl("rep_txtCGST");
+            TextBox rep_txtSgst = (TextBox)row.FindControl("rep_txtSgst");
+            TextBox rep_txtIgst = (TextBox)row.FindControl("rep_txtIgst");
+
+            TextBox rep_txtGSTtotal = (TextBox)row.FindControl("rep_txtGSTtotal");
+            TextBox rep_txtTotal = (TextBox)row.FindControl("rep_txtTotal");
+            TextBox rep_txtNetRate = (TextBox)row.FindControl("rep_txtNetRate");
 
 
 
 
-            if (rep_txtCart.Text == "")
-            {
-                rep_txtCart.Text = "0";
-            }
-            double cartqty = Convert.ToDouble(rep_txtCart.Text);
-            double packing = Convert.ToDouble(rep_txtpacking.Text);
-            double unitRate = Convert.ToDouble(rep_txtUnitRate.Text);
-            double gst = Convert.ToDouble(rep_txtCGST.Text) + Convert.ToDouble(rep_txtSGST.Text) + Convert.ToDouble(rep_txtIGST.Text);
-            double totalQty = cartqty * packing;
-
-            //rep_txtqty.Text = totalQty.ToString();
-            double subtotal = totalQty * unitRate;
             if (rep_txtDiscount.Text == "")
             {
                 rep_txtDiscount.Text = "0";
             }
-            double disAmt = Convert.ToDouble(rep_txtDiscount.Text);
-            double grandtotal = subtotal - disAmt;
 
-            //rep_txtSubtotal.Text = System.Math.Round(subtotal, 2).ToString();
+            if (rep_txtQty.Text == "")
+            {
+                rep_txtQty.Text = "0";
+            }
+
+            decimal qty = Convert.ToDecimal(rep_txtQty.Text);
+            decimal rate = Convert.ToDecimal(rep_txtRate.Text);
+            decimal discount = Convert.ToDecimal(rep_txtDiscount.Text);
+            decimal subtotal = qty * rate;
+            string finalsubtotal = subtotal.ToString();
+            decimal disamt = (subtotal * discount) / 100;
+            decimal tot1 = subtotal - disamt;
 
 
-            double d1 = subtotal / (gst + 100);
-            double taxableamt = d1 * 100;
-            //rep_txtTaxableAmt.Text = System.Math.Round(taxableamt, 2).ToString();
-            //rep_txtfinalTotal.Text = System.Math.Round(subtotal, 2).ToString();
 
-            double gstamt = subtotal - taxableamt;
-            //rep_txtGSTamt.Text = System.Math.Round(gstamt, 2).ToString();
+            decimal gst = Convert.ToDecimal(rep_txtCGST.Text) + Convert.ToDecimal(rep_txtSgst.Text) + Convert.ToDecimal(rep_txtIgst.Text);
+            decimal d1 = subtotal / (gst + 100);
+            decimal taxableamt = d1 * 100;
+            string finalTaxableamt = System.Math.Round(taxableamt, 2).ToString();
 
+            decimal gstamt = (Convert.ToDecimal(subtotal) * gst) / 100;
+            string finalGSTamt = gstamt.ToString();
+            string FinalTotal = "";
+            if (string.Equals("Excluding GST", ddlinvoiceType.SelectedValue.ToString()))
+            {
+                FinalTotal = (tot1 + gstamt).ToString();
+
+            }
+            else if (string.Equals("Including GST", ddlinvoiceType.SelectedValue.ToString()))
+            {
+                FinalTotal = tot1.ToString();
+            }
 
 
             DataRow[] drr = dtprodn.Select("sr='" + txtsr.Text + " ' ");
             foreach (var dr in drr)
             {
 
-                //rep_txtqty.Text = totalQty.ToString();                
-                //rep_txtSubtotal.Text = System.Math.Round(subtotal, 2).ToString();
-                //rep_txtTaxableAmt.Text = System.Math.Round(taxableamt, 2).ToString();
-                //rep_txtfinalTotal.Text = System.Math.Round(subtotal, 2).ToString();
-                //rep_txtGSTamt.Text = System.Math.Round(gstamt, 2).ToString();
-                dr["cart"] = cartqty.ToString();
-                dr["qty"] = totalQty.ToString();
+                dr["qty"] = rep_txtQty.Text.ToString();
+
                 dr["discount"] = rep_txtDiscount.Text;
-                dr["subTotal"] = System.Math.Round(subtotal, 2).ToString();
-                dr["taxableamt"] = System.Math.Round(taxableamt, 2).ToString();
-                dr["GSTamt"] = System.Math.Round(gstamt, 2).ToString();
-                dr["TotalAmount"] = System.Math.Round(grandtotal, 2).ToString();
+                dr["subtotal"] = System.Math.Round(subtotal, 2).ToString();
+                dr["taxableamt"] = System.Math.Round(Convert.ToDecimal(finalTaxableamt), 2).ToString();
+                dr["gstamt"] = System.Math.Round(gstamt, 2).ToString();
+                dr["total"] = System.Math.Round(Convert.ToDecimal(FinalTotal), 2).ToString();
 
 
             }
@@ -997,6 +912,7 @@ public partial class addeditponew : System.Web.UI.Page
 
         catch { }
         gridTotal();
+
     }
     protected void lnkDelete_Click(object sender, EventArgs e)
     {
@@ -1021,7 +937,7 @@ public partial class addeditponew : System.Web.UI.Page
             {
                 Int64 OrderID = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["oid"].ToString(), true));
                 //   string s = "update Customer_orderproducts set isdelete=1 where oid=" + OrderID + " and pid=" + pid + "";
-                string s = "delete from orderproducts where oid=" + OrderID + " and pid=" + rep_txtproductid + "";
+                string s = "delete from PurchaseOrderDetails where oid=" + OrderID + " and pid=" + rep_txtproductid + "";
                 SqlCommand cmd = new SqlCommand(s, con);
                 int t = cmd.ExecuteNonQuery();
                 if (t > 0)
@@ -1047,11 +963,11 @@ public partial class addeditponew : System.Web.UI.Page
 
     protected void txttaxableDis_TextChanged(object sender, EventArgs e)
     {
-        if (txttaxableDis.Text == "")
-        {
-            txttaxableDis.Text = "0";
-        }
-        gridTotal();
+        //if (txttaxableDis.Text == "")
+        //{
+        //    txttaxableDis.Text = "0";
+        //}
+        //gridTotal();
     }
     protected void txttradDis_TextChanged(object sender, EventArgs e)
     {
@@ -1064,115 +980,222 @@ public partial class addeditponew : System.Web.UI.Page
     }
     protected void txtotherAmt_TextChanged(object sender, EventArgs e)
     {
-        if (txtotherAmt.Text == "")
-        {
-            txtotherAmt.Text = "0";
-        }
-        gridTotal();
+        //if (txtotherAmt.Text == "")
+        //{
+        //    txtotherAmt.Text = "0";
+        //}
+        //gridTotal();
     }
     protected void txtfreightdis_TextChanged(object sender, EventArgs e)
     {
-        if (txtfreightdis.Text == "")
-        {
-            txtfreightdis.Text = "0";
-        }
-        gridTotal();
+        //if (txtfreightdis.Text == "")
+        //{
+        //    txtfreightdis.Text = "0";
+        //}
+        //gridTotal();
     }
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect(Page.ResolveUrl("~/managepurchaseordernew.aspx"));
     }
 
-    public void gridDiscount()
+
+
+    protected void txttransport_TextChanged(object sender, EventArgs e)
+    {
+        gridTotal();
+    }
+
+    protected void txtpacking_TextChanged(object sender, EventArgs e)
+    {
+        gridTotal();
+
+    }
+
+    protected void txtotherAmt_TextChanged1(object sender, EventArgs e)
+    {
+        gridTotal();
+    }
+
+    protected void txtdiscountamt_TextChanged(object sender, EventArgs e)
+    {
+        gridTotal();
+
+    }
+
+    //protected void txtQty_TextChanged(object sender, EventArgs e)
+    //{
+    //    try
+    //    {
+    //        if (txtDiscount.Text == "")
+    //        {
+    //            txtDiscount.Text = "0";
+    //        }
+
+    //        if (txtQty.Text == "")
+    //        {
+    //            txtQty.Text = "0";
+    //        }
+
+    //        decimal qty = Convert.ToDecimal(txtQty.Text);
+    //        decimal rate = Convert.ToDecimal(txtRate.Text);
+    //        decimal discount = Convert.ToDecimal(txtDiscount.Text);
+    //        decimal subtotal = qty * rate;
+    //        txtSubTotal.Text = subtotal.ToString();
+    //        decimal disamt = (subtotal * discount) / 100;
+    //        decimal tot1 = subtotal - disamt;
+
+
+
+    //        decimal gst = Convert.ToDecimal(txtCGST.Text) + Convert.ToDecimal(txtSgst.Text) + Convert.ToDecimal(txtIgst.Text);
+    //        decimal d1 = subtotal / (gst + 100);
+    //        decimal taxableamt = d1 * 100;
+    //        txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
+
+    //        decimal gstamt = (Convert.ToDecimal(txtSubTotal.Text) * gst) / 100;
+    //        txtGSTtotal.Text = gstamt.ToString();
+    //        if (string.Equals("Excluding GST", ddlinvoiceType.SelectedValue.ToString()))
+    //        {
+    //            txtTotal.Text = (tot1 + gstamt).ToString();
+
+    //        }
+    //        else if (string.Equals("Including GST", ddlinvoiceType.SelectedValue.ToString()))
+    //        {
+    //            txtTotal.Text = tot1.ToString();
+    //        }
+
+
+
+    //    }
+    //    catch { }
+    //}
+
+
+
+
+
+    protected void txtQty_TextChanged(object sender, EventArgs e)
     {
         try
         {
-
-            DataTable dtprodn = new DataTable();
-            dtprodn = (DataTable)ViewState["dtprod"];
-            double discount = Convert.ToDouble(txttradDis.Text);
-            for (int i = 0; i < dtprodn.Rows.Count; i++)
+            if (txtDiscount.Text == "")
             {
-                double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subTotal"].ToString());
-                double disamt = (subTotal1 * discount) / 100;
-                double grandtot = subTotal1 - disamt;
-                dtprodn.Rows[i]["TotalAmount"] = grandtot.ToString();
-                //dr["sr"] = rowcnt.ToString();
-                //dr["productName"] = ddlProduct.SelectedItem.ToString();
-                //dr["pid"] = Convert.ToInt64(ddlProduct.SelectedValue.ToString());
-                //dr["brandid"] = Convert.ToString(txtBrand.Text);
-                //dr["sizeid"] = Convert.ToString(txtSize.Text);
-                //dr["colorid"] = Convert.ToString(txtColor.Text);
-                //dr["cart"] = Convert.ToDecimal(txtCart.Text);
-                //dr["pack"] = Convert.ToDecimal(txtPack.Text);
-                //dr["qty"] = Convert.ToDecimal(txtQty.Text);
-                //dr["mrp"] = Convert.ToDecimal(txtMrp.Text);
-                //dr["unitRate"] = Convert.ToDecimal(txtUnitRate.Text);
-                //dr["subTotal"] = Convert.ToDecimal(txtSubTotal.Text);
-                //dr["discount"] = Convert.ToDecimal(txtDiscount.Text);
-                //dr["scheme"] = Convert.ToDecimal(txtScheme.Text);
-                //dr["taxableamt"] = Convert.ToDecimal(txttaxable.Text);
-                //dr["CGSTper"] = Convert.ToDecimal(txtCGST.Text);
-                //dr["SGSTper"] = Convert.ToDecimal(txtSgst.Text);
-                //dr["IGSTper"] = Convert.ToDecimal(txtIgst.Text);
-                //dr["GSTamt"] = Convert.ToDecimal(txtGSTtotal.Text);
-                //dr["TotalAmount"] = Convert.ToDecimal(txtTotal.Text);
+                txtDiscount.Text = "0";
             }
 
-            dtprodn.AcceptChanges();
-            ViewState["dtprod"] = dtprodn;
-            Repeater1.DataSource = dtprodn;
-            Repeater1.DataBind();
+            if (txtQty.Text == "")
+            {
+                txtQty.Text = "0";
+            }
+
+            decimal qty = Convert.ToDecimal(txtQty.Text);
+            decimal rate = Convert.ToDecimal(txtRate.Text);
+            decimal discount = Convert.ToDecimal(txtDiscount.Text);
+            decimal subtotal = qty * rate;
+            txtSubTotal.Text = subtotal.ToString();
+            decimal disamt = (subtotal * discount) / 100;
+            decimal tot1 = subtotal - disamt;
 
 
 
-            //if (rep_txtCart.Text == "")
-            //{
-            //    rep_txtCart.Text = "0";
-            //}
-            //double cartqty = Convert.ToDouble(rep_txtCart.Text);
-            //double packing = Convert.ToDouble(rep_txtpacking.Text);
-            //double unitRate = Convert.ToDouble(rep_txtUnitRate.Text);
-            //double gst = Convert.ToDouble(rep_txtCGST.Text) + Convert.ToDouble(rep_txtSGST.Text) + Convert.ToDouble(rep_txtIGST.Text);
-            //double totalQty = cartqty * packing;
+            decimal gst = Convert.ToDecimal(txtCGST.Text) + Convert.ToDecimal(txtSgst.Text) + Convert.ToDecimal(txtIgst.Text);
+            decimal d1 = subtotal / (gst + 100);
+            decimal taxableamt = d1 * 100;
+            txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
 
+            decimal gstamt = (Convert.ToDecimal(txtSubTotal.Text) * gst) / 100;
+            txtGSTtotal.Text = gstamt.ToString();
+            if (string.Equals("Excluding GST", ddlinvoiceType.SelectedValue.ToString()))
+            {
+                txtTotal.Text = (tot1 + gstamt).ToString();
 
-            //double subtotal = totalQty * unitRate;
-            //if (rep_txtDiscount.Text == "")
-            //{
-            //    rep_txtDiscount.Text = "0";
-            //}
-            //double disAmt = Convert.ToDouble(rep_txtDiscount.Text);
-            //double grandtotal = subtotal - disAmt;
-
-
-
-            //double d1 = subtotal / (gst + 100);
-            //double taxableamt = d1 * 100;
-
-            //double gstamt = subtotal - taxableamt;
-
-
-            //DataRow[] drr = dtprodn.Select("sr='" + txtsr.Text + " ' ");
-            //foreach (var dr in drr)
-            //{
-
-
-            //    dr["cart"] = cartqty.ToString();
-            //    dr["qty"] = totalQty.ToString();
-            //    dr["discount"] = rep_txtDiscount.Text;
-            //    dr["subTotal"] = System.Math.Round(subtotal, 2).ToString();
-            //    dr["taxableamt"] = System.Math.Round(taxableamt, 2).ToString();
-            //    dr["GSTamt"] = System.Math.Round(gstamt, 2).ToString();
-            //    dr["TotalAmount"] = System.Math.Round(grandtotal, 2).ToString();
-
-
-            //}
+            }
+            else if (string.Equals("Including GST", ddlinvoiceType.SelectedValue.ToString()))
+            {
+                txtTotal.Text = tot1.ToString();
+            }
 
 
 
         }
-
         catch { }
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+
+            if (ddlProduct.SelectedIndex == 0 || txtQty.Text == string.Empty)
+            {
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Enter Proper Value ');", true);
+                //return;
+            }
+
+            DataTable dtprodn = new DataTable();
+            dtprodn = (DataTable)ViewState["dtprod"];
+
+            DataRow[] drr = dtprodn.Select("pid='" + ddlProduct.SelectedValue.ToString() + " ' ");
+            if (drr.Length > 0)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('This Product already add')", true);
+            }
+            else
+            {
+                DataRow dr = dtprodn.NewRow();
+                int rowcnt = dtprodn.Rows.Count + 1;
+
+
+                dr["sr"] = rowcnt.ToString();
+                dr["productName"] = ddlProduct.SelectedItem.ToString();
+                dr["pid"] = Convert.ToInt64(ddlProduct.SelectedValue.ToString());
+                dr["qty"] = Convert.ToString(txtQty.Text);
+                dr["rate"] = Convert.ToString(txtRate.Text);
+                dr["subtotal"] = Convert.ToString(txtSubTotal.Text);
+                dr["discount"] = Convert.ToDecimal(txtDiscount.Text);
+                dr["scheme"] = Convert.ToDecimal(txtScheme.Text);
+                dr["frieghtamt"] = Convert.ToDecimal(txtFrieghtAmt.Text);
+                dr["taxableamt"] = Convert.ToDecimal(txttaxable.Text);
+                dr["csgtper"] = Convert.ToDecimal(txtCGST.Text);
+                dr["sgstper"] = Convert.ToDecimal(txtSgst.Text);
+                dr["igstper"] = Convert.ToDecimal(txtIgst.Text);
+                dr["gstamt"] = Convert.ToDecimal(txtGSTtotal.Text);
+                dr["total"] = Convert.ToDecimal(txtTotal.Text);
+                dr["netrate"] = Convert.ToDecimal(txtNetRate.Text);
+
+
+
+
+                dtprodn.Rows.Add(dr);
+                Repeater1.DataSource = dtprodn;
+                Repeater1.DataBind();
+                ViewState["dtprod"] = dtprodn;
+
+
+                txtQty.Text = "0";
+                txtRate.Text = "0";
+                txtSubTotal.Text = "0";
+                txtDiscount.Text = "0";
+                txtScheme.Text = "0";
+                txtFrieghtAmt.Text = "0";
+                txttaxable.Text = "0";
+                txtCGST.Text = "0";
+                txtSgst.Text = "0";
+                txtIgst.Text = "0";
+                txtGSTtotal.Text = "0";
+                txtTotal.Text = "0";
+                txtNetRate.Text = "0";
+                ddlProduct.SelectedIndex = 0;
+
+                gridTotal();
+
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Response.Write(ex.Message + ex.StackTrace);
+        }
     }
 }

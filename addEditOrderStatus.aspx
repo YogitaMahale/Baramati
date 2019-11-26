@@ -22,7 +22,9 @@
                 <div class="box-body">
                    
                     <div class="form-group row">
-                    
+                       
+
+
                   <div class="col-xs-6">
                         <label for="exampleInputEmail1">Order Type<span style="color:red">*</span> </label>
                         <asp:TextBox ID="txtorderType" CssClass="form-control" runat="server"></asp:TextBox>

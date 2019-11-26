@@ -96,6 +96,24 @@ namespace BusinessLayer
                 throw new Exception(ex.Message);
             }
         }
+
+        public DataTable Selectorderdetailsbydealerid(Int64 dealerId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Cls_orders_db objCls_orders_db = new Cls_orders_db();
+                dt = objCls_orders_db.Selectorderdetailsbydealerid(dealerId);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                ErrHandler.writeError(ex.Message, ex.StackTrace);
+                return dt;
+            }
+        }
+
+        
         #endregion
 
 

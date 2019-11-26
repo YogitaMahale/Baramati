@@ -145,6 +145,7 @@ namespace DatabaseLayer
                 cmd.Parameters.AddWithValue("@disctypepercentage", objcreditnotes.disctypepercentage);
                 cmd.Parameters.AddWithValue("@amount", objcreditnotes.amount);
                 cmd.Parameters.AddWithValue("@freightdiscount", objcreditnotes.freightdiscount);
+                cmd.Parameters.AddWithValue("@otheramount", objcreditnotes.otheramount);
                 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();

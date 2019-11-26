@@ -131,7 +131,9 @@ namespace BusinessLayer
         private Decimal _freightdiscount;
         private System.DateTime _createddate;
         private Boolean _isdeleted;
+        private Decimal _otheramount;
         
+
         #endregion
 
 
@@ -182,7 +184,13 @@ namespace BusinessLayer
             get { return _isdeleted; }
             set { _isdeleted = value; }
         }
+        public Decimal otheramount
+        {
+            get { return _otheramount; }
+            set { _otheramount = value; }
+        }
 
+        
         #endregion
     }
 

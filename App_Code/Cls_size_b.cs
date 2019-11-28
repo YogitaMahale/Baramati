@@ -122,6 +122,7 @@ namespace BusinessLayer
 
         private String _field1;
         private String _field2;
+        private Int64 _groupid;
 
 
         #endregion
@@ -132,6 +133,12 @@ namespace BusinessLayer
         {
             get { return _cid; }
             set { _cid = value; }
+        }
+
+        public Int64 groupid
+        {
+            get { return _groupid; }
+            set { _groupid = value; }
         }
 
         public String sizeName

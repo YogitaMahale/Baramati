@@ -4001,3 +4001,16 @@ Invalid column name 'orderno'.
    at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
    at DatabaseLayer.Cls_PurchaseOrderHeader_db.SelectAll() in e:\yogita 6.8.19\maharashtrafootwear.onlineerp.org\26.11.19\Baramati\App_Code\Cls_PurchaseOrderHeader_db.cs:line 44
 __________________________
+
+Log Entry : 
+11/28/2019 16:10:15
+Error Message :Thread was being aborted.
+
+ Statck Trace:    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
+__________________________

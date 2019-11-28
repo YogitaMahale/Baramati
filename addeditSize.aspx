@@ -20,12 +20,22 @@
                 <!-- form start -->
 
                 <div class="box-body">
-                    <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-xs-6">
                         <label for="exampleInputEmail1">Size Name </label>
                          <asp:TextBox ID="txtSizeName" class="form-control" runat="server"></asp:TextBox>
                           <asp:RequiredFieldValidator ID="RFVtxtCategoryName" runat="server" Display="Dynamic" ControlToValidate="txtSizeName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
                     </div>
-                    
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                        <label for="exampleInputEmail1">Size Group </label>
+                         <asp:ListBox ID="lstGroup" runat="server" class="form-control select2"></asp:ListBox>
+                         <asp:HiddenField ID="hfgroupid" runat="server" />
+            
+                    </div>
+                    </div>
 
 
 
@@ -132,5 +142,48 @@
             return result;
         }
     </script>
+
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            initDropDowns();
+
+        });
+
+
+        function pageLoad() {
+            // JS to execute during full and partial postbacks
+            initDropDowns();
+
+
+        }
+
+
+        function initDropDowns() {
+
+            $("#<%=lstGroup.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+         //alert("Selected value is: "+$("#<%=lstGroup.ClientID%>").select2("val"));
+                    $('[id*=hfgroupid]').val($(this).val());
+                });
+
+            
+        }
+
+
+    </script>
+
+    <%--<script type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    </script>--%>
+
+
 </asp:Content>
 

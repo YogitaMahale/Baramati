@@ -22,10 +22,11 @@ public partial class addeditSize : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             //BindBank();
+            Bind();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             if (Request.QueryString["id"] != null)
             {
-                BindColor(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
+                BindSize(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
                 btnSave.Text = "Update";
                 hPageTitle.InnerText = "Size Update";
                 Page.Title = "Size Update";
@@ -47,15 +48,63 @@ public partial class addeditSize : System.Web.UI.Page
 
     }
 
+    private void Bind()
+    {
+        DataTable dtSizegroup = new DataTable();
+        
+        try
+        {
+            Cls_groupmaster_b clsGroup = new Cls_groupmaster_b();
+            dtSizegroup = clsGroup.SelectAll();
+            
+        }
+        catch { }
+        finally { }
+
+        
+        if (dtSizegroup != null)
+        {
+            if (dtSizegroup.Rows.Count > 0)
+            {
+                lstGroup.DataSource = dtSizegroup;
+                lstGroup.DataTextField = "groupname";
+                lstGroup.DataValueField = "id";
+                lstGroup.DataBind();
+                
+
+            }
+            else
+            {
+                lstGroup.DataSource = dtSizegroup;
+                lstGroup.DataTextField = "groupname";
+                lstGroup.DataValueField = "id";
+                lstGroup.DataBind();
 
 
-    public void BindColor(Int64 CategoryId)
+            }
+        }
+        else
+        {
+            lstGroup.DataSource = dtSizegroup;
+            lstGroup.DataTextField = "groupname";
+            lstGroup.DataValueField = "id";
+            lstGroup.DataBind();
+
+
+        }
+
+    }
+
+
+    public void BindSize(Int64 CategoryId)
     {
         sizeMaster  objcategory = (new Cls_size_b().SelectById(CategoryId));
         if (objcategory != null)
         {
             //ddlBank.SelectedValue = objcategory.bankid.ToString();
             txtSizeName.Text = objcategory.sizeName;
+            lstGroup.SelectedValue = objcategory.groupid.ToString();
+
 
         }
     }
@@ -74,6 +123,7 @@ public partial class addeditSize : System.Web.UI.Page
         Int64 Result = 0;
         sizeMaster objcategory = new sizeMaster();
         objcategory.sizeName = txtSizeName.Text.Trim();
+        objcategory.groupid = Convert.ToInt64(hfgroupid.Value);
 
         if (Request.QueryString["id"] != null)
         {
@@ -89,7 +139,7 @@ public partial class addeditSize : System.Web.UI.Page
                 Clear();
                 spnMessgae.Style.Add("color", "red");
                 spnMessgae.InnerText = "Size Not Updated";
-                BindColor(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
+                BindSize(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
             }
         }
         else

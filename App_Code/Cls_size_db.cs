@@ -86,14 +86,15 @@ public class Cls_size_db
                             {
                                 objcategory.cid = Convert.ToInt64(ds.Tables[0].Rows[0]["cid"]);
                                 objcategory.sizeName = Convert.ToString(ds.Tables[0].Rows[0]["sizeName"]);
-                                //objcategory.imagename = Convert.ToString(ds.Tables[0].Rows[0]["imagename"]);
-                                //objcategory.actualprice = Convert.ToDecimal(ds.Tables[0].Rows[0]["actualprice"]);
-                                //objcategory.discountprice = Convert.ToDecimal(ds.Tables[0].Rows[0]["discountprice"]);
-                                //objcategory.shortdesc = Convert.ToString(ds.Tables[0].Rows[0]["shortdesc"]);
-                                //objcategory.longdescp = Convert.ToString(ds.Tables[0].Rows[0]["longdescp"]);
-                                //objcategory.bankid = Convert.ToInt32(ds.Tables[0].Rows[0]["bankid"]);
+                                objcategory.groupid = Convert.ToInt64(ds.Tables[0].Rows[0]["groupid"]);
+                                    //objcategory.imagename = Convert.ToString(ds.Tables[0].Rows[0]["imagename"]);
+                                    //objcategory.actualprice = Convert.ToDecimal(ds.Tables[0].Rows[0]["actualprice"]);
+                                    //objcategory.discountprice = Convert.ToDecimal(ds.Tables[0].Rows[0]["discountprice"]);
+                                    //objcategory.shortdesc = Convert.ToString(ds.Tables[0].Rows[0]["shortdesc"]);
+                                    //objcategory.longdescp = Convert.ToString(ds.Tables[0].Rows[0]["longdescp"]);
+                                    //objcategory.bankid = Convert.ToInt32(ds.Tables[0].Rows[0]["bankid"]);
+                                }
                             }
-                        }
                     }
                 }
             }
@@ -128,6 +129,7 @@ public class Cls_size_db
             param.Direction = ParameterDirection.InputOutput;
             cmd.Parameters.Add(param);
             cmd.Parameters.AddWithValue("@sizeName", objcategory.sizeName);
+                cmd.Parameters.AddWithValue("@groupid", objcategory.groupid);
 
 
             ConnectionString.Open();
@@ -163,6 +165,7 @@ public class Cls_size_db
             param.Direction = ParameterDirection.InputOutput;
             cmd.Parameters.Add(param);
             cmd.Parameters.AddWithValue("@sizeName", objcategory.sizeName);
+            cmd.Parameters.AddWithValue("@groupid", objcategory.groupid);
 
             ConnectionString.Open();
             cmd.ExecuteNonQuery();

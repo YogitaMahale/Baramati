@@ -11,7 +11,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-public partial class articleproduction : System.Web.UI.Page
+public partial class addarticleproduction : System.Web.UI.Page
 {
     common ocommon = new common();
     Int64 worksheetid;
@@ -30,19 +30,21 @@ public partial class articleproduction : System.Web.UI.Page
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             hPageTitle.InnerText = "Article Production";
         }
-        
+
     }
 
     private void Bind()
     {
+        DataSet dtWorksheetdetails = new DataSet();
+        DataTable dtEmployee = new DataTable();
+        SqlDataAdapter da;
+
         if (Request.QueryString["id"] != null)
         {
             worksheetid = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
         }
-            DataTable dtWorksheetdetails = new DataTable();
-            SqlDataAdapter da;
-            try
-            {
+        try
+        {
             SqlCommand cmd = new SqlCommand
             {
                 CommandText = "getWorksheetDetailsForArticleProduction",
@@ -54,26 +56,93 @@ public partial class articleproduction : System.Web.UI.Page
 
             da = new SqlDataAdapter(cmd);
             da.Fill(dtWorksheetdetails);
-            }
-            catch (Exception ex)
+
+
+            SqlCommand cmdemp = new SqlCommand
             {
-                ErrHandler.writeError(ex.Message, ex.StackTrace);
-                
-            }
-            finally
+                CommandText = "SELECT employeename,id FROM tblEmployeeMaster WHERE id IN (SELECT empid FROM employeewages WHERE isdeleted=0) AND isdelete=0",
+                CommandType = CommandType.Text,
+                Connection = con
+            };
+            cmdemp.Parameters.AddWithValue("@id", worksheetid);
+            //con.Open();
+
+            da = new SqlDataAdapter(cmdemp);
+            da.Fill(dtEmployee);
+
+
+            if (dtEmployee != null)
             {
-                con.Close();
+                if (dtEmployee.Rows.Count > 0)
+                {
+
+
+                    lstemployee.DataSource = dtEmployee;
+                    lstemployee.DataTextField = "employeename";
+                    lstemployee.DataValueField = "id";
+                    lstemployee.DataBind();
+                    //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select Color--", "0");
+                    //lstemployee.Items.Insert(0, objListItem);
+
+
+                }
+                else
+                {
+                    lstemployee.DataSource = dtEmployee;
+                    lstemployee.DataTextField = "employeename";
+                    lstemployee.DataValueField = "id";
+                    lstemployee.DataBind();
+
+
+                }
             }
+            else
+            {
+                lstemployee.DataSource = dtEmployee;
+                lstemployee.DataTextField = "employeename";
+                lstemployee.DataValueField = "id";
+                lstemployee.DataBind();
+            }
+
+
+
+
+
+        }
+        catch (Exception ex)
+        {
+            ErrHandler.writeError(ex.Message, ex.StackTrace);
+
+        }
+        finally
+        {
+            con.Close();
+        }
 
         if (dtWorksheetdetails != null)
         {
-            if (dtWorksheetdetails.Rows.Count > 0)
+            if (dtWorksheetdetails.Tables[0].Rows.Count > 0)
             {
-                txtworksheetno.Text = Convert.ToString(dtWorksheetdetails.Rows[0]["id"]);
-                txtworksheetdate.Text = Convert.ToString(dtWorksheetdetails.Rows[0]["createddate"]);
-                txtarticleno.Text = Convert.ToString(dtWorksheetdetails.Rows[0]["productname"]);
-                txtcolor.Text = Convert.ToString(dtWorksheetdetails.Rows[0]["colornames"]);
-                txtsize.Text = Convert.ToString(dtWorksheetdetails.Rows[0]["sizenames"]);
+                if (dtWorksheetdetails.Tables[0].Rows.Count > 0)
+                {
+                    txtworksheetno.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["id"]);
+                    txtworksheetdate.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["createddate"]);
+                    txtarticleno.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["productname"]);
+                    txtcolor.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["colornames"]);
+                    txtsize.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["groupname"]);
+                    txtpid.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["productid"]);
+                    txtcolorid.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["colorid"]);
+                    txtsizegroupid.Text = Convert.ToString(dtWorksheetdetails.Tables[0].Rows[0]["sizeid"]);
+                }
+            }
+
+            if (dtWorksheetdetails.Tables[1].Rows.Count > 0)
+            {
+                if (dtWorksheetdetails.Tables[1].Rows.Count > 0)
+                {
+                    Repeater1.DataSource = dtWorksheetdetails.Tables[1];
+                    Repeater1.DataBind();
+                }
             }
         }
 
@@ -107,6 +176,8 @@ public partial class articleproduction : System.Web.UI.Page
         //}
         //finally { con.Close(); }
     }
+
+    /*
     protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
         Int64 id = Int64.Parse(ddlCategory.SelectedValue.ToString());
@@ -137,7 +208,7 @@ public partial class articleproduction : System.Web.UI.Page
         finally { con.Close(); }
 
     }
-
+    
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         DataTable dtProduct = new DataTable();
@@ -292,94 +363,89 @@ public partial class articleproduction : System.Web.UI.Page
         }
     }
 
-
+    */
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        //Int64 Result = 0, Result1 = 0;
-        //DataTable dtProduct = new DataTable();
+        Int64 Result = 0, Result1 = 0, Result2=0;
+        DataTable dtProduct = new DataTable();
+
+        //Response.Write(hf1.Value);
+
+        //String valuesColor = hfcolorid.Value, valuesSize = hfsizeid.Value;
 
 
-        //String user = null, month = null, pono = null;
-        //bool flag = false, flag1 = false, flag2 = false, flag3 = false;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        //id, worksheetno, employeeid, totalpairs, vshape, silai, factorysecond, isdeleted, createddate
 
-        //int year = int.Parse(DateTime.Now.Year.ToString());
-        //month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-        //int day = int.Parse(DateTime.Now.Day.ToString());
-        //int min = int.Parse(DateTime.Now.Minute.ToString());
-        //int hour = int.Parse(DateTime.Now.Hour.ToString());
+        articleproduction objarticleproduction = new articleproduction();
 
-        //pono = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
+        objarticleproduction.worksheetno = Convert.ToInt64(txtworksheetno.Text);
+        objarticleproduction.employeeid = Convert.ToInt64(hfemployeeid.Value);
+        if (cbvshape.Checked)
+        {
+            objarticleproduction.vshape = Convert.ToInt64(txttotalpairs.Text);
 
-        //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-        //PurchaseOrderHeader objcategory = new PurchaseOrderHeader();
-        //objcategory.PONo = pono;
-        //objcategory.VendorId = Int64.Parse(ddlVendor.SelectedValue);
+        }
+        else if (cbsilai.Checked)
+        {
+            objarticleproduction.silai = Convert.ToInt64(txttotalpairs.Text);
+        }
+        else
+            objarticleproduction.totalpairs = Convert.ToInt64(txttotalpairs.Text);
 
-        //objcategory.isdeleted = false;
-
-        //if (Request.QueryString["id"] != null)
-        //{
-        //    objcategory.PurchaseOrderId = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
-        //    Result = (new Cls_PurchaseOrderHeader_b().Update(objcategory));
-        //    if (Result > 0)
-        //    {
-
-        //        Response.Redirect(Page.ResolveUrl("~/managepurchaseorder.aspx?mode=u"));
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
-        //else
-        //{
-        //    Result = (new Cls_PurchaseOrderHeader_b().Insert(objcategory));
-        //    if (Result > 0)
-        //    {
-        //        con.Open();
-        //        if (ViewState["Products"] != null)
-        //            dtProduct = (DataTable)ViewState["Products"];
-        //        PurchaseOrderDetails objPod = new PurchaseOrderDetails();
-        //        foreach (DataRow row in dtProduct.Rows)
-        //        {
-        //            objPod.PurchaseOrderId = Result;
-        //            objPod.ProdId = Convert.ToInt64(row["ProdId"]);
-        //            objPod.CategoryId = Convert.ToInt64(row["CatId"]);
-        //            objPod.Quantity = Convert.ToInt64(row["Quantity"]);
-        //            objPod.Quantity1 = Convert.ToInt64(row["Quantity"]);
-
-        //            Result1 = (new Cls_PurchaseOrderDetails_b().Insert(objPod));
-
-        //            //if (Result1 > 0)
-        //            // flag = true;
+        objarticleproduction.factorysecond = Convert.ToInt64(txtfactorysecond.Text);
 
 
-        //        }
+        Result = (new Cls_articleproduction_b().Insert(objarticleproduction));
+        if (Result > 0)
+        {
+            //if (ViewState["Products"] != null)
+            //    dtProduct = (DataTable)ViewState["Products"];
 
-        //        con.Close();
+            //id, pid, sizeid, colorid, quantity
 
-        //        //Clear();
+            Label id = new Label(); TextBox quantity=new TextBox();
+            articlestock objPod = new articlestock();
+            foreach (RepeaterItem item in Repeater1.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    id = (Label)item.FindControl("lblid");
+                    quantity = (TextBox)item.FindControl("txtquantity");
+                    
+                }
+                objPod.pid = Convert.ToInt64(txtpid.Text);
+                objPod.sizeid = Convert.ToInt64(id.Text);
+                objPod.colorid = Convert.ToInt64(txtcolorid.Text);
+                objPod.quantity = Convert.ToDecimal(quantity.Text);
+               
+                Result1 = (new Cls_articlestock_b().InsertUpdate(objPod));
 
-        //        String vendorname = ddlVendor.SelectedItem.ToString();
-        //        String mailTo = txtEmail.Text.Trim();
-        //        //String Name = txt_contactperson.Text.Trim();
-        //        String MobileNo = txtMobile.Text.Trim();
-        //        flag = PDFUpload(Result);
-        //        flag1 = SendOrderMail(mailTo, pono);
-        //        //flag2 = SendSMS(vendorname, MobileNo);
+                //if (Result1 > 0)
+                // flag = true;
 
-        //        if (flag)
-        //            Response.Redirect(Page.ResolveUrl("~/managepurchaseorder.aspx?mode=i"));
-        //    }
-        //    else
-        //    {
+            }
+
+            articleloosepairs objarticle = new articleloosepairs();
+            objarticle.pid = Convert.ToInt64(txtpid.Text);
+            objarticle.sizegroupid = Convert.ToInt64(txtsizegroupid.Text);
+            objarticle.colorid = Convert.ToInt64(txtcolorid.Text);
+            objarticle.quantity = Convert.ToDecimal(txtloosepair.Text);
+
+            Result2 = (new Cls_articleloosepairs_b().InsertUpdate(objarticle));
+
+            Response.Redirect(Page.ResolveUrl("~/manageworksheets.aspx?mode=a"));
+        }
+        else
+        {
 
 
-        //    }
-        //}
+        }
+
+
     }
-    
+
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/manageworksheets.aspx");

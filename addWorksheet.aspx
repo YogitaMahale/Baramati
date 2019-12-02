@@ -73,7 +73,7 @@
                                 <asp:HiddenField ID="hfsizename" runat="server" />--%>
                                         <label for="exampleInputEmail1">Size</label>
                                         <%--<asp:DropDownList ID="ddlSize" runat="server" class="form-control select2" multiple="multiple" />--%>
-                                        <asp:ListBox ID="lstSize" runat="server" multiple="multiple"  class="form-control select2"></asp:ListBox>
+                                        <asp:ListBox ID="lstSize" runat="server"  class="form-control select2"></asp:ListBox>
                                         <asp:HiddenField ID="hfsizeid" runat="server" />
             <asp:HiddenField ID="hfsizename" runat="server" />
 

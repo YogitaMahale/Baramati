@@ -4014,3 +4014,165 @@ Error Message :Thread was being aborted.
    at System.Web.HttpResponse.Redirect(String url)
    at addeditwebuser.btnSave_Click(Object sender, EventArgs e) in f:\GitRepos\Baramati\addeditwebuser.aspx.cs:line 247
 __________________________
+
+Log Entry : 
+12/02/2019 17:42:50
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:42:51
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:42:51
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:42:51
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:42:51
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:42:51
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articleloosepairs_db.InsertUpdate(articleloosepairs objarticleloosepairs) in f:\GitRepos\Baramati\App_Code\Cls_articleloosepairs_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:07
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:07
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:07
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:07
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:07
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:08
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articleloosepairs_db.InsertUpdate(articleloosepairs objarticleloosepairs) in f:\GitRepos\Baramati\App_Code\Cls_articleloosepairs_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:59
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:44:59
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:45:00
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:45:00
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:45:00
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articlestock_db.InsertUpdate(articlestock objarticlestock) in f:\GitRepos\Baramati\App_Code\Cls_articlestock_db.cs:line 171
+__________________________
+
+Log Entry : 
+12/02/2019 17:45:00
+Error Message :Object cannot be cast from DBNull to other types.
+
+ Statck Trace:    at System.DBNull.System.IConvertible.ToInt64(IFormatProvider provider)
+   at System.Convert.ToInt64(Object value)
+   at DatabaseLayer.Cls_articleloosepairs_db.InsertUpdate(articleloosepairs objarticleloosepairs) in f:\GitRepos\Baramati\App_Code\Cls_articleloosepairs_db.cs:line 171
+__________________________

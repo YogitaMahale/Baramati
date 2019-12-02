@@ -100,7 +100,10 @@ public partial class addWorksheet : System.Web.UI.Page
             Cls_color_b clsColor = new Cls_color_b();
             dtColor = clsColor.SelectAll();
 
-            Cls_size_b clsSize = new Cls_size_b();
+            //Cls_size_b clsSize = new Cls_size_b();
+            //dtSize = clsSize.SelectAll();
+
+            Cls_groupmaster_b clsSize = new Cls_groupmaster_b();
             dtSize = clsSize.SelectAll();
 
             Cls_Employee_b clsEmployee = new Cls_Employee_b();
@@ -177,23 +180,23 @@ public partial class addWorksheet : System.Web.UI.Page
                 //ddlSize.Items.Insert(0, objListItem);
 
                 lstSize.DataSource = dtSize;
-                lstSize.DataTextField = "sizeName";
-                lstSize.DataValueField = "cid";
+                lstSize.DataTextField = "groupname";
+                lstSize.DataValueField = "id";
                 lstSize.DataBind();
 
             }
             else {
                 lstSize.DataSource = dtSize;
-                lstSize.DataTextField = "sizeName";
-                lstSize.DataValueField = "cid";
+                lstSize.DataTextField = "groupname";
+                lstSize.DataValueField = "id";
                 lstSize.DataBind();
             }
         }
         else
         {
             lstSize.DataSource = dtSize;
-            lstSize.DataTextField = "sizeName";
-            lstSize.DataValueField = "cid";
+            lstSize.DataTextField = "groupname";
+            lstSize.DataValueField = "id";
             lstSize.DataBind();
         }
         if (dtEmployee != null)

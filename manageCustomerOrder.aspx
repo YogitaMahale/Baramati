@@ -81,6 +81,7 @@
                                     
                                                             <asp:HyperLink ID="hlEditOrder" runat="server" Target="_blank" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" Text="Edit"></asp:HyperLink>&nbsp;
                                    
+                                                            <asp:LinkButton ID="lnkTaxInvoices" runat="server" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" CommandArgument='<%# Eval(" oid")+";"+Eval("orderdate") %>' OnClick="lnkTaxInvoices_Click">Tax Invoice</asp:LinkButton>&nbsp;
                                                            
                                                             &nbsp;<asp:LinkButton ID="lnkTodayDelete" runat="server" Text="Cancel" CommandArgument='<%# Eval("oid") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this order?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                         </td>
@@ -141,7 +142,7 @@
                                                             <asp:HyperLink ID="hlInvoice" runat="server" Target="_blank" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" Text="Details"></asp:HyperLink>&nbsp;
                                     
                                                             <asp:HyperLink ID="hlEditOrder" runat="server" Target="_blank" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" Text="Edit"></asp:HyperLink>&nbsp;
-                                   
+                                                                      <asp:LinkButton ID="lnkTaxInvoices" runat="server" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" CommandArgument='<%# Eval(" oid")+";"+Eval("orderdate") %>' OnClick="lnkTaxInvoices_Click">Tax Invoice</asp:LinkButton>&nbsp;
                                                            
                                                             &nbsp;<asp:LinkButton ID="lnkTodayDelete" runat="server" Text="Cancel" CommandArgument='<%# Eval("oid") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this order?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                         </td>
@@ -204,7 +205,7 @@
                                                             <asp:HyperLink ID="hlInvoice" runat="server" Target="_blank" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" Text="Details"></asp:HyperLink>&nbsp;
                                     
                                                             <asp:HyperLink ID="hlEditOrder" runat="server" Target="_blank" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" Text="Edit"></asp:HyperLink>&nbsp;
-                                   
+                                   <asp:LinkButton ID="lnkTaxInvoices" runat="server" CssClass="btn btn-sm btn-success" Style="text-decoration: underline" CommandArgument='<%# Eval(" oid")+";"+Eval("orderdate") %>' OnClick="lnkTaxInvoices_Click">Tax Invoice</asp:LinkButton>&nbsp;
                                                            
                                                             &nbsp;<asp:LinkButton ID="lnkTodayDelete" runat="server" Text="Cancel" CommandArgument='<%# Eval("oid") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this order?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                         </td>

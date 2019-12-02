@@ -16,8 +16,11 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3><span style="color: red">* Indicates Required Fields</span></h3>
-                            <h3 class="box-title" style="text-align: center"><b id="spnMessgae" runat="server"></b></h3>
+                          
                             <%--<cc1:ToolkitScriptManager ID="toolScriptManager1" runat="server"></cc1:ToolkitScriptManager>--%>
+                        </div>
+                            <div>
+                              <h3 class="box-title" style="text-align: center"><b id="spnMessgae" runat="server"></b></h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -298,7 +301,7 @@
                                 </div>
                                 <div class="col-xs-2">
 
-                                    <label for="exampleInputEmail1">Freight Disc. </label>
+                                    <label for="exampleInputEmail1">Freight Amount </label>
                                     <asp:TextBox ID="txtfreightdis" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtfreightdis_TextChanged"></asp:TextBox>
 
                                 </div>

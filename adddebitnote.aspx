@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="adddebitnote.aspx.cs" Inherits="adddebitnote" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -14,8 +15,11 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3><span style="color: red">* Indicates Required Fields</span></h3>
-                            <h3 class="box-title" style="text-align: center"><b id="spnMessgae" runat="server"></b></h3>
+                          
                             <%--<cc1:ToolkitScriptManager ID="toolScriptManager1" runat="server"></cc1:ToolkitScriptManager>--%>
+                        </div>
+                        <div>
+                              <h3 class="box-title" style="text-align: center"><b id="spnMessgae" runat="server"></b></h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -24,7 +28,7 @@
 
                             <div class="form-group row">
 
-                                
+
                                 <div class="col-xs-3">
                                     <label for="exampleInputEmail1">Supplier Name<span style="color: red">*</span> </label>
                                     <asp:ListBox ID="lstCustomer" runat="server" AutoPostBack="true" OnSelectedIndexChanged="lstCustomer_SelectedIndexChanged" class="form-control select2"></asp:ListBox>
@@ -52,7 +56,7 @@
                                 </div>
 
                             </div>
-                            
+
                             <div class="form-group row">
                                 <div class="col-xs-3">
                                     <label for="exampleInputEmail1">Invoice No<span style="color: red">*</span> </label>
@@ -68,174 +72,208 @@
 
                                 </div>
 
-                                <%--<div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Delivered Through</label>
-                                    <asp:TextBox ID="txttransporter" CssClass="form-control" runat="server" ReadOnly="true" ></asp:TextBox>
 
-                                </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Delivered Details</label>
-                                    <asp:TextBox ID="txtdeliverydetails" CssClass="form-control" ReadOnly="true" runat="server"></asp:TextBox>
-
-                                </div>--%>
-                                
                             </div>
-                            <div class="form-group row">
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Sub Amount</label>
-                                    <asp:TextBox ID="txtsubtotal" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
+                            <div class="form-group row" style="overflow: scroll;">
+                                <div class="col-md-12">
 
+                                    <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                        <thead>
+                                            <tr>
+                                                <th>sr</th>
+                                                <td>Product</td>
+                                                <td>Quantity</td>
+                                                <td>Rate</td>
+                                                <td>SubTotal</td>
+                                                <td>Discount</td>
+                                                <td>Scheme</td>
+                                                <td>Frieght Amount</td>
+                                                <td>Taxable Amt</td>
+                                                <td>CGST</td>
+                                                <td>SGST</td>
+                                                <td>IGST</td>
+                                                <td>GST amt</td>
+                                                <td>Total</td>
+                                                <td>Net Rate</td>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <asp:Repeater ID="Repeater1" runat="server">
+                                                <ItemTemplate>
+                                                    <tr class="odd gradeX">
+                                                       <td class="center">
+                                                            <asp:Label ID="txtsr" runat="server" Text='<%# Eval("sr") %>'></asp:Label>
+
+                                                            <%--<asp:TextBox ID="txtsr" ReadOnly="true" Width="20" runat="server" Text=' <%#Eval("sr")%>'></asp:TextBox>--%>
+                                                        </td>
+                                                        <td class="center">
+                                                            <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtproductid" Visible="false" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
+
+                                                        </td>
+
+                                                        <td>
+                                                            <asp:Label ID="rep_txtQty" Text='<%# Eval("qty") %>' AutoPostBack="true"  Width="70" runat="server" Enabled="true" placeholder="Qty"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtRate" Text='<%# Eval("rate") %>' Width="70" runat="server" Enabled="false" placeholder="MRP"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtSubTotal" Text='<%# Eval("subtotal") %>' Width="70" Enabled="false" runat="server" placeholder="SubTotal"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtDiscount" Text='<%# Eval("discount") %>' Width="70" Enabled="false" runat="server" placeholder="Dis(%)"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtScheme" Text='<%# Eval("scheme") %>' Width="70" Enabled="false" runat="server" placeholder="Scheme"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtFrieghtAmt" Text='<%# Eval("frieghtamt") %>' Enabled="false" Width="70" runat="server" placeholder="Cart" AutoPostBack="true"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txttaxable" Text='<%# Eval("taxableamt") %>' Width="70" Enabled="false" runat="server" placeholder="Taxable"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtCGST" Text='<%# Eval("csgtper") %>' Width="70" Enabled="false" runat="server" placeholder="CGST"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtSgst" Text='<%# Eval("sgstper") %>' Width="70" Enabled="false" runat="server" placeholder="SGST"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtIgst" Text='<%# Eval("igstper") %>' Width="70" Enabled="false" runat="server" placeholder="IGST"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtGSTtotal" Text='<%# Eval("gstamt") %>' Width="70" Enabled="false" runat="server" placeholder="GSTtotal"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtTotal" Text='<%# Eval("total") %>' Width="70" Enabled="false" runat="server" placeholder="Total"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="rep_txtNetRate" Text='<%# Eval("netrate") %>' Width="70" runat="server" Enabled="false" placeholder="UnitRate"></asp:Label></td>
+                                                         
+                                                    </tr>
+
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Discount & Scheme</label>
-                                    <asp:TextBox ID="txtdicscheme" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
+                        </div>
+                        <div class="form-group row">
 
-                                    <%--<asp:RadioButton ID="rdbtntrade" Checked="true" runat="server" Text="Trade Discount(%) & Amount" GroupName="discounttype"/>
-                                    <div class="form-group row">
-                                <div class="col-xs-6">
-                                    <asp:TextBox ID="txttradedisc" OnTextChanged="txttradedisc_TextChanged" AutoPostBack="true" CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-                                    </div>
-                                        
-                                <div class="col-xs-6">
-                                    <asp:TextBox ID="txttradeamount" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
-                                    </div>
-                                </div>
-                                        --%>
-
-                                    </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Freight Amount</label>
-                                    <asp:TextBox ID="txtfreightamount" ReadOnly="true" CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-
-
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Taxable Amount</label>
-                                    <asp:TextBox ID="txttaxable" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
-
-                                </div>
-                                </div>
-            <div class="form-group row">
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">CGST Amount</label>
-                                    <asp:TextBox ID="txtcgst" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
-
-                                </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">SGST Amount</label>
-                                    <asp:TextBox ID="txtsgst" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
-
-                                </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">IGST Amount</label>
-                                    <asp:TextBox ID="txtigst" CssClass="form-control" ReadOnly="true" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Total Amount</label>
-                                    <asp:TextBox ID="txttotal" CssClass="form-control" ReadOnly="true" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-
-            </div>
-            <div class="form-group row">
-
-                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Freight Amount</label>
-                                    <asp:TextBox ID="txtfreightamount1" CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Transport Amount</label>
-                                    <asp:TextBox ID="txttransportamount"  CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Packing Amount</label>
-                                    <asp:TextBox ID="txtpacking"  CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Other Amount</label>
-                                    <asp:TextBox ID="txtother" CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-                                <%--<div class="col-xs-2">
-                                    <label for="exampleInputEmail1">Total GST</label>
-                                    <asp:TextBox ID="txttotalgst" CssClass="form-control" runat="server" ReadOnly="true" Text ="0"></asp:TextBox>
-
-                                </div>
-                                <div class="col-xs-2">
-                                    <label for="exampleInputEmail1">Taxable Discount(%) & Amount</label>
-                            <div class="form-group row">
-                                <div class="col-xs-6">
-                                    <asp:TextBox ID="txttaxabledisc" CssClass="form-control" OnTextChanged="txttaxabledisc_TextChanged" AutoPostBack="true" runat="server" Text ="0"></asp:TextBox>
-                                    </div>
-                                <div class="col-xs-6">
-                                    <asp:TextBox ID="txttaxableamount" CssClass="form-control" ReadOnly="true" runat="server" Text ="0"></asp:TextBox>
-                                    </div>
-                                    </div>
-                                </div>
-                                
-                                
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Freight Discount</label>
-                                    <asp:TextBox ID="txtfreightdiscount" CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
-
-                                </div>
-                                --%>
+                            <div class="col-xs-3">
+                                <label for="exampleInputEmail1">Sub Amount </label>
+                                <asp:TextBox ID="txt_Subtotal" Enabled="false" class="form-control" runat="server"></asp:TextBox>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-xs-2">
-                                    <label for="exampleInputEmail1">Discount Amount</label>
-                                    <asp:TextBox ID="txtdisc" CssClass="form-control" runat="server" Text ="0"></asp:TextBox>
 
-                                </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">Grand Total</label>
-                                    <asp:TextBox ID="txtgrandtotal" CssClass="form-control" ReadOnly="true" runat="server" Text ="0"></asp:TextBox>
+                            <div class="col-xs-3">
+                                <label for="exampleInputEmail1">Dis  And Scheme </label>
 
-                                </div>
-                                </div>
-                            <div class="col-md-12">
-                                <div class="box-footer" style="text-align: center">
-
-                                    <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="SAVE" OnClick="btnSave_Click" />&nbsp;&nbsp;
-                    <asp:Button ID="btnCancel" runat="server" CausesValidation="false" CssClass="btn btn-info" OnClick="btnCancel_Click" Text="CANCEL" />
-                                </div>
+                                <asp:TextBox ID="txttradDis" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txttradDis_TextChanged"></asp:TextBox></td>
+                                            <%--<td>
+                                                <asp:TextBox ID="txttradAmt" Enabled="false" Width="70" class="form-control" Text="0" runat="server"></asp:TextBox></td>--%>
                             </div>
+                            <div class="col-xs-3">
+
+                                <label for="exampleInputEmail1">Frieght Amount </label>
+                                <asp:TextBox ID="txtFriegtAmt" class="form-control" AutoPostBack="true" OnTextChanged="txtFriegtAmt_TextChanged"  runat="server"></asp:TextBox>
+
+                            </div>
+
+                            <div class="col-xs-3">
+
+                                <label for="exampleInputEmail1">Taxable Amount </label>
+                                <asp:TextBox ID="txttaxableAmt" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="form-group row">
+
+                            <div class="col-xs-3">
+
+                                <label for="exampleInputEmail1">CGST Amount </label>
+                                <asp:TextBox ID="txtcsgtfinal" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+
+                            </div>
+
+                            <div class="col-xs-3">
+                                <label for="exampleInputEmail1">SGST Amount</label>
+                                <asp:TextBox ID="txtsgstfinal" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="exampleInputEmail1">IGST Amount </label>
+                                <asp:TextBox ID="txtIgstfinal" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+
+                            </div>
+                            <div class="col-xs-3">
+
+                                <label for="exampleInputEmail1">Total Amount</label>
+                                <asp:TextBox ID="txttotalAmt" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+
+                            </div>
+
                         </div>
 
+                        <div class="form-group row">
+                            <div class="col-xs-2">
 
+                                <label for="exampleInputEmail1">Transport Amount</label>
+                                <asp:TextBox ID="txttransport" class="form-control" runat="server" OnTextChanged="txttransport_TextChanged"  AutoPostBack="true" ></asp:TextBox>
 
+                            </div>
+                            <div class="col-xs-2">
 
+                                <label for="exampleInputEmail1">Packing Amount</label>
+                                <asp:TextBox ID="txtpacking" class="form-control" runat="server" OnTextChanged="txtpacking_TextChanged"  AutoPostBack="true" ></asp:TextBox>
 
-                        <%--</div>--%>
+                            </div>
+                            <div class="col-xs-2">
+                                <label for="exampleInputEmail1">Other Amount </label>
+                                <asp:TextBox ID="txtotherAmt" class="form-control" runat="server" OnTextChanged="txtotherAmt_TextChanged"  AutoPostBack="true" ></asp:TextBox>
+                            </div>
+
+                            <div class="col-xs-3" style="display: none;">
+                                <label for="exampleInputEmail1">Discount Amount </label>
+                                <asp:TextBox ID="txtdiscountamt" class="form-control" runat="server" Text="0"></asp:TextBox>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <label for="exampleInputEmail1">Grand Amount</label>
+                                <asp:TextBox ID="txttotalAmtfinal" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box-footer" style="text-align: center">
+
+                                <asp:Button ID="btnSave" runat="server" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="SAVE" OnClick="btnSave_Click" />&nbsp;&nbsp;
+                    <asp:Button ID="btnCancel" runat="server" CausesValidation="false" CssClass="btn btn-info" OnClick="btnCancel_Click" Text="CANCEL" />
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
 
 
+
+
+
+                    <%--</div>--%>
                 </div>
-                <!-- /.box -->
-
-                <!-- Form Element sizes -->
-
-                <!-- /.box -->
+                <!-- /.box-body -->
 
 
-                <!-- /.box -->
+            </div>
+            <!-- /.box -->
 
-                <!-- Input addon -->
+            <!-- Form Element sizes -->
 
-                <!-- /.box -->
+            <!-- /.box -->
 
 
-                <!--/.col (left) -->
-                <!-- right column -->
+            <!-- /.box -->
 
-                <!--/.col (right) -->
+            <!-- Input addon -->
+
+            <!-- /.box -->
+
+
+            <!--/.col (left) -->
+            <!-- right column -->
+
+            <!--/.col (right) -->
 
             </div>
 

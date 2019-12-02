@@ -10,6 +10,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Net;
+using System.Net.Mail;
 
 public partial class ManualOrder1 : System.Web.UI.Page
 {
@@ -106,12 +108,15 @@ public partial class ManualOrder1 : System.Web.UI.Page
         daprodcut.Fill(dtrpoduct);
         if (dtrpoduct.Rows.Count > 0)
         {
+            ddlProduct.Items.Clear();
             ddlProduct.DataSource = dtrpoduct;
             ddlProduct.DataTextField = "productname";
             ddlProduct.DataValueField = "pid";
             ddlProduct.DataBind();
             ddlProduct.Items.Insert(0, "---Select----");
         }
+        else
+        { ddlProduct.Items.Clear(); }
     }
     protected void ddlname_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -232,8 +237,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
             if (txttradDis.Text == "")
             {
                 txttradDis.Text = "0";
-            }
-             
+            }             
             if (txtCart.Text == "")
             {
                 txtCart.Text = "0";
@@ -247,11 +251,13 @@ public partial class ManualOrder1 : System.Web.UI.Page
             double subtotal = totalQty * unitRate;
             txtSubTotal.Text = System.Math.Round(subtotal, 2).ToString();
 
-            double disamt = (subtotal * Convert.ToDouble(txttradDis.Text)) / 100;
 
 
+            double disamt = (subtotal * Convert.ToDouble(txtDiscount.Text)) / 100;
 
-            double d1 = subtotal / (gst + 100);
+            double tot1 = subtotal - disamt;
+
+            double d1 = tot1 / (gst + 100);
             double taxableamt = d1 * 100;
             txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
 
@@ -260,11 +266,11 @@ public partial class ManualOrder1 : System.Web.UI.Page
             double p = subtotal - disamt;
             txtTotal.Text = System.Math.Round(p, 2).ToString();
 
-            double gstamt = subtotal - taxableamt;
+            double gstamt = (taxableamt * gst) / 100;
             txtGSTtotal.Text = System.Math.Round(gstamt, 2).ToString();
 
 
-            txtDiscount.Text = txttradDis.Text;
+            //txtDiscount.Text = txttradDis.Text;
         }
         catch { }
 
@@ -287,12 +293,12 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
             for (int i = 0; i < dtprodn.Rows.Count; i++)
             {
-                double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subTotal"].ToString());
-                double disamt1 = (subTotal1 * discount) / 100;
+                //double subTotal1 = Convert.ToDouble(dtprodn.Rows[i]["subTotal"].ToString());
+                //double disamt1 = (subTotal1 * discount) / 100;
 
-                double grandtot = subTotal1 - disamt1;
-                dtprodn.Rows[i]["discount"] = txttradDis.Text;
-                dtprodn.Rows[i]["TotalAmount"] = grandtot.ToString();
+                //double grandtot = subTotal1 - disamt1;
+                //dtprodn.Rows[i]["discount"] = txttradDis.Text;
+                //dtprodn.Rows[i]["TotalAmount"] = grandtot.ToString();
 
                 string t_subtotal1 = dtprodn.Rows[i]["subTotal"].ToString();
                 string t_totalGSTamt11 = dtprodn.Rows[i]["GSTamt"].ToString();
@@ -330,13 +336,13 @@ public partial class ManualOrder1 : System.Web.UI.Page
                 txtcsgtfinal.Text = "0";
 
             }
-            else if (t_SGST == 0)
+             if (t_SGST == 0)
             {
 
                 txtsgstfinal.Text = "0";
 
             }
-            else if (t_IGST == 0)
+             if (t_IGST == 0)
             {
 
                 txtIgstfinal.Text = "0";
@@ -794,6 +800,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
                     }
                     if (OrderId > 0)
                     {
+                        //SendOrderMail(OrderId);
                         ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Saved Successfully')", true);
                         clear();
                     }
@@ -851,6 +858,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
                                     try
                                     {
+                                        con.Close();
                                         con.Open();
                                         string sel = "select * from orderproducts  where oid=" + OrderId + " and pid=" + Convert.ToInt64(ds.Rows[i]["pid"]) + "";
                                         SqlCommand sel_cmd = new SqlCommand(sel, con);
@@ -1100,7 +1108,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
             Label rep_txtMrp = (Label)row.FindControl("rep_txtMrp");
             Label rep_txtUnitRate = (Label)row.FindControl("rep_txtUnitRate");
             Label rep_txtSubtotal = (Label)row.FindControl("rep_txtSubtotal");
-            Label rep_txtDiscount = (Label)row.FindControl("rep_txtDiscount");
+            TextBox rep_txtDiscount = (TextBox)row.FindControl("rep_txtDiscount");
             Label rep_txtScheme = (Label)row.FindControl("rep_txtScheme");
             Label rep_txtTaxableAmt = (Label)row.FindControl("rep_txtTaxableAmt");
             Label rep_txtCGST = (Label)row.FindControl("rep_txtCGST");
@@ -1128,31 +1136,28 @@ public partial class ManualOrder1 : System.Web.UI.Page
             {
                 rep_txtDiscount.Text="0";
             }
-            double  disAmt = Convert.ToDouble(rep_txtDiscount.Text);
-            double grandtotal = subtotal - disAmt;
-
-            //rep_txtSubtotal.Text = System.Math.Round(subtotal, 2).ToString();
-
-
-            double d1 = subtotal / (gst + 100);
+            //double  disAmt = Convert.ToDouble(rep_txtDiscount.Text);
+            //double grandtotal = subtotal - disAmt;
+            //double d1 = subtotal / (gst + 100);
+            //double taxableamt = d1 * 100;
+            //double gstamt = subtotal - taxableamt;
+            double disamt = (subtotal * Convert.ToDouble(rep_txtDiscount.Text)) / 100;
+            double tot1 = subtotal - disamt;
+            double d1 = tot1 / (gst + 100);
             double taxableamt = d1 * 100;
-            //rep_txtTaxableAmt.Text = System.Math.Round(taxableamt, 2).ToString();
-            //rep_txtfinalTotal.Text = System.Math.Round(subtotal, 2).ToString();
-
-            double gstamt = subtotal - taxableamt;
-            //rep_txtGSTamt.Text = System.Math.Round(gstamt, 2).ToString();
-
+            //txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
+           
+            double grandtotal = subtotal - disamt;
+           // txtTotal.Text = System.Math.Round(p, 2).ToString();
+            double gstamt = (taxableamt * gst) / 100;
+            txtGSTtotal.Text = System.Math.Round(gstamt, 2).ToString();
 
 
             DataRow[] drr = dtprodn.Select("sr='" + txtsr.Text + " ' ");
             foreach (var dr in drr)
             {
               
-                //rep_txtqty.Text = totalQty.ToString();                
-                //rep_txtSubtotal.Text = System.Math.Round(subtotal, 2).ToString();
-                //rep_txtTaxableAmt.Text = System.Math.Round(taxableamt, 2).ToString();
-                //rep_txtfinalTotal.Text = System.Math.Round(subtotal, 2).ToString();
-                //rep_txtGSTamt.Text = System.Math.Round(gstamt, 2).ToString();
+              
                 dr["cart"] = cartqty.ToString() ;
                 dr["qty"] = totalQty.ToString();
                 dr["discount"] = rep_txtDiscount.Text;
@@ -1171,7 +1176,8 @@ public partial class ManualOrder1 : System.Web.UI.Page
             Repeater1.DataBind();
         }
 
-        catch { }
+        catch(Exception p)
+        { }
         gridTotal();
     }
     protected void lnkDelete_Click(object sender, EventArgs e)
@@ -1351,4 +1357,118 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
         catch { }
     }
+
+
+    //private bool SendOrderMail(Int64 OrderId)
+    //{
+    //    common ocommon = new common();
+    //    string oSB = string.Empty;
+    //    bool send = false;
+    //    MailMessage mail = new MailMessage();
+    //    mail.To.Add("kshatriya.enterprises@gmail.com");
+
+    //    mail.CC.Add("Acnts.moryatools@gmail.com");
+    //    mail.From = new MailAddress("demo@moryatools.com", "Morya Tools App");
+    //    mail.Subject = "Customer Generate New Order - InvoiceNo - " + OrderId;
+    //    mail.Body = OrderMailCreate(OrderId);
+    //    mail.IsBodyHtml = true;
+    //    SmtpClient smtp = new SmtpClient();
+    //    smtp.Host = "103.250.184.62";
+    //    smtp.Port = 25;
+    //    smtp.UseDefaultCredentials = false;
+    //    smtp.Credentials = new System.Net.NetworkCredential("demo@moryatools.com", "vsys@2017");
+    //    try
+    //    {
+    //        smtp.Send(mail);
+    //        send = true;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        send = false;
+    //        ErrHandler.writeError(ex.Message, ex.StackTrace);
+    //    }
+    //    return send;
+    //}
+
+    //private string OrderMailCreate(Int64 OrderId)
+    //{
+    //    common ocommon = new common();
+    //    string OrderLink = "http://moryaapp.moryatools.com/orderinvoice.aspx?oid=" + ocommon.Encrypt(OrderId.ToString(), true);
+    //    string oSB = string.Empty;
+    //    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+    //    DataSet ds = new DataSet();
+    //    SqlDataAdapter da;
+    //    try
+    //    {
+    //        SqlCommand cmd = new SqlCommand();
+    //        //cmd.CommandText = "order_invoice";
+    //        cmd.CommandText = "order_invoice1";
+    //        cmd.CommandType = CommandType.StoredProcedure;
+    //        cmd.Parameters.AddWithValue("@oid", OrderId);
+    //        cmd.Connection = con;
+    //        con.Open();
+    //        da = new SqlDataAdapter(cmd);
+    //        da.Fill(ds);
+    //        oSB += "<div>Hello Admin,</div";
+    //        if (ds.Tables != null)
+    //        {
+    //            if (ds.Tables[2].Rows.Count > 0)
+    //            {
+    //                oSB += "<br/>";
+    //                oSB += "<table><tr><td><b><u>Customer Details - </u></b></td></tr><tr><td> Name - " + ds.Tables[2].Rows[0]["name"].ToString() + "</td></tr><tr><td>Phone: <span>" + ds.Tables[2].Rows[0]["phone"].ToString() + "</span></td></tr><tr><td>GST NO: <span>" + ds.Tables[2].Rows[0]["gstno"].ToString() + "</span></td></tr><tr><td>Address: <span>" + ds.Tables[2].Rows[0]["address"].ToString() + "</span></td></tr><tr><td>Email: <span>" + ds.Tables[2].Rows[0]["email"].ToString() + "</span></td></tr></table>";
+    //                oSB += "<hr/>";
+    //            }
+
+    //            if (ds.Tables[0] != null)
+    //            {
+    //                if (ds.Tables[0].Rows.Count > 0)
+    //                {
+    //                    oSB += "<br/>";
+    //                    oSB += "<table><tr><td><b><u>Order Details -</u></b></td></tr><tr><td> Invoice No - #" + ds.Tables[0].Rows[0]["oid"].ToString() + "</td></tr><tr><td>Order Date: <span>" + ds.Tables[0].Rows[0]["orderdate"].ToString() + "</span></td></tr><tr><td>Total Amount: <span>" + ds.Tables[0].Rows[0]["totalamount"].ToString() + "</span></td></tr></table>";
+    //                    oSB += "<hr/>";
+    //                }
+    //            }
+
+    //            if (ds.Tables[1].Rows.Count > 0)
+    //            {
+    //                oSB += "<br/>";
+    //                oSB += "<table><tr><td><b><u>Order Products Details - </u></b></td></tr></table>";
+    //                oSB += "<br/>";
+    //                oSB += "<table style='border: 1px solid black'><thead><tr style='border: 1px solid black'><th style='border: 1px solid black'>Product Name</th><th style='border: 1px solid black'>SKU</th><th style='text-align: center;border: 1px solid black'>Product Price</th><th style='text-align: center;border: 1px solid black'>Quantites</th><th style='text-align: center;border: 1px solid black'>GST</th><th style='text-align: center;border: 1px solid black'>Product Basic Price</th><th style='text-align: center;border: 1px solid black'>Product Total Price</th></tr></thead><tbody>";
+    //                for (int i = 0; i < ds.Tables[1].Rows.Count; i++)
+    //                {
+    //                    oSB += "<tr style='border: 1px solid black'>";
+    //                    oSB += "<td style='border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["productname"].ToString() + "</span></td>";
+    //                    oSB += "<td style='text-align: center;border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["sku"].ToString() + "</span></td>";
+    //                    oSB += "<td style='text-align: center;border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["productprice"].ToString() + "</span></td>";
+    //                    oSB += "<td style='text-align: center;border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["quantites"].ToString() + "</span></td>";
+    //                    oSB += "<td style='text-align: center;border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["gst"].ToString() + "</span></td>";
+    //                    oSB += "<td style='text-align: center;border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["ProductBasicPrice"].ToString() + "</span></td>";
+    //                    oSB += "<td style='text-align: center;border: 1px solid black'><span>" + ds.Tables[1].Rows[i]["producttotalprice"].ToString() + "</span></td>";
+    //                    oSB += "</tr>";
+    //                }
+    //                oSB += "</tbody></table>";
+    //                oSB += "<br/>";
+    //                oSB += "<b><u>Website Page Link -</u>  <a href=" + OrderLink + ">" + OrderLink + "</a></b>";
+    //                oSB += "<br/>";
+    //                oSB += "<br/>";
+    //                oSB += "<hr/>";
+    //                oSB += "<div>Thank you,</div>";
+    //                oSB += "<div>Morya App - Support Team.</div>";
+    //            }
+
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        ErrHandler.writeError(ex.Message, ex.StackTrace);
+    //        return null;
+    //    }
+    //    finally
+    //    {
+    //        con.Close();
+    //    }
+    //    return oSB;
+    //}
+
 }

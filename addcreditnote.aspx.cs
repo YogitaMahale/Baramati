@@ -387,7 +387,7 @@ public partial class addcreditnote : System.Web.UI.Page
             spnMessgae.InnerText = "Credit Note Saved Successfully !!!";
 
             //Response.Redirect(Page.ResolveUrl("~/manageEmployee.aspx?mode=i"));
-
+            Response.Redirect("addCreditNoteInvoice.aspx?id=" + Result);
         }
         else
         {

@@ -68,7 +68,8 @@ public partial class _Default : System.Web.UI.Page
                         Session["usertype"] = Convert.ToString(dtUser.Rows[0]["usertype"]);
                         Session["nameuser"] = Convert.ToString(dtUser.Rows[0]["name"]);
                         Session["usermail"] = Convert.ToString(dtUser.Rows[0]["email"]);
-                        Response.Redirect(Page.ResolveUrl("~/dashboard.aspx"));
+                        //                        Response.Redirect(Page.ResolveUrl("~/dashboard.aspx"));
+                        Response.Redirect("dashboard.aspx");
                     }
                     else
                     {
@@ -87,7 +88,8 @@ public partial class _Default : System.Web.UI.Page
                 bMsg.InnerText = "Please enter user name & password !!!";
             }
         }
-        catch { }
+        catch(Exception p)
+        { }
         finally { con.Close(); }
     }
 

@@ -729,4 +729,16 @@ public partial class manageCustomerOrder : System.Web.UI.Page
         Response.Redirect(Page.ResolveUrl("~/ManualOrder1.aspx"));
         
     }
+
+
+    protected void lnkTaxInvoices_Click(object sender, EventArgs e)
+    {
+        LinkButton lnkTaxInvoice = (LinkButton)sender;
+        string[] arguments = lnkTaxInvoice.CommandArgument.Split(';');
+        int OrderId = Convert.ToInt32(arguments[0]);
+        string OrderDate = arguments[1];
+
+        Response.Redirect("GSTInvoice.aspx?OrderId=" + OrderId + "&OrderDate=" + OrderDate);
+        //Response.Redirect("GSTInvoice.aspx?OrderId=" + OrderId);
+    }
 }

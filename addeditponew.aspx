@@ -32,10 +32,10 @@
                                 <div class="col-xs-4">
 
                                     <label for="exampleInputEmail1">Supplier Name </label>
-                                     <asp:DropDownList ID="ddlname" CssClass="form-control" Width="350px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged">
+                                    <asp:DropDownList ID="ddlname" CssClass="form-control" Width="350px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged">
                                     </asp:DropDownList>
 
-                                   <%-- <asp:ListBox ID="ddlname" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged"></asp:ListBox>
+                                    <%-- <asp:ListBox ID="ddlname" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged"></asp:ListBox>
                                     <asp:HiddenField ID="hfddlnameid" runat="server" />
                                     <asp:HiddenField ID="hfddlname1" runat="server" />--%>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" ControlToValidate="ddlname" ValidationGroup="gg" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
@@ -57,7 +57,7 @@
 
                             <div class="form-group row">
 
-                                <div class="col-xs-4" style="display:none;">
+                                <div class="col-xs-4" style="display: none;">
                                     <label for="exampleInputEmail1">Payment Type </label>
                                     <asp:DropDownList ID="ddlPaymentType" runat="server" CssClass="form-control" AutoPostBack="true">
                                         <asp:ListItem Value="0">--select--</asp:ListItem>
@@ -74,7 +74,7 @@
                                     <asp:DropDownList ID="ddlinvoiceType" runat="server" CssClass="form-control" AutoPostBack="true">
                                         <asp:ListItem Value="0">-- select -- </asp:ListItem>
                                         <asp:ListItem Value="Including GST">Including GST</asp:ListItem>
-                                            <asp:ListItem Value="Excluding GST">Excluding GST</asp:ListItem>
+                                        <asp:ListItem Value="Excluding GST">Excluding GST</asp:ListItem>
                                     </asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" ControlToValidate="ddlinvoiceType" ValidationGroup="gg" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
 
@@ -117,7 +117,7 @@
 
                                 </div>
                                 <div class="col-xs-3">
-                                  <label for="exampleInputEmail1">Stock Date</label>
+                                    <label for="exampleInputEmail1">Stock Date</label>
                                     <asp:TextBox ID="txtStockDate" runat="server" class="form-control" autocomplete="off"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ErrorMessage="Enter Date" ControlToValidate="txtStockDate" ValidationGroup="gg" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtStockDate" Format="yyyy/MM/dd"></cc1:CalendarExtender>
@@ -127,7 +127,7 @@
                             </div>
                             <div class="form-group row" style="overflow: scroll;">
                                 <div class="col-md-12">
-                                    <table>
+                                    <%-- <table>
                                         <tr>
                                             <td>Product</td>
                                             <td>Quantity</td>
@@ -150,8 +150,7 @@
                                             <td>
                                                  <asp:DropDownList ID="ddlProduct" CssClass="form-control"  runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged">
                                     </asp:DropDownList>
-                                                <%--<asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged"></asp:ListBox>
-                                                <asp:HiddenField ID="ddlProductid" runat="server" />--%>
+                                               
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="txtQty" Width="70" runat="server" Enabled="true" AutoPostBack="true" OnTextChanged="txtQty_TextChanged"  placeholder="Qty" Text="0"></asp:TextBox></td>
@@ -184,36 +183,34 @@
                                         
 
                                         
-                                    </table>
-
+                                    </table>--%>
                                 </div>
-                               
-                            </div> 
-                             <div>
-                                 <asp:Button ID="Button1" runat="server" Text="Add" OnClick="Button1_Click" />
-                             </div>
+
+                            </div>
+                            <div>
+                            </div>
                             <div class="form-group row" style="overflow: scroll;">
                                 <div class="col-md-12">
 
-                                    <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                    <table class="table table-hover table-checkable order-column full-width" id="example4"  >
                                         <thead>
                                             <tr>
-                                                <th>sr</th>
-                                                <td>Product</td>
-                                                <td>Quantity</td>
-                                                <td>Rate</td>
-                                                <td>SubTotal</td>
-                                                <td>Discount</td>
-                                                <td>Scheme</td>
-                                                <td>Frieght Amount</td>
-                                                <td>Taxable Amt</td>
-                                                <td>CGST</td>
-                                                <td>SGST</td>
-                                                <td>IGST</td>
-                                                <td>GST amt</td>
-                                                <td>Total</td>
-                                                <td>Net Rate</td>
-                                                <th>Action</th>
+                                                <th><b>sr</b></th>
+                                                <td><b>Product</b></th>
+                                                <td><b>Quantity</b></th>
+                                                <td><b>Rate</b></th>
+                                                <td><b>SubTotal</b></th>
+                                                <td><b>Discount</b></th>
+                                                <td><b>Scheme</b></th>
+                                                <td><b>Frieght Amount</b></th>
+                                                <td><b>Taxable Amt</b></th>
+                                                <td><b>CGST</b></th>
+                                                <td><b>SGST</b></th>
+                                                <td><b>IGST</b></th>
+                                                <td><b>GST amt</b></th>
+                                                <td><b>Total</b></th>
+                                                <td><b>Net Rate</b></th>
+                                                <th><b>Action</b></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -227,36 +224,36 @@
                                                         </td>
                                                         <td class="center">
                                                             <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
-                                                            <asp:Label ID="rep_txtproductid" Visible="false"  runat="server" Text='<%# Eval("pid") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtproductid" Visible="false" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
 
                                                         </td>
 
                                                         <td>
                                                             <asp:TextBox ID="rep_txtQty" Text='<%# Eval("qty") %>' AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" Width="70" runat="server" Enabled="true" placeholder="Qty"></asp:TextBox></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtRate" Text='<%# Eval("rate") %>' Width="70" runat="server" Enabled="false" placeholder="MRP"></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtRate" Text='<%# Eval("rate") %>' Width="70" runat="server" Enabled="false" placeholder="MRP"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtSubTotal" Text='<%# Eval("subtotal") %>' Width="70" Enabled="false" runat="server" placeholder="SubTotal" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtSubTotal" Text='<%# Eval("subtotal") %>' Width="70" Enabled="false" runat="server" placeholder="SubTotal"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtDiscount" Text='<%# Eval("discount") %>' Width="70" Enabled="false" runat="server" placeholder="Dis(%)" ></asp:TextBox></td>
+                                                            <asp:TextBox ID="rep_txtDiscount" Text='<%# Eval("discount") %>' Width="70"  AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged"  runat="server" placeholder="Dis(%)" ></asp:TextBox></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtScheme"  Text='<%# Eval("scheme") %>' Width="70" Enabled="false" runat="server" placeholder="Scheme" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtScheme" Text='<%# Eval("scheme") %>' Width="70" Enabled="false" runat="server" placeholder="Scheme"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtFrieghtAmt" Text='<%# Eval("frieghtamt") %>' Enabled="false" Width="70" runat="server" placeholder="Cart" AutoPostBack="true" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtFrieghtAmt" Text='<%# Eval("frieghtamt") %>' Enabled="false" Width="70" runat="server" placeholder="Cart" AutoPostBack="true"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txttaxable" Text='<%# Eval("taxableamt") %>' Width="70" Enabled="false" runat="server" placeholder="Taxable" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txttaxable" Text='<%# Eval("taxableamt") %>' Width="70" Enabled="false" runat="server" placeholder="Taxable"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtCGST" Text='<%# Eval("csgtper") %>' Width="70" Enabled="false" runat="server" placeholder="CGST" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtCGST" Text='<%# Eval("csgtper") %>' Width="70" Enabled="false" runat="server" placeholder="CGST"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtSgst"  Text='<%# Eval("sgstper") %>'  Width="70" Enabled="false" runat="server" placeholder="SGST" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtSgst" Text='<%# Eval("sgstper") %>' Width="70" Enabled="false" runat="server" placeholder="SGST"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtIgst" Text='<%# Eval("igstper") %>' Width="70" Enabled="false" runat="server" placeholder="IGST" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtIgst" Text='<%# Eval("igstper") %>' Width="70" Enabled="false" runat="server" placeholder="IGST"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtGSTtotal" Text='<%# Eval("gstamt") %>' Width="70" Enabled="false" runat="server" placeholder="GSTtotal"></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtGSTtotal" Text='<%# Eval("gstamt") %>' Width="70" Enabled="false" runat="server" placeholder="GSTtotal"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtTotal"  Text='<%# Eval("total") %>' Width="70" Enabled="false" runat="server" placeholder="Total" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtTotal" Text='<%# Eval("total") %>' Width="70" Enabled="false" runat="server" placeholder="Total"></asp:Label></td>
                                                         <td>
-                                                            <asp:TextBox ID="rep_txtNetRate" Text='<%# Eval("netrate") %>' Width="70" runat="server" Enabled="false" placeholder="UnitRate" ></asp:TextBox></td>
+                                                            <asp:Label ID="rep_txtNetRate" Text='<%# Eval("netrate") %>' Width="70" runat="server" Enabled="false" placeholder="UnitRate"></asp:Label></td>
                                                         <td style="text-align: center">
                                                             <asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" class="btn btn-danger" OnClientClick="return confirm('Do you want to delete this  ?');" OnClick="lnkDelete_Click"></asp:LinkButton>
                                                         </td>
@@ -266,10 +263,44 @@
                                             </asp:Repeater>
 
                                         </tbody>
+                                        <tfoot>
+                                            <th>
+                                                <asp:Button ID="Button1" runat="server" Text="Add" OnClick="Button1_Click" /></th>
+                                            <td>
+                                                <asp:DropDownList ID="ddlProduct" Width="150" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged">
+                                                </asp:DropDownList></td>
+                                            <td>
+                                                <asp:TextBox ID="txtQty" Width="70" runat="server" Enabled="true" AutoPostBack="true" OnTextChanged="txtQty_TextChanged" placeholder="Qty" Text="0"></asp:TextBox></td>
+                                            <td>
+                                                <asp:Label ID="txtRate"  runat="server" Enabled="false" placeholder="MRP" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtSubTotal"  Enabled="false" runat="server" placeholder="SubTotal" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:TextBox ID="txtDiscount" Width="70" runat="server" AutoPostBack="True" OnTextChanged="txtQty_TextChanged" placeholder="Dis(%)"></asp:TextBox></td>
+                                            <td>
+                                                <asp:Label ID="txtScheme"  Enabled="false" runat="server" placeholder="Scheme" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtFrieghtAmt"  Enabled="false" runat="server" placeholder="Cart" AutoPostBack="true" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txttaxable" Enabled="false" runat="server" placeholder="Taxable" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtCGST" Enabled="false" runat="server" placeholder="CGST" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtSgst"  Enabled="false" runat="server" placeholder="SGST" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtIgst"  Enabled="false" runat="server" placeholder="IGST" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtGSTtotal"  Enabled="false" runat="server" placeholder="GSTtotal" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtTotal"  Enabled="false" runat="server" placeholder="Total" Text="0"></asp:Label></td>
+                                            <td>
+                                                <asp:Label ID="txtNetRate"  runat="server" Enabled="false" placeholder="UnitRate" Text="0"></asp:Label></td>
+                                            <th></th>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
-
+                            <%--lggg--%>
                             <div class="form-group row">
 
                                 <div class="col-xs-3">
@@ -278,18 +309,16 @@
                                 </div>
 
                                 <div class="col-xs-3">
-                                    <label for="exampleInputEmail1">  Dis  And Scheme </label>
-                                    
-                                                <asp:TextBox ID="txttradDis" class="form-control"   runat="server" ></asp:TextBox></td>
+                                    <label for="exampleInputEmail1">Dis  And Scheme </label>
+
+                                    <asp:TextBox ID="txttradDis" Enabled="false"  class="form-control" runat="server" Text="0"></asp:TextBox></td>
                                             <%--<td>
                                                 <asp:TextBox ID="txttradAmt" Enabled="false" Width="70" class="form-control" Text="0" runat="server"></asp:TextBox></td>--%>
-                                        
-
                                 </div>
                                 <div class="col-xs-3">
 
                                     <label for="exampleInputEmail1">Frieght Amount </label>
-                                    <asp:TextBox ID="txtFriegtAmt"  class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtFriegtAmt" class="form-control" AutoPostBack="true" OnTextChanged="txtFriegtAmt_TextChanged" runat="server"></asp:TextBox>
 
                                 </div>
 
@@ -348,8 +377,8 @@
                                     <label for="exampleInputEmail1">Other Amount </label>
                                     <asp:TextBox ID="txtotherAmt" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtotherAmt_TextChanged1"></asp:TextBox>
                                 </div>
-                                
-                                  <div class="col-xs-3" style="display:none;">
+
+                                <div class="col-xs-3" style="display: none;">
                                     <label for="exampleInputEmail1">Discount Amount </label>
                                     <asp:TextBox ID="txtdiscountamt" class="form-control" runat="server" Text="0"></asp:TextBox>
                                 </div>
@@ -360,7 +389,7 @@
 
                                 </div>
                             </div>
-                             
+
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <div class="box-footer" style="text-align: center">
@@ -412,7 +441,7 @@
 
 
     <%--********************************--%>
-  <%--  <script type="text/javascript">
+    <%--  <script type="text/javascript">
         function pageLoad() {
             // JS to execute during full and partial postbacks
             initDropDowns();

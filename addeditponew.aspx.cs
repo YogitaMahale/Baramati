@@ -25,6 +25,8 @@ public partial class addeditponew : System.Web.UI.Page
         //-------------------------------------------------
         if (!IsPostBack)
         {
+            ddlname.Focus();
+
             ddlinvoiceType.SelectedValue = "Including GST";
             BindRepeater();
             Bindvendor();
@@ -98,7 +100,7 @@ public partial class addeditponew : System.Web.UI.Page
     }
     public void BindProducts()
     {
-        string GetProduct = "select distinct pid,productname from product";
+        string GetProduct = "select distinct id,productname from tbl_RawMaterialRegi";
         SqlDataAdapter daprodcut = new SqlDataAdapter(GetProduct, con);
         DataTable dtrpoduct = new DataTable();
         daprodcut.Fill(dtrpoduct);
@@ -106,7 +108,7 @@ public partial class addeditponew : System.Web.UI.Page
         {
             ddlProduct.DataSource = dtrpoduct;
             ddlProduct.DataTextField = "productname";
-            ddlProduct.DataValueField = "pid";
+            ddlProduct.DataValueField = "id";
             ddlProduct.DataBind();
             ddlProduct.Items.Insert(0, "---Select----");
         }
@@ -136,31 +138,7 @@ public partial class addeditponew : System.Web.UI.Page
 
             }
 
-            //}
-            //else
-            //{
-            //    string Getcusotmerdata = "select fname+''+mname+''+lname as name,email,phone,address1+''+address2 as uadd from userregistration where uid=" + ddlname.SelectedValue + "";
-            //    SqlDataAdapter dacust = new SqlDataAdapter(Getcusotmerdata, con);
-            //    DataTable dtcustoemr = new DataTable();
-            //    dacust.Fill(dtcustoemr);
-            //    if (dtcustoemr.Rows.Count > 0)
-            //    {
-            //        txtAddress.Text = dtcustoemr.Rows[0]["uadd"].ToString();
-            //        txtemail.Text = dtcustoemr.Rows[0]["email"].ToString();
-            //        txtPhone.Text = dtcustoemr.Rows[0]["phone"].ToString();
-            //        //txtcity.Text = dtcustoemr.Rows[0]["city"].ToString();
-            //        //txtcountry.Text = dtcustoemr.Rows[0]["country"].ToString();
-            //        // txtstate.Text = dtcustoemr.Rows[0]["State"].ToString();
-            //        // txtGstNo.Text = "";
-            //        hfid.Value = ddlname.SelectedValue;
-            //        //CustmerState = dtcustoemr.Rows[0]["StateID"].ToString();
-            //    }
-            //    else
-            //    {
-
-            //    }
-            //}
-
+         
 
         }
         catch (Exception ex)
@@ -168,6 +146,7 @@ public partial class addeditponew : System.Web.UI.Page
 
             Response.Write(ex.Message + ex.StackTrace);
         }
+        ddlinvoiceType_SelectedIndexChanged(null, null);
     }
 
     protected void ddlProduct_SelectedIndexChanged(object sender, EventArgs e)
@@ -1124,5 +1103,47 @@ public partial class addeditponew : System.Web.UI.Page
             txtFriegtAmt.Text = "0";
         }
         gridTotal();
+    }
+
+    protected void ddlinvoiceType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            txtQty.Text = "0";
+            txtRate.Text = "0";
+            txtSubTotal.Text = "0";
+            txtDiscount.Text = "0";
+            txtScheme.Text = "0";
+            txtFrieghtAmt.Text = "0";
+            txttaxable.Text = "0";
+            txtCGST.Text = "0";
+            txtSgst.Text = "0";
+            txtIgst.Text = "0";
+            txtGSTtotal.Text = "0";
+            txtTotal.Text = "0";
+            txtNetRate.Text = "0";
+            ddlProduct.SelectedIndex = 0;
+
+            txt_Subtotal.Text = "0";
+            txttradDis.Text = "0";
+            txtFriegtAmt.Text = "0";
+            txttaxableAmt.Text = "0";
+            txtcsgtfinal.Text = "0";
+            txtsgstfinal.Text = "0";
+            txtIgstfinal.Text = "0";
+            txttotalAmt.Text = "0";
+            txttransport.Text = "0";
+            txtpacking.Text = "0";
+            txtotherAmt.Text = "0";
+            txtdiscountamt.Text = "0";
+            txttotalAmtfinal.Text = "0";
+            DataTable dtprodn = new DataTable();
+            dtprodn = (DataTable)ViewState["dtprod"];
+            dtprodn.Rows.Clear();
+            Repeater1.DataSource = dtprodn;
+            Repeater1.DataBind();
+            ViewState["dtprod"] = dtprodn;
+        }
+        catch { }
     }
 }

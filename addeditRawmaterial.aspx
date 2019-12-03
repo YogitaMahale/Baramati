@@ -53,7 +53,7 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txthsncode" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">GST No</label>
+                        <label for="exampleInputEmail1">GST</label>
                         <asp:TextBox ID="txtgstno" Class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txtgstno" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                     </div>
@@ -107,7 +107,7 @@
 
 
 
-                    <div class="form-group" >
+                    <div class="form-group" style="display:none;" >
                         <label for="exampleInputFile">Image</label>
                         <table>
                             <tr>

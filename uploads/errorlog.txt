@@ -4001,3 +4001,12 @@ Invalid column name 'orderno'.
    at System.Data.Common.DbDataAdapter.Fill(DataSet dataSet)
    at DatabaseLayer.Cls_PurchaseOrderHeader_db.SelectAll() in e:\yogita 6.8.19\maharashtrafootwear.onlineerp.org\26.11.19\Baramati\App_Code\Cls_PurchaseOrderHeader_db.cs:line 44
 __________________________
+
+Log Entry : 
+12/03/2019 13:08:25
+Error Message :Column 'email' does not belong to table Table2.
+
+ Statck Trace:    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at orderinvoice.BindOrderDetails(Int64 OrderId) in e:\yogita 6.8.19\maharashtrafootwear.onlineerp.org\26.11.19\Baramati\orderinvoice.aspx.cs:line 78
+__________________________

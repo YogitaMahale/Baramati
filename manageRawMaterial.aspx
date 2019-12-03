@@ -37,7 +37,7 @@
                                         <th style="text-align: center">Price</th>
                                         <th style="text-align: center">Unit</th>
                                         <th style="text-align: center">HSN Code</th>
-                                        <th style="text-align: center">GST No</th>
+                                        <th style="text-align: center">GST</th>
 
                                          <th style="text-align: center">Quantity</th>
                                         <th style="text-align: center">Action</th>

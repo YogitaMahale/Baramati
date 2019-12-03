@@ -32,12 +32,15 @@
                                 <div class="col-xs-4">
 
                                     <label for="exampleInputEmail1">Supplier Name </label>
-                                    <asp:DropDownList ID="ddlname" CssClass="form-control" Width="350px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged">
-                                    </asp:DropDownList>
 
-                                    <%-- <asp:ListBox ID="ddlname" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged"></asp:ListBox>
-                                    <asp:HiddenField ID="hfddlnameid" runat="server" />
-                                    <asp:HiddenField ID="hfddlname1" runat="server" />--%>
+                                    <asp:ListBox ID="ddlname" runat="server" AutoPostBack="True"  OnSelectedIndexChanged="ddlname_SelectedIndexChanged" class="form-control select2"></asp:ListBox>
+                                     <%--<asp:ListBox ID="ddlname" runat="server" AutoPostBack="True" onkeydown="return focusOnNext(event, 'ddlPaymentType')" OnSelectedIndexChanged="ddlname_SelectedIndexChanged" class="form-control select2"></asp:ListBox>--%>
+                                    <asp:HiddenField ID="hfddlname" runat="server" />
+
+                                  <%--  <asp:DropDownList ID="ddlname" CssClass="form-control" Width="350px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged">
+                                    </asp:DropDownList>--%>
+
+                                    
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" ControlToValidate="ddlname" ValidationGroup="gg" runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>
 
                                 </div>
@@ -71,7 +74,7 @@
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Billing Type</label>
 
-                                    <asp:DropDownList ID="ddlinvoiceType" runat="server" CssClass="form-control" AutoPostBack="true">
+                                    <asp:DropDownList ID="ddlinvoiceType" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlinvoiceType_SelectedIndexChanged" >
                                         <asp:ListItem Value="0">-- select -- </asp:ListItem>
                                         <asp:ListItem Value="Including GST">Including GST</asp:ListItem>
                                         <asp:ListItem Value="Excluding GST">Excluding GST</asp:ListItem>
@@ -263,12 +266,16 @@
                                             </asp:Repeater>
 
                                         </tbody>
-                                        <tfoot>
+                                        <tfoot style="background-color: #ecf0f5;border-style:solid;border:thin;">
                                             <th>
-                                                <asp:Button ID="Button1" runat="server" Text="Add" OnClick="Button1_Click" /></th>
+                                                <asp:Button ID="Button1" runat="server" Text="Add" BackColor="#3c8dbc" ForeColor="White"  OnClick="Button1_Click" /></th>
                                             <td>
-                                                <asp:DropDownList ID="ddlProduct" Width="150" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged">
-                                                </asp:DropDownList></td>
+                                              <%--  <asp:DropDownList ID="ddlProduct" Width="150" CssClass="form-control" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged">
+                                                </asp:DropDownList>--%>
+
+                                                  <asp:ListBox ID="ddlProduct" runat="server" Width="150" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged" class="form-control select2"></asp:ListBox>
+                                    <asp:HiddenField ID="HiddenField1" runat="server" />
+                                            </td>
                                             <td>
                                                 <asp:TextBox ID="txtQty" Width="70" runat="server" Enabled="true" AutoPostBack="true" OnTextChanged="txtQty_TextChanged" placeholder="Qty" Text="0"></asp:TextBox></td>
                                             <td>
@@ -276,7 +283,7 @@
                                             <td>
                                                 <asp:Label ID="txtSubTotal"  Enabled="false" runat="server" placeholder="SubTotal" Text="0"></asp:Label></td>
                                             <td>
-                                                <asp:TextBox ID="txtDiscount" Width="70" runat="server" AutoPostBack="True" OnTextChanged="txtQty_TextChanged" placeholder="Dis(%)"></asp:TextBox></td>
+                                                <asp:TextBox ID="txtDiscount" Width="70" runat="server" AutoPostBack="True" OnTextChanged="txtQty_TextChanged" placeholder="0"></asp:TextBox></td>
                                             <td>
                                                 <asp:Label ID="txtScheme"  Enabled="false" runat="server" placeholder="Scheme" Text="0"></asp:Label></td>
                                             <td>
@@ -441,41 +448,41 @@
 
 
     <%--********************************--%>
-    <%--  <script type="text/javascript">
+    <script type="text/javascript">
         function pageLoad() {
             // JS to execute during full and partial postbacks
             initDropDowns();
 
 
         }
-    </script>--%>
+    </script>
 
-    <%--<script type="text/javascript">
+    <script type="text/javascript">
         function initDropDowns() {
-
-
-
-            $("#<%=ddlProduct.ClientID%>").select2({
-
-                allowClear: true
-
-            }).on('change.select2', function () {
-                //alert("Selected value is: "+$("#<%=ddlProduct.ClientID%>").select2("val"));
-                    $('[id*=ddlProductid]').val($(this).val());
-                });
 
             $("#<%=ddlname.ClientID%>").select2({
 
                 allowClear: true
 
             }).on('change.select2', function () {
-                //alert("Selected value is: "+$("#<%=ddlname.ClientID%>").select2("val"));
-                    $('[id*=hfddlnameid]').val($(this).val());
+         //alert("Selected value is: "+$("#<%=ddlname.ClientID%>").select2("val"));
+                    $('[id*=hfddlname]').val($(this).val());
                 });
+
+ 
+      $("#<%=ddlProduct.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+         //alert("Selected value is: "+$("#<%=ddlProduct.ClientID%>").select2("val"));
+                    $('[id*=HiddenField1]').val($(this).val());
+                });
+
         }
 
     </script>
-
+     
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -484,6 +491,18 @@
 
         });
 
+    </script>
+
+   <%-- <script type="text/javascript">
+        function focusOnNext(e, nextControl) {
+            alert(e.keyCode);
+            if (e.keyCode == 13) {
+                $("." + nextControl).focus();
+                   
+                return false;
+            }
+            
+        }
     </script>--%>
 </asp:Content>
 

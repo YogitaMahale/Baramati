@@ -35,7 +35,7 @@
                                     <%-- <asp:DropDownList ID="ddlname" CssClass="form-control" Width="350px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged">
                                     </asp:DropDownList>--%>
 
-                                    <asp:ListBox ID="ddlname" runat="server" class="form-control select2" AutoPostBack="True" OnSelectedIndexChanged="ddlname_SelectedIndexChanged"></asp:ListBox>
+                                    <asp:ListBox ID="ddlname" runat="server" class="form-control select2" AutoPostBack="True" TabIndex="1" onkeyup="MyKeyUpEvent();"   OnSelectedIndexChanged="ddlname_SelectedIndexChanged"></asp:ListBox>
                                     <asp:HiddenField ID="hfddlnameid" runat="server" />
                                     <asp:HiddenField ID="hfddlname1" runat="server" />
                                 </div>
@@ -57,7 +57,7 @@
 
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Payment Type </label>
-                                    <asp:DropDownList ID="ddlPaymentType" runat="server" CssClass="form-control" AutoPostBack="true">
+                                    <asp:DropDownList ID="ddlPaymentType" TabIndex="2" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="ddlPaymentType_TextChanged">
                                         <asp:ListItem Value="0">--select--</asp:ListItem>
                                         <asp:ListItem>Counter Cash</asp:ListItem>
                                     </asp:DropDownList>
@@ -69,7 +69,7 @@
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Invoice Type</label>
 
-                                    <asp:DropDownList ID="ddlinvoiceType" runat="server" CssClass="form-control" AutoPostBack="true">
+                                    <asp:DropDownList ID="ddlinvoiceType" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlinvoiceType_SelectedIndexChanged" TabIndex="3">
                                         <asp:ListItem Value="0">-- select -- </asp:ListItem>
                                         <asp:ListItem>GST Invoice</asp:ListItem>
                                     </asp:DropDownList>
@@ -79,7 +79,7 @@
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Invoice No </label>
 
-                                    <asp:TextBox ID="txt_InvoieNo" Enabled="false" class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txt_InvoieNo" Enabled="false" class="form-control" runat="server" TabIndex="4"></asp:TextBox>
 
                                 </div>
                             </div>
@@ -89,17 +89,17 @@
                                     <label for="exampleInputEmail1">Payment Mode </label>
                                     <br />
                                     &nbsp;&nbsp;
-                      <asp:RadioButton ID="rdoCash" runat="server" Text="Cash" GroupName="aa" Checked="true" />
+                      <asp:RadioButton ID="rdoCash" runat="server" Text="Cash" GroupName="aa" Checked="true" TabIndex="5" />
                                     &nbsp;&nbsp;&nbsp;
-                            <asp:RadioButton ID="rdoCredit" runat="server" Text="Credit" GroupName="aa" Checked="false" />
+                            <asp:RadioButton ID="rdoCredit" runat="server" Text="Credit" GroupName="aa" Checked="false" TabIndex="6" />
 
 
                                 </div>
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">Invoice Date</label>
-                                    <asp:TextBox ID="txt_Date" runat="server" class="form-control" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txt_Date" runat="server" Enabled="false"  class="form-control" autocomplete="off" TabIndex="7"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Enter Date" ControlToValidate="txt_Date" ValidationGroup="gg" ForeColor="Red"></asp:RequiredFieldValidator>
-                                    <cc1:CalendarExtender ID="CalendarExtender3" PopupButtonID="imgPopup" runat="server" TargetControlID="txt_Date" Format="yyyy/MM/dd"></cc1:CalendarExtender>
+                                    <cc1:CalendarExtender ID="CalendarExtender3" PopupButtonID="imgPopup" runat="server" TargetControlID="txt_Date" Format="dd/MM/yyyy"></cc1:CalendarExtender>
                                 </div>
                                 <div class="col-xs-4">
                                 </div>
@@ -337,11 +337,11 @@
                                             </asp:Repeater>
 
                                         </tbody>
-                                        <tfoot>
+                                        <tfoot  style="background-color: #ecf0f5;border-style:solid;border:thin;">
                                             <tr>
-                                                <th><asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" ValidationGroup="bb" OnClick="btnAdd_Click" /></th>
+                                                <th><asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" ValidationGroup="bb" BackColor="#3c8dbc" ForeColor="White" OnClick="btnAdd_Click" TabIndex="11" /></th>
                                                 <th>
-                                                    <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" Width="150" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged"></asp:ListBox>
+                                                    <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" Width="150" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged" TabIndex="8"></asp:ListBox>
                                                     <asp:HiddenField ID="ddlProductid" runat="server" />
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="ddlProduct" ValidationGroup="bb" runat="server" ErrorMessage="*" Font-Bold="True" Font-Size="Medium"></asp:RequiredFieldValidator>
 
@@ -355,7 +355,7 @@
                                                 <th>
                                                     <asp:Label ID="txtColor"  runat="server" Enabled="false" placeholder="Color" Text=""></asp:Label></th>
                                                 <th>
-                                                    <asp:TextBox ID="txtCart" Width="70"  runat="server" placeholder="Cart" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" Text="0"></asp:TextBox></td>
+                                                    <asp:TextBox ID="txtCart" Width="70"  runat="server" placeholder="Cart" AutoPostBack="true"  OnTextChanged="txtCart_TextChanged" Text="0" TabIndex="9"></asp:TextBox></td>
                                             <asp:RegularExpressionValidator
                                                 ID="RegularExpressionValidator6"
                                                 runat="server"
@@ -374,7 +374,7 @@
                                                 <th>
                                                     <asp:Label ID="txtSubTotal" Enabled="false" runat="server" placeholder="SubTotal" Text="0"></asp:Label></th>
                                                 <th>
-                                                    <asp:TextBox ID="txtDiscount" Width="70" Enabled="true" runat="server" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" placeholder="Dis(%)" Text="0"></asp:TextBox></th>
+                                                    <asp:TextBox ID="txtDiscount" Width="70" Enabled="true" runat="server" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" placeholder="Dis(%)" Text="0" TabIndex="10"></asp:TextBox></th>
                                                 <th>
                                                     <asp:Label  ID="txtScheme"    Enabled="false" runat="server" placeholder="Scheme" Text="0"></asp:Label></th>
                                                 <th>
@@ -417,7 +417,7 @@
                                         <tr>
 
                                             <td>
-                                                <asp:TextBox ID="txttradDis" class="form-control" Width="70" runat="server" AutoPostBack="true" OnTextChanged="txttradDis_TextChanged"></asp:TextBox>
+                                                <asp:TextBox ID="txttradDis" class="form-control" Width="70" Enabled="false"  runat="server" AutoPostBack="true" OnTextChanged="txttradDis_TextChanged"></asp:TextBox>
 
                                             </td>
 
@@ -482,13 +482,13 @@
                                 </div>
                                 <div class="col-xs-2">
                                     <label for="exampleInputEmail1">Other Amount </label>
-                                    <asp:TextBox ID="txtotherAmt" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtotherAmt_TextChanged"></asp:TextBox>
+                                    <asp:TextBox ID="txtotherAmt" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtotherAmt_TextChanged" TabIndex="12"></asp:TextBox>
 
                                 </div>
                                 <div class="col-xs-2">
 
                                     <label for="exampleInputEmail1">Freight Disc. </label>
-                                    <asp:TextBox ID="txtfreightdis" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtfreightdis_TextChanged"></asp:TextBox>
+                                    <asp:TextBox ID="txtfreightdis" class="form-control" runat="server" AutoPostBack="true" OnTextChanged="txtfreightdis_TextChanged" TabIndex="13"></asp:TextBox>
 
                                 </div>
                                 <div class="col-xs-2">

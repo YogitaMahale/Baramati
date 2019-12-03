@@ -238,8 +238,11 @@ public partial class addWorksheet : System.Web.UI.Page
             Repeater1.Visible = false;
         }
 
-        
+        ddlOperation.SelectedIndex = 0;
+        txtWorkDate.Text = string.Empty;
+        ddlEmployee.SelectedIndex = 0;
         txtquantity.Text = "0";
+        txtwages.Text = "0";
     }
 
 
@@ -359,7 +362,7 @@ public partial class addWorksheet : System.Web.UI.Page
             ddlOperation.SelectedIndex = 0;
             txtquantity.Text = "0";
             
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Product Removed Successfully');", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Record Removed Successfully');", true);
 
         }
         catch (Exception p)

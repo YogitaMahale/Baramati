@@ -33,6 +33,12 @@ public partial class manageworksheets : System.Web.UI.Page
             spnMessage.Style.Add("color", "green");
             spnMessage.InnerText = "Worksheet Created Successfully";
         }
+        else if (Request.QueryString["mode"] == "a")
+        {
+            spnMessage.Visible = true;
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Final Production Saved Successfully";
+        }
     }
 
     private void BindWorkSheets()
@@ -122,10 +128,10 @@ public partial class manageworksheets : System.Web.UI.Page
         if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
         {
             HyperLink lblAgentId = (HyperLink)e.Item.FindControl("lblAgentId");
-            lblAgentId.NavigateUrl = Page.ResolveUrl("~/articleproduction.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
+            lblAgentId.NavigateUrl = Page.ResolveUrl("~/addarticleproduction.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
 
             HyperLink lblMobileno = (HyperLink)e.Item.FindControl("lblMobileno");
-            lblMobileno.NavigateUrl = Page.ResolveUrl("~/articleproduction.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
+            lblMobileno.NavigateUrl = Page.ResolveUrl("~/addarticleproduction.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
 
             
 

@@ -56,10 +56,36 @@ public class Cls_size_db
         return ds.Tables[0];
     }
 
+        //public DataTable SelectAllByGroupId()
+        //{
+        //    DataSet ds = new DataSet();
+        //    SqlDataAdapter da;
+        //    try
+        //    {
+        //        SqlCommand cmd = new SqlCommand();
+        //        cmd.CommandText = "size_SelectAllByGroupId";
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Connection = ConnectionString;
+        //        ConnectionString.Open();
+        //        da = new SqlDataAdapter(cmd);
+        //        da.Fill(ds);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrHandler.writeError(ex.Message, ex.StackTrace);
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        ConnectionString.Close();
+        //    }
+        //    return ds.Tables[0];
+        //}
 
 
 
-    public sizeMaster  SelectById(Int64 cid)
+
+        public sizeMaster  SelectById(Int64 cid)
     {
         SqlDataAdapter da;
         DataSet ds = new DataSet();

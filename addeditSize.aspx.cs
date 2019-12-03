@@ -44,6 +44,7 @@ public partial class addeditSize : System.Web.UI.Page
     private void Clear()
     {
         txtSizeName.Text = string.Empty;
+        lstGroup.SelectedIndex = -1;
 
 
     }

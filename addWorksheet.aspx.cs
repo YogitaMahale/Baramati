@@ -100,7 +100,10 @@ public partial class addWorksheet : System.Web.UI.Page
             Cls_color_b clsColor = new Cls_color_b();
             dtColor = clsColor.SelectAll();
 
-            Cls_size_b clsSize = new Cls_size_b();
+            //Cls_size_b clsSize = new Cls_size_b();
+            //dtSize = clsSize.SelectAll();
+
+            Cls_groupmaster_b clsSize = new Cls_groupmaster_b();
             dtSize = clsSize.SelectAll();
 
             Cls_Employee_b clsEmployee = new Cls_Employee_b();
@@ -177,23 +180,23 @@ public partial class addWorksheet : System.Web.UI.Page
                 //ddlSize.Items.Insert(0, objListItem);
 
                 lstSize.DataSource = dtSize;
-                lstSize.DataTextField = "sizeName";
-                lstSize.DataValueField = "cid";
+                lstSize.DataTextField = "groupname";
+                lstSize.DataValueField = "id";
                 lstSize.DataBind();
 
             }
             else {
                 lstSize.DataSource = dtSize;
-                lstSize.DataTextField = "sizeName";
-                lstSize.DataValueField = "cid";
+                lstSize.DataTextField = "groupname";
+                lstSize.DataValueField = "id";
                 lstSize.DataBind();
             }
         }
         else
         {
             lstSize.DataSource = dtSize;
-            lstSize.DataTextField = "sizeName";
-            lstSize.DataValueField = "cid";
+            lstSize.DataTextField = "groupname";
+            lstSize.DataValueField = "id";
             lstSize.DataBind();
         }
         if (dtEmployee != null)
@@ -235,8 +238,11 @@ public partial class addWorksheet : System.Web.UI.Page
             Repeater1.Visible = false;
         }
 
-        
+        ddlOperation.SelectedIndex = 0;
+        txtWorkDate.Text = string.Empty;
+        ddlEmployee.SelectedIndex = 0;
         txtquantity.Text = "0";
+        txtwages.Text = "0";
     }
 
 
@@ -356,7 +362,7 @@ public partial class addWorksheet : System.Web.UI.Page
             ddlOperation.SelectedIndex = 0;
             txtquantity.Text = "0";
             
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Product Removed Successfully');", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Record Removed Successfully');", true);
 
         }
         catch (Exception p)
